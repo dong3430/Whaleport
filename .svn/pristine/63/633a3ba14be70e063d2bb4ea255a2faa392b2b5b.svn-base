@@ -1,0 +1,241 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<!-- table-basic.html 사용 -->
+
+<style>
+    .table th {
+        text-align: center;
+    }
+    .table td {
+        text-align: center;
+    }
+    
+</style>
+
+<div class="body-wrapper">
+    <div class="container-fluid">
+    	<!-- 상단 카드 시작-->
+        <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+           <div class="card-body px-4 py-3">
+             <div class="row align-items-center" style="margin-top:20px;">
+               <div class="col-9">
+                 <h4 class="fw-semibold mb-8">업체 목록</h4>
+                 <nav aria-label="breadcrumb">
+                   <ol class="breadcrumb">
+                     <li class="breadcrumb-item">
+                       <a class="text-muted text-decoration-none" href="../main/index.html">DashBoard</a>
+                     </li>
+                     <li class="breadcrumb-item" aria-current="page">협력업체 목록</li>
+                   </ol>
+                 </nav>
+               </div>
+               <div class="col-3">
+                 <div class="text-center mb-n4">
+                   <img src="${pageContext.request.contextPath }/resources/assets/images/logos/symbol-01.png" alt="modernize-img" class="img-fluid" style="width: 120px; height: auto;">
+                 </div>
+               </div>
+             </div>
+           </div>
+        </div>
+        <!-- 상단 카드 끝 -->
+        <div class="card w-100 position-relative overflow-hidden">
+            <div class="card-body p-4">
+            <!-- 상태별 카운트 위젯 시작 -->
+			<div class="row d-flex align-items-center justify-content-center g-4">
+			    <div style="width: 17%">
+			        <div class="card border-bottom border-info">
+			            <div class="card-body p-4" style="height: 125px">
+			                <div class="d-flex align-items-center">
+			                    <div>
+			                        <h4 class="card-title fs-6">${countVO.totalCount}</h4>
+			                        <p class="card-subtitle text-info">협력업체 전체</p>
+			                    </div>
+			                    <div class="ms-auto">
+			                        <span class="text-info display-6">
+			                            <i class="ti ti-users"></i>
+			                        </span>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			    <div style="width: 17%">
+			        <div class="card border-bottom border-primary">
+			            <div class="card-body p-4" style="height: 125px">
+			                <div class="d-flex align-items-center">
+			                    <div>
+			                        <h4 class="card-title fs-6">${countVO.countY}</h4>
+			                        <p class="card-subtitle text-info">승인된 협력업체</p>
+			                    </div>
+			                    <div class="ms-auto">
+			                        <span class="text-primary display-6">
+			                            <span class="badge bg-primary-subtle text-primary" style="font-size: 1rem; padding: 0.5rem 0.5rem;">승인</span>
+			                        </span>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			    <div style="width: 17%">
+			        <div class="card border-bottom border-success">
+			            <div class="card-body p-4" style="height: 125px">
+			                <div class="d-flex align-items-center">
+			                    <div>
+			                        <h4 class="card-title fs-6">${countVO.countH}</h4>
+			                        <p class="card-subtitle text-success">승인 대기 중인 <br>협력업체</p>
+			                    </div>
+			                    <div class="ms-auto">
+			                        <span class="text-success display-6">
+			                            <span class="badge bg-success-subtle text-success" style="font-size: 1rem; padding: 0.5rem 0.5rem;">승인대기</span>
+			                        </span>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			    <div style="width: 17%">
+			        <div class="card border-bottom border-danger">
+			            <div class="card-body p-4" style="height: 125px">
+			                <div class="d-flex align-items-center">
+			                    <div>
+			                        <h4 class="card-title fs-6">${countVO.countN}</h4>
+			                        <p class="card-subtitle text-danger">반려된 협력업체</p>
+			                    </div>
+			                    <div class="ms-auto">
+			                        <span class="text-danger display-6">
+			                            <span class="badge bg-danger-subtle text-danger" style="font-size: 1rem; padding: 0.5rem 0.5rem;">반려</span>
+			                        </span>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			<br/>
+			<!-- 상태별 카운트 위젯 끝 -->
+            <!-- 셀렉트 및 검색창 시작 -->
+            <div class="row mb-4 align-items-center">
+                <div class="col-md-3">
+                    <form id="filter-form" action="/management/partner/account/accountList" method="get">
+                        <select class="form-select form-control" id="status-select" name="selectedItem" onchange="document.getElementById('filter-form').submit();" style="width:120px;">
+                            <option value="">상태 선택</option>
+                            <option value="Y" ${selectedItem == 'Y' ? 'selected' : ''}>승인</option>
+                            <option value="N" ${selectedItem == 'N' ? 'selected' : ''}>반려</option>
+                            <option value="H" ${selectedItem == 'H' ? 'selected' : ''}>승인대기</option>
+                        </select>
+                    </form>
+                </div>
+	            <div class="col-md-9 d-flex justify-content-end align-items-center">
+	                <form action="/management/partner/account/accountList" method="get" class="position-relative me-2">
+	                    <input type="text" class="form-control product-search ps-5 pe-5" id="input-search" name="searchWord" placeholder="업체명 또는 사업자등록번호" value="${searchWord}" style="width:280px;" />
+	                    <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
+	                </form>
+	                <button type="button" class="btn btn-primary" onclick="document.getElementById('search-form').submit();">검색</button>
+	            </div>
+            </div>
+            <!-- 셀렉트 및 검색창 끝 -->
+            <div class="table-responsive mb-4 border rounded-1 mt-3">
+                <table class="table table-hover text-nowrap mb-0 align-middle" style="table-layout: fixed;">
+                    <colgroup>
+                        <col style="width: 14%;">
+                        <col style="width: 14%;">
+                        <col style="width: 14%;">
+                        <col style="width: 14%;">
+                        <col style="width: 14%;">
+                        <col style="width: 14%;">
+                        <col style="width: 8%;">
+                        <col style="width: 8%;">
+                    </colgroup>
+                    <thead class="text-dark fs-4">
+                        <tr>
+                            <th><h6 class="fs-4 fw-semibold mb-0">업체구분</h6></th>
+                            <th><h6 class="fs-4 fw-semibold mb-0">업체명</h6></th>
+                            <th><h6 class="fs-4 fw-semibold mb-0">사업자등록번호</h6></th>
+                            <th><h6 class="fs-4 fw-semibold mb-0">대표자</h6></th>
+                            <th><h6 class="fs-4 fw-semibold mb-0">개업연월일</h6></th>
+                            <th><h6 class="fs-4 fw-semibold mb-0">담당자 연락처</h6></th>
+                            <th><h6 class="fs-4 fw-semibold mb-0">상태</h6></th>
+                            <th><h6 class="fs-4 fw-semibold mb-0">상세보기</h6></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:choose>
+                            <c:when test="${empty pagingVO.dataList}">
+                                <tr>
+                                    <td colspan="8">협력업체 신청내역이 존재하지 않습니다.</td>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach items="${pagingVO.dataList}" var="pt" varStatus="status">
+                                    <c:if test="${pt.ptApproval == selectedItem or empty selectedItem}">
+                                        <tr>
+                                        <tr onclick="location.href='/management/partner/account/accountDetail?ptNo=${pt.ptNo}';" style="cursor: pointer;">
+                                            <td><p class="mb-0 fw-normal fs-4">${pt.comdName}</p></td>
+                                            <td><p class="mb-0 fw-normal fs-4">${pt.ptName}</p></td>
+                                            <td><p class="mb-0 fw-normal fs-4">${fn:substring(pt.ptBusnum, 0, 3)}-${fn:substring(pt.ptBusnum, 3, 5)}-${fn:substring(pt.ptBusnum, 5, 10)}</p></td>
+                                            <td><p class="mb-0 fw-normal fs-4">${pt.ptCeo}</p></td>
+                                            <td><p class="mb-0 fw-normal fs-4">${fn:split(pt.ptOpendate, " ")[0]}</p></td>
+                                            <td><p class="mb-0 fw-normal fs-4">${pt.ptMgrtel}</p></td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${pt.ptApproval == 'N'}">
+                                                        <span class="badge bg-warning-subtle text-warning" style="margin-left:10px">반려</span>
+                                                    </c:when>
+                                                    <c:when test="${pt.ptApproval == 'Y'}">
+                                                        <span class="badge bg-primary-subtle text-primary" style="margin-left:10px">승인</span>
+                                                    </c:when>
+                                                    <c:when test="${pt.ptApproval == 'H'}">
+                                                        <span class="badge bg-success-subtle text-success" style="margin-left:10px">승인대기</span>
+                                                    </c:when>
+                                                </c:choose>
+                                            </td>
+                                            <td>
+                                             <div class="action-btn" style="display: flex; justify-content: center; align-items: center;">
+                                                 <i class="ti ti-eye fs-5"></i>
+                                             </div>
+                                                <input type="hidden" name="ptNo" value="${pt.ptNo}" />
+                                         </td>
+                                        </tr>
+                                    </c:if>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+                    </tbody>
+                </table>
+            </div>
+
+                <div class="text-end mb-3">
+                    <c:if test="${not empty searchWord}">
+                        <a href="/management/partner/account/accountList" class="btn btn-outline-primary me-3">목록</a>
+                    </c:if>
+                </div>
+
+				<!-- Pagination 시작 -->
+				<div class="d-flex justify-content-center" style="margin-top: 20px;">
+				    <nav aria-label="...">
+				        <ul class="pagination">
+				            <li class="page-item <c:if test='${pagingVO.currentPage == 1}'>disabled</c:if>">
+				                <!-- Previous 버튼에 필터링 정보 추가 -->
+				                <a class="page-link" href="?page=${pagingVO.currentPage - 1}&searchType=${searchType}&searchWord=${searchWord}&selectedItem=${selectedItem}" tabindex="-1" aria-disabled="true">Previous</a>
+				            </li>
+				            <c:forEach begin="1" end="${pagingVO.totalPage}" var="pageNum">
+				                <li class="page-item <c:if test='${pagingVO.currentPage == pageNum}'>active</c:if>">
+				                    <!-- 페이지 번호 링크에 필터링 정보 추가 -->
+				                    <a class="page-link" href="?page=${pageNum}&searchType=${searchType}&searchWord=${searchWord}&selectedItem=${selectedItem}">${pageNum}</a>
+				                </li>
+				            </c:forEach>
+				            <li class="page-item <c:if test='${pagingVO.currentPage == pagingVO.totalPage}'>disabled</c:if>">
+				                <!-- Next 버튼에 필터링 정보 추가 -->
+				                <a class="page-link" href="?page=${pagingVO.currentPage + 1}&searchType=${searchType}&searchWord=${searchWord}&selectedItem=${selectedItem}">Next</a>
+				            </li>
+				        </ul>
+				    </nav>
+				</div>
+				<!-- Pagination 끝 -->
+            </div>
+        </div>
+    </div>
+</div>
+

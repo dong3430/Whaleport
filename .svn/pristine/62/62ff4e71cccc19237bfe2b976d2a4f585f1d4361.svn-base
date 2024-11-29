@@ -1,0 +1,62 @@
+package kr.or.ddit.management.airService.customerManagement.web;
+
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("/management/customer")
+public class UserManagementController {
+	
+	
+	
+	//회원
+	
+	// 공항서빗관리 > 회원관리(회원 목록)
+	@GetMapping("/list")
+	public String cusList() {
+		log.info("userList()실행...!");
+		
+		return "management/customerManagement/customerList";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 공항서비스 관리 > 시설 예약관리
+	@GetMapping("/reservation")
+	public String cusReservation() {
+		log.info("cusReservation()실행...!");
+		
+		
+		return "management/customerManagement/customerReservationList";
+	}
+
+	// 공항서비스 관리 > 항공편 스케줄 안내
+	@GetMapping("/airlineSchedule")
+	public String airlineSchedule() {
+		log.info("airlineSchedule()실행...!");
+		
+		
+		return "management/cusManagement/airlineSchedule";
+	}
+	
+	
+	
+	
+
+}

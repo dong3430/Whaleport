@@ -1,0 +1,27 @@
+package kr.or.ddit.user.reserve.meeting.service.impl;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.user.reserve.meeting.mapper.MeetingMapper;
+import kr.or.ddit.user.reserve.meeting.service.IMeetingService;
+import kr.or.ddit.user.reserve.meeting.vo.MeetingVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+public class MeetingServiceImpl implements IMeetingService{
+
+	@Inject
+	private MeetingMapper mapper;
+	
+	@Override
+	public List<MeetingVO> list() {
+		log.info("# MeetingServiceImpl list");
+		return mapper.list();
+	}
+
+}

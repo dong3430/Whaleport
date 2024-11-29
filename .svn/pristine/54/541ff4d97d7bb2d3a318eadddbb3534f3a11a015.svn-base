@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.ddit.partner.store.warehouse.mapper.IPWarehouseMapper">
+ 	
+ 	<select id="list" parameterType="string" resultType="kr.or.ddit.partner.store.warehouse.vo.WarehouseStockVO">
+	 	select
+	 		ws_no, ws_image, ws_name, ws_qty, ws_date
+	 	from warehouse_stock
+	 	where wh_no = #{whNo}
+	 	order by ws_no desc
+ 	</select>
+ 	
+ 	<select id="detail" parameterType="string" resultType="kr.or.ddit.partner.store.warehouse.vo.WarehouseStockVO">
+ 		select
+	 		ws_no, ws_image, ws_name, ws_qty, ws_date, ws_detail
+	 	from warehouse_stock
+	 	where ws_no = #{wsNo}
+ 	</select>
+ 
+ </mapper>

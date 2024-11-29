@@ -1,0 +1,19 @@
+package kr.or.ddit.util.vo;
+
+import lombok.Data;
+
+@Data
+public class FileVO {
+	private int fileNo;
+	private String fileOwner;
+	private String fileSavepath;
+	private long fileSize;
+	private String fileMime;
+	private String fileRealname;
+	private String fileSavename;
+	private String fileSavedate;
+	private String fileDelyn;
+	private int fileDowncount;
+	private int fileFancysize;
+
+}

@@ -1,0 +1,197 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<style>
+.card {
+	width: 350px;
+	height: 350px;
+	perspective: 1100px;
+	position: relative;
+	margin: 10px;
+	transition: transform 1.0s;
+	transform-style: preserve-3d;
+	cursor: pointer;
+	transform: rotateY(0deg);
+}
+
+.front, .back {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+.front {
+	background: teal;
+}
+
+.back {
+	background: white;
+	display: flex; /* Flexbox를 사용하여 내용 중앙 정렬 */
+	justify-content: center;
+	align-items: center;
+	text-align: center; /* 텍스트 중앙 정렬 */
+	transform: rotateY(180deg);
+}
+</style>
+
+<div class="body-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 d-flex justify-content-center align-items-stretch">
+                <div class="card w-100" style="border-radius: 15px; overflow: hidden; height: 500px;">
+                    <div class="front" style="background-image: url('${pageContext.request.contextPath}/resources/assets/images/profile/pass.png'); background-size: cover; background-position: center; padding: 20px;z-index:2000">
+                        <div class="chat-list chat active-chat" style="margin-top:100px;">
+                            <div style="text-align: center;">
+                                <img src="${employeeVO.empImage }" alt="user4" width="150" height="180" class="rounded-circle"><br>
+                                <p class="mb-1 fs-3"><strong>Name</strong></p>
+                                <h6 class="fs-4 mb-0" style="font-size: 30px !important;"><strong>${employeeVO.empName }</strong></h6><br>
+                                <div class="row" style="text-align: center;">
+                                    <div class="col-6 mb-9">
+                                        <p class="mb-1 fs-3"><strong>Department</strong></p>
+                                        <h6 class="fw-semibold mb-0" style="font-size: 15px;">${employeeVO.empDept }</h6>
+                                    </div>
+                                    <div class="col-6 mb-9">
+                                        <p class="mb-1 fs-3"><strong>Position</strong></p>
+                                        <h6 class="fw-semibold mb-0" style="font-size: 15px;">${employeeVO.empPosition }</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+                    <div class="back" style="background-image: url('${pageContext.request.contextPath}/resources/assets/images/profile/pass2.png'); background-size: cover; background-position: center; padding: 20px;">
+                        <div class="row" style="text-align: center;">
+                            <div class="col-12 mb-7">
+                                <h6 class="fw-semibold mb-0" style="font-size: 15px;">${employeeVO.empId }</h6>
+                                <img src="${pageContext.request.contextPath}/resources/assets/images/svgs/QR.png" alt="QR Code" style="width: 150px; height: 150px; margin-top: 10px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<h4>2. html5-qrcode 방법</h4>
+    <button type="button" id="btn2">값 추출하기</button><br>
+    <div id="reader" style="width:500px; display:none;"></div>
+    <div id="result2"></div>
+    <div id="result3"></div>
+                   
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll(".card");
+    for (const card of cards) {
+        card.addEventListener("click", flipper);
+    }
+    
+//     $(".front").on("click", function () {
+// 		$(this).css("transform","rotateY(90deg)");
+// 	});
+    
+    function flipper(event) {
+        const target = event.currentTarget;
+        // 현재 회전 상태에 따라 회전
+        if (target.style.transform === "rotateY(0deg)" || target.style.transform === "") {
+            target.style.transform = "rotateY(180deg)";
+        	setTimeout(() => {
+	        	$(".front").css("z-index", "0");
+	        	$(".back").css("z-index", "1000");
+			}, 250);
+        } else {
+        	setTimeout(() => {
+	        	$(".back").css("z-index", "0");
+	        	$(".front").css("z-index", "1000");
+			}, 250);
+        	target.style.transform = "rotateY(0deg)";
+        }
+    }
+});
+
+$(function(){
+// 	var btn1 = $("#btn1");
+	var btn2 = $("#btn2");
+	
+// 	btn1.on("click", function() {
+// 		$.ajax({
+// 			url : "/management/qrCode/employeeQrCodeValue",
+// 			method : "get",
+// 			contentType : "application/json; charset=UTF-8",
+// 			success : function (result) {
+// 				var html = "";
+// 				html = "<h3>값 : " + result + "</h3>";
+// 				$("#result1").html(html);
+// 			}
+// 		});
+// 	});
+	
+	btn2.on("click", function() {
+		startQrScanner();
+	});
+	
+});
+function startQrScanner() {
+    $('#reader').show(); // 스캐너 영역을 표시
+
+    // Html5QrCode 객체를 생성하여 QR 코드 스캔 기능을 활성화
+    // "reader"는 QR 코드를 스캔할 영역의 ID로, 이 영역애서 실시간으로 QR 코드를 스캔
+    let html5QrCode = new Html5Qrcode("reader");
+
+    // html5QrCode.start(...) : QR 코드 스캔을 시작하는 메서드
+    html5QrCode.start(
+    		
+    	// "user" : 전면 카메라 사용
+    	// "environment : 후면 카메라 사용"
+        { facingMode: "environment" },
+        {
+        	// 초당 프레임 수
+            fps: 10,  
+            // QR 코드 인식 영역 크기
+            // qrbox: {width: 250, height: 250} -> 가로, 세로 각각 설정 가능
+            qrbox: 250
+            
+        },
+        
+        // QR 코드 스캔을 성공하면 qrCodeMessage에 QR 코드의 데이터가 들어가고 콜백함수 실행
+        function (qrCodeMessage) {
+        	
+        	
+			var html = "";
+			html = "<h3>값 : " + qrCodeMessage + "</h3>";
+			$("#result2").html(html);
+
+            // QR 코드 데이터에서 JSON을 추출
+            $.ajax({
+                url: '/management/qrCode/employeeQrCodeValue',
+                type: 'GET',
+                success: function(result) {
+                	
+                    // JSON 데이터를 처리
+					html = "<h3>값 : " + result + "</h3>";
+					$("#result3").html(html);
+					
+					// QR 코드 스캔을 중지하고 카메라를 끕니다.
+					// 중지 성공 시 then() 실행, 실패 시 catch() 실행
+                    html5QrCode.stop().then(() => {
+                        console.log('QR code scanning stopped.');
+                        $('#reader').hide();
+                    }).catch((err) => {
+                        console.error('Failed to stop QR code scanning:', err);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching member data:', error);
+                }
+            });
+        },
+        // 스캔 실패 시
+        function (error) {
+            
+            console.warn(`QR 코드 스캔 실패: ${error}`);
+        }
+     // 시작 실패 시
+    ).catch(err => {
+        console.log(`QR 스캐너 시작 중 오류: ${err}`);
+    });
+}
+</script>

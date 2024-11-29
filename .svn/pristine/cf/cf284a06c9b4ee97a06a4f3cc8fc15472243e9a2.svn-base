@@ -1,0 +1,11 @@
+package kr.or.ddit.customer.myPage.mapper;
+
+import kr.or.ddit.customer.myPage.vo.CustomerMyPageVO;
+
+public interface CustomerMyPageMapper {
+
+	public CustomerMyPageVO myInfomation(String cusId);
+
+	public void myInfoUpdate(CustomerMyPageVO customerVO);
+
+}

@@ -1,0 +1,272 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!-- Sidebar Start -->
+<aside class="left-sidebar with-vertical">
+    <div><!-- ---------------------------------- -->
+      <!-- Start Vertical Layout Sidebar -->
+      <!-- ---------------------------------- -->
+      <div class="brand-logo d-flex align-items-center justify-content-between">
+        <a href="/common/home" class="text-nowrap logo-img">
+          <img src="${pageContext.request.contextPath }/resources/assets/images/logos/dark-logo.svg" class="dark-logo" alt="Logo-Dark" />
+<%--           <img src="${pageContext.request.contextPath }/resources/assets/images/logos/light-logo.svg" class="light-logo" alt="Logo-light" /> --%>
+        </a>
+        <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
+          <i class="ti ti-x"></i>
+        </a>
+      </div>
+
+
+      <nav class="sidebar-nav scroll-sidebar" data-simplebar>
+        <ul id="sidebarnav">
+          <!-- ---------------------------------- -->
+          <!-- Dashboard -->
+          <!-- ---------------------------------- -->
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Home</span>
+          </li>
+         
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/common/home" id="get-url" aria-expanded="false">
+<!--             <a class="sidebar-link" href="/common/home" id="" aria-expanded="false"> -->
+              <span>
+                <i class="ti ti-aperture"></i>
+              </span>
+              <span class="hide-menu">Home</span>
+            </a>
+          </li>
+       
+          <!-- ---------------------------------- -->
+          <!-- 직원 공통 -->
+          <!-- ---------------------------------- -->
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Apps</span>
+          </li>
+           <li class="sidebar-item">
+            <a class="sidebar-link" href="${pageContext.request.contextPath }/common/chat/chat" aria-expanded="false">
+              <span>
+                <i class="ti ti-message-dots"></i>
+              </span>
+              <span class="hide-menu">Message</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="/common/myPage" class="sidebar-link">
+              <i class="ti ti-user-circle"></i>
+              <span class="hide-menu">My Page</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+           <a class="sidebar-link" href="/common/entireEmail" aria-expanded="false">
+             <span>
+               <i class="ti ti-mail"></i>
+             </span>
+             <span class="hide-menu">Email</span>
+           </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/common/calendar" aria-expanded="false">
+              <span>
+                <i class="ti ti-calendar"></i>
+              </span>
+              <span class="hide-menu">Calendar</span>
+            </a>
+          </li>
+          
+          <!-- ---------------------------------- -->
+          <!-- 부서별 -->
+          <!-- ---------------------------------- -->
+         <li class="nav-small-cap">
+           <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+           <span class="hide-menu">Position</span>
+         </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+              <span class="d-flex">
+                <i class="ti ti-notes"></i>
+              </span>
+              <span class="hide-menu">인사관리</span>
+            </a>
+            <ul aria-expanded="false" class="collapse first-level">
+              <li class="sidebar-item">
+                <a href="/management/list" class="sidebar-link">
+                  <div class="round-16 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-circle"></i>
+                  </div>
+                  <span class="hide-menu">직원 정보</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a href="/group/orgChart" class="sidebar-link">
+                  <div class="round-16 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-circle"></i>
+                  </div>
+                  <span class="hide-menu">조직도</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a href="/etc/attendanceChart" class="sidebar-link">
+                  <div class="round-16 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-circle"></i>
+                  </div>
+                  <span class="hide-menu">근태관리</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+              <span class="d-flex">
+                <i class="ti ti-layout"></i>
+              </span>
+              <span class="hide-menu">전산관리</span>
+            </a>
+            <ul aria-expanded="false" class="collapse first-level">
+              <li class="sidebar-item">
+                <a href="/info/empInsertList" class="sidebar-link">
+                  <div class="round-16 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-circle"></i>
+                  </div>
+                  <span class="hide-menu">직원 등록 내역 관리</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a href="/info/accessRight" class="sidebar-link">
+                  <div class="round-16 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-circle"></i>
+                  </div>
+                  <span class="hide-menu">접근 권한 관리</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="sidebar-item">
+    <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+        <span class="d-flex">
+            <i class="ti ti-layout-grid"></i>
+        </span>
+        <span class="hide-menu">협력업체 관리</span>
+    </a>
+    <ul aria-expanded="false" class="collapse first-level">
+        <li class="sidebar-item">
+            <a href="/management/partner/accountList" class="sidebar-link">
+                <div class="round-16 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-circle"></i> 
+                </div>
+                <span class="hide-menu">업체 목록</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="javascript:void(0)" class="sidebar-link has-arrow" aria-expanded="false">
+                <div class="round-16 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-circle"></i> 
+                </div>
+                <span class="hide-menu">업체 관리</span>
+            </a>
+            <ul aria-expanded="false" class="collapse second-level">
+                <li class="sidebar-item">
+                    <a href="/management/airlport/schedule" class="sidebar-link">
+                        <div class="round-16 d-flex align-items-center justify-content-center">
+                            <i class="ti ti-minus"></i> 
+                        </div>
+                        <span class="hide-menu">항공사</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="./main/entrance-companies.html" class="sidebar-link">
+                        <div class="round-16 d-flex align-items-center justify-content-center">
+                            <i class="ti ti-minus"></i> 
+                        </div>
+                        <span class="hide-menu">입점업체</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/management/security/report" class="sidebar-link">
+                        <div class="round-16 d-flex align-items-center justify-content-center">
+                            <i class="ti ti-minus"></i> 
+                        </div>
+                        <span class="hide-menu">보안업체</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/management/facility/report" class="sidebar-link">
+                        <div class="round-16 d-flex align-items-center justify-content-center">
+                            <i class="ti ti-minus"></i> 
+                        </div>
+                        <span class="hide-menu">시설업체</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="sidebar-item">
+            <a href="/management/partner/qnaList" class="sidebar-link">
+                <div class="round-16 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-layout-grid"></i> <!-- 원래 아이콘 유지 -->
+                </div>
+                <span class="hide-menu">문의사항</span>
+            </a>
+        </li>
+    </ul>
+</li>
+
+          <li class="sidebar-item">
+            <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+              <span class="d-flex">
+                <i class="ti ti-topology-star-3"></i>
+              </span>
+              <span class="hide-menu">공항서비스 관리</span>
+            </a>
+            <ul aria-expanded="false" class="collapse first-level">
+              <li class="sidebar-item">
+                <a href="/management/user/list" class="sidebar-link">
+                  <div class="round-16 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-circle"></i>
+                  </div>
+                  <span class="hide-menu">회원 관리</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a href="/management/user/airlineSchedule" class="sidebar-link">
+                  <div class="round-16 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-circle"></i>
+                  </div>
+                  <span class="hide-menu">항공편 스케줄 안내</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a href="./main/widgets-banners.html" class="sidebar-link">
+                  <div class="round-16 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-circle"></i>
+                  </div>
+                  <span class="hide-menu">고객 서비스 관리</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a href="/management/user/reservation" class="sidebar-link">
+                  <div class="round-16 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-circle"></i>
+                  </div>
+                  <span class="hide-menu">시설 예약 관리</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a href="/mangement/popup/list" class="sidebar-link">
+                  <div class="round-16 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-circle"></i>
+                  </div>
+                  <span class="hide-menu">팝업창 관리</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          
+         
+          
+      
+      </nav>
+      <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+
+  </aside>

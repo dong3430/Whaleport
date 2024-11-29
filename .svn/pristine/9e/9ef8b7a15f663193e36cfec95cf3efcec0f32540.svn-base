@@ -1,0 +1,21 @@
+package kr.or.ddit.management.airService.customerManagement.mapper;
+
+import java.util.List;
+
+import kr.or.ddit.customer.login.login.vo.LoginCustomerVO;
+import kr.or.ddit.util.vo.PaginationVO;
+
+public interface ICustomerMapper {
+
+	public int selectCusCount(PaginationVO<LoginCustomerVO> pagingVO);
+
+	public List<LoginCustomerVO> selectCusList(PaginationVO<LoginCustomerVO> pagingVO);
+
+	public LoginCustomerVO selectCustomer(int cusNo);
+
+	public int cusUpdate(LoginCustomerVO cusVO);
+
+	public int cusDelete(int cusNo);
+
+
+}

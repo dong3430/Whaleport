@@ -1,0 +1,18 @@
+package kr.or.ddit.partner.store.warehouse.vo;
+
+import java.time.LocalDate;
+
+import lombok.Data;
+
+@Data
+public class WarehouseStockVO {
+	private String wsNo;
+	private String whNo;
+	private String wsName;
+	private int wsQty;
+	private LocalDate wsDate;
+	private LocalDate whEnddate;
+	private String wsDetail;
+	private String wsImage;
+
+}

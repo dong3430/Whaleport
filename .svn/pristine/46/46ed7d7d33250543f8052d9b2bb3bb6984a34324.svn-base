@@ -1,0 +1,16 @@
+package kr.or.ddit.management.partner.popup.mapper;
+
+import java.util.List;
+
+import kr.or.ddit.management.partner.popup.vo.PopupVO;
+import kr.or.ddit.util.vo.PaginationVO;
+
+public interface IPopupMapper {
+
+	public int selectPopupCount(PaginationVO<PopupVO> pagingVO);
+
+	public List<PopupVO> selectPopupList(PaginationVO<PopupVO> pagingVO);
+
+	public int insert(PopupVO popupVO);
+
+}

@@ -1,0 +1,30 @@
+package kr.or.ddit.partner.store.warehouse.service.impl;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.partner.store.warehouse.mapper.IPWarehouseMapper;
+import kr.or.ddit.partner.store.warehouse.service.IPWarehouseService;
+import kr.or.ddit.partner.store.warehouse.vo.WarehouseStockVO;
+
+
+@Service
+public class PWarehouseServiceImpl implements IPWarehouseService {
+	
+	@Inject
+	private IPWarehouseMapper mapper;
+
+	@Override
+	public List<WarehouseStockVO> list(String whNo) {
+		return mapper.list(whNo);
+	}
+
+	@Override
+	public WarehouseStockVO detail(String wsNo) {
+		return mapper.detail(wsNo);
+	}
+
+}

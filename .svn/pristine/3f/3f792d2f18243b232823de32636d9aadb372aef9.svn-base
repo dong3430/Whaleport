@@ -1,0 +1,15 @@
+package kr.or.ddit.partner.airline.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/partner/airline")
+public class airlineController {
+
+	@GetMapping("/schedule")
+	public String airlineSchedule() {
+		return "partner/airline/airlineSchedule";
+	}
+}

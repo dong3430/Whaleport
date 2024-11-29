@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="kr.or.ddit.common.etc.chat.mapper.ChatMapper" >
+  	<select id="list" resultType="kr.or.ddit.common.login.vo.LoginCommonVO">
+  		SELECT
+		    EMP_NO
+		  , EMP_ID
+		  , EMP_PW
+		  , EMP_NAME
+		  , EMP_BIRTH
+		  , EMP_EMAIL
+		  , EMP_TEL
+		  , EMP_ADDR
+		  , EMP_ADDR2
+		  , EMP_POSTCODE
+		  , EMP_DEPT
+		  , EMP_QR
+		  , EMP_CARMODEL
+		  , EMP_CARNUM
+		  , EMP_STARTDATE
+		  , EMP_POSITION
+		  , EMP_IMAGE
+		  , EMP_APPROVAL
+		  , EMP_REJECT
+		FROM
+		    EMPLOYEE
+  	</select>
+  	
+  	<select id="getMsg" parameterType="int" resultType="kr.or.ddit.common.etc.chat.vo.ChatMsgVO">
+  		select chat_no, chat_msg, chat_sender, chat_date, room_no, chat_filecode, chat_read
+  		from chatmsg
+  		where room_no = #{roomNo}
+  	</select>
+  	
+  	
+   	<insert id="createRoom" useGeneratedKeys="true">
+   		<selectKey keyProperty="roomNo" order="BEFORE" resultType="int">
+   			select seq_chatroom.nextval from dual
+   		</selectKey>
+   		insert into chatroom(
+    		room_no, room_create, single_chat
+		)
+		values (
+		    #{roomNo}, sysdate, 'Y'
+		)
+   		
+   	</insert>
+	
+	<insert id="insertMember" parameterType="map">
+    insert all
+    <foreach collection="userList" item="userId" index="num">
+        into chatroom_member(
+            st_no, room_no, user_id, cr_date
+        ) values (
+            seq_chatroom_member.nextval + #{num}, #{roomNo}, #{userId}, sysdate
+        )
+    </foreach>
+    select * from dual
+    
+	</insert>
+   	
+   	<select id="nextval" resultType="int">
+   		select seq_chatroom_member.nextval from dual
+   	</select>
+   	
+  	<select id="unList" resultType="kr.or.ddit.common.login.vo.LoginCommonVO" parameterType="map">
+		SELECT E.EMP_NO, E.EMP_ID, E.EMP_BIRTH, E.EMP_EMAIL, E.EMP_TEL, E.EMP_DEPT, E.EMP_NAME, E.EMP_IMAGE, E.EMP_POSITION, NVL(RM.ROOM_NO, 0) AS ROOM_NO
+		FROM EMPLOYEE E
+		LEFT JOIN (
+    	SELECT CM.USER_ID, CM.ROOM_NO
+    	FROM CHATROOM_MEMBER CM
+    	JOIN CHATROOM C ON CM.ROOM_NO = C.ROOM_NO
+    	WHERE C.SINGLE_CHAT = 'Y' 
+      	AND CM.ROOM_NO IN (
+          SELECT CM2.ROOM_NO
+          FROM CHATROOM_MEMBER CM2
+          WHERE CM2.USER_ID = #{sessionUserId}
+      	)
+		) RM ON E.EMP_ID = RM.USER_ID
+		WHERE E.EMP_ID not in 
+		<foreach item="empId" collection="list"  open="(" separator="," close=")">
+	        #{empId}
+	    </foreach>  
+	    <![CDATA[
+   		AND E.EMP_ID <> #{sessionUserId}
+   		]]>	
+	</select>
+  	
+  	<select id="liveList" resultType="kr.or.ddit.common.login.vo.LoginCommonVO" parameterType="map">
+  		SELECT E.EMP_NO, E.EMP_ID, E.EMP_BIRTH, E.EMP_EMAIL, E.EMP_TEL, E.EMP_DEPT, E.EMP_NAME, E.EMP_IMAGE, E.EMP_POSITION, NVL(RM.ROOM_NO, 0) AS ROOM_NO
+		FROM EMPLOYEE E
+		LEFT JOIN (
+    	SELECT CM.USER_ID, CM.ROOM_NO
+    	FROM CHATROOM_MEMBER CM
+    	JOIN CHATROOM C ON CM.ROOM_NO = C.ROOM_NO
+    	WHERE C.SINGLE_CHAT = 'Y' 
+      	AND CM.ROOM_NO IN (
+          SELECT CM2.ROOM_NO
+          FROM CHATROOM_MEMBER CM2
+          WHERE CM2.USER_ID = #{sessionUserId}
+      	)
+		) RM ON E.EMP_ID = RM.USER_ID
+		WHERE E.EMP_ID in 
+		<foreach item="empId" collection="list"  open="(" separator="," close=")">
+	        #{empId}
+	    </foreach>  
+	    <![CDATA[
+   		AND E.EMP_ID <> #{sessionUserId}
+   		]]>	  
+  	</select>
+  	
+  </mapper>

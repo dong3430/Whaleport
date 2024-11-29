@@ -1,0 +1,17 @@
+package kr.or.ddit.common.mypage.service;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import kr.or.ddit.common.login.vo.LoginCommonVO;
+import kr.or.ddit.common.mypage.web.ServiceResult;
+
+public interface CommMyPageService {
+	
+	// 직원 정보 수정 화면
+	public List<LoginCommonVO> selectComm(String empId);
+	
+	// 직원 정보 수정
+	public ServiceResult updateProfile(HttpServletRequest req, LoginCommonVO loginCommonVO);
+}

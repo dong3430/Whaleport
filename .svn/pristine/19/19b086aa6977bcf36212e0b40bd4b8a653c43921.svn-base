@@ -1,0 +1,5 @@
+package kr.or.ddit.management.airService.customerManagement.vo;
+
+public class CustomerVO {
+
+}

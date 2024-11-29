@@ -1,0 +1,808 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="vertical">
+
+ 
+<div class="body-wrapper">
+        <div class="container-fluid">
+          <div class="card bg-info-subtle shadow-none position-relative mb-4">
+            <div class="card-body px-4 py-3">
+              <div class="row align-items-center">
+                <div class="col-9">
+                  <h4 class="fw-semibold mb-8">Chat</h4>
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a class="text-muted text-decoration-none" href="${pageContext.request.contextPath }/resources/main/index.html">Home</a>
+                      </li>
+                      <li class="breadcrumb-item" aria-current="page">Chat</li>
+                    </ol>
+                  </nav>
+                </div>
+                <div class="col-3">
+                  <div class="text-center mb-n5">
+                    <img src="${pageContext.request.contextPath }/resources/assets/images/breadcrumb/ChatBc.png" alt="modernize-img" class="img-fluid mb-n4" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card chat-application">
+            <div class="d-flex align-items-center justify-content-between gap-6 m-3 d-lg-none">
+              <button class="btn btn-primary d-flex" type="button" data-bs-toggle="offcanvas" data-bs-target="#chat-sidebar" aria-controls="chat-sidebar">
+                <i class="ti ti-menu-2 fs-5"></i>
+              </button>
+              <form class="position-relative w-100">
+                <input type="text" class="form-control search-chat py-2 ps-5" id="text-srh" placeholder="Search Contact" />
+                <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
+              </form>
+            </div>
+            <div class="d-flex">
+              <div class="w-30 d-none d-lg-block border-end user-chat-box">
+                <div class="px-4 pt-9 pb-6">
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="d-flex align-items-center">
+                      <div class="position-relative">
+                        <img src="${pageContext.request.contextPath }/resources/assets/images/profile/user-1.jpg" alt="user1" width="54" height="54" class="rounded-circle" />
+                        <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
+                          <span class="visually-hidden">New alerts</span>
+                        </span>
+                      </div>
+                      <div class="ms-3">
+                        <h6 class="fw-semibold mb-2" id="userId">${id }</h6>
+                        <p class="mb-0 fs-2">Design111er</p>
+                      </div>
+                    </div>
+                    <div class="dropdown">
+                      <a class="text-dark fs-6 nav-icon-hover" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="ti ti-dots-vertical"></i>
+                      </a>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center gap-2 border-bottom" href="javascript:void(0)">
+                            <span>
+                              <i class="ti ti-settings fs-4"></i>
+                            </span>Setting
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center gap-2" href="javascript:void(0)">
+                            <span>
+                              <i class="ti ti-help fs-4"></i>
+                            </span>Help
+                            and feedback
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center gap-2" href="javascript:void(0)">
+                            <span>
+                              <i class="ti ti-layout-board-split fs-4"></i>
+                            </span>Enable split View mode
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center gap-2 border-bottom" href="javascript:void(0)">
+                            <span>
+                              <i class="ti ti-table-shortcut fs-4"></i>
+                            </span>Keyboard
+                            shortcut
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center gap-2" href="javascript:void(0)">
+                            <span>
+                              <i class="ti ti-login fs-4"></i>
+                            </span>Sign
+                            Out
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <form class="position-relative mb-4">
+                    <input type="text" class="form-control search-chat py-2 ps-5" id="text-srh" placeholder="Search Contact" />
+                    <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
+                  </form>
+                  <div class="dropdown">
+                    <a class="text-muted fw-semibold d-flex align-items-center" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Recent Chats<i class="ti ti-chevron-down ms-1 fs-5"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a class="dropdown-item" href="javascript:void(0)">Sort by time</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item border-bottom" href="javascript:void(0)">Sort by Unread</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="javascript:void(0)">Hide favourites</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="app-chat" id="singleMsg">
+                  <ul class="chat-users mb-0 mh-n100 simplebar-scrollable-y">
+                    <li>
+                      <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user" id="chat_user_3" data-user-id="3">
+                        <div class="d-flex align-items-center">
+                          <span class="position-relative">
+                            <img src="${pageContext.request.contextPath }/resources/assets/images/profile/user-8.jpg" alt="user-8" width="48" height="48" class="rounded-circle" />
+                            <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-warning">
+                              <span class="visually-hidden">New alerts</span>
+                            </span>
+                          </span>
+                          <div class="ms-3 d-inline-block w-75">
+                            <h6 class="mb-1 fw-semibold chat-title" data-username="James Anderson">
+                              Andrew Johnson
+                            </h6>
+                            <span class="fs-3 text-truncate text-body-color d-block">Sent a photo</span>
+                          </div>
+                        </div>
+                        <p class="fs-2 mb-0 text-muted">2 hours</p>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="w-70 w-xs-100 chat-container">
+                <div class="chat-box-inner-part h-100">
+                  <div class="chat-not-selected h-100 d-none">
+                    <div class="d-flex align-items-center justify-content-center h-100 p-5">
+                      <div class="text-center">
+                        <span class="text-primary">
+                          <i class="ti ti-message-dots fs-10"></i>
+                        </span>
+                        <h6 class="mt-2">Open chat from the list</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="chatting-box d-block">
+                    <div class="p-9 border-bottom chat-meta-user d-flex align-items-center justify-content-between">
+                      <div class="hstack gap-3 current-chat-user-name">
+                        <div class="position-relative">
+                          <img src="${pageContext.request.contextPath }/resources/assets/images/profile/user-3.jpg" alt="user1" width="48" height="48" class="rounded-circle" />
+                          <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
+                            <span class="visually-hidden">New alerts</span>
+                          </span>
+                        </div>
+                        <div>
+                          <h6 class="mb-1 name fw-semibold"></h6>
+                          <p class="mb-0" class="roomName">Away</p>
+                        </div>
+                      </div>
+                      <ul class="list-unstyled mb-0 d-flex align-items-center">
+                        <li>
+                          <a class="text-dark px-2 fs-7 bg-hover-primary nav-icon-hover position-relative z-index-5" href="javascript:void(0)">
+                            <i class="ti ti-phone"></i>
+                          </a>
+                        </li>
+                        <li>
+                          <a class="text-dark px-2 fs-7 bg-hover-primary nav-icon-hover position-relative z-index-5" href="javascript:void(0)">
+                            <i class="ti ti-video"></i>
+                          </a>
+                        </li>
+                        <li>
+                          <a class="chat-menu text-dark px-2 fs-7 bg-hover-primary nav-icon-hover position-relative z-index-5" href="javascript:void(0)">
+                            <i class="ti ti-menu-2"></i>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="d-flex parent-chat-box">
+                      <div class="chat-box w-xs-100">
+                        <div class="chat-box-inner p-9" style="overflow-y : auto;">
+                          <div class="chat-list active-chat">
+                            <div class="hstack gap-3 align-items-start mb-7 justify-content-start">
+                              <img src="${pageContext.request.contextPath }/resources/assets/images/profile/user-8.jpg" alt="user8" width="40" height="40" class="rounded-circle" />
+                              <div>
+                                <h6 class="fs-2 text-muted">
+                                  Andrew, 2 hours ago
+                                </h6>
+                                <div class="p-2 text-bg-light rounded-1 d-inline-block text-dark fs-3">
+                                  If I don’t like something, I’ll stay away
+                                  from it.
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="hstack gap-3 align-items-start mb-7 justify-content-start">
+                              <img src="${pageContext.request.contextPath }/resources/assets/images/profile/user-8.jpg" alt="user8" width="40" height="40" class="rounded-circle" />
+                              <div>
+                                <h6 class="fs-2 text-muted">
+                                  Andrew, 2 hours ago
+                                </h6>
+                                <div class="p-2 text-bg-light rounded-1 d-inline-block text-dark fs-3">
+                                  I want more detailed information.
+                                </div>
+                              </div>
+                            </div>
+                            <div class="hstack gap-3 align-items-start mb-7 justify-content-end">
+                              <div class="text-end">
+                                <h6 class="fs-2 text-muted">2 hours ago</h6>
+                                <div class="p-2 bg-info-subtle text-dark mb-1 d-inline-block rounded-1 fs-3">
+                                  If I don’t like something, I’ll stay away
+                                  from it.
+                                </div>
+                                <div class="p-2 bg-info-subtle text-dark rounded-1 fs-3">
+                                  They got there early, and they got really
+                                  good seats.
+                                </div>
+                              </div>
+                            </div>
+                            <div class="hstack gap-3 align-items-start mb-7 justify-content-start">
+                              <img src="${pageContext.request.contextPath }/resources/assets/images/profile/user-8.jpg" alt="user8" width="40" height="40" class="rounded-circle" />
+                              <div>
+                                <h6 class="fs-2 text-muted">
+                                  Andrew, 2 hours ago
+                                </h6>
+                                <div class="rounded-2">
+                                  <img src="${pageContext.request.contextPath }/resources/assets/images/products/product-1.jpg" alt="modernize-img" class="w-100" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        
+                          
+                          
+                          
+                        </div>
+                        <div class="px-9 py-6 border-top chat-send-message-footer">
+                          <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-2 w-85">
+                              <a class="position-relative nav-icon-hover z-index-5" href="javascript:void(0)">
+                                <i class="ti ti-mood-smile text-dark bg-hover-primary fs-7"></i>
+                              </a>
+                              <input type="text" class="form-control message-type-box text-muted border-0 p-0 ms-2" placeholder="Type a Message" id="msgBox"/>
+                            </div>
+                            <ul class="list-unstyledn mb-0 d-flex align-items-center">
+                              <li>
+                                <a class="text-dark px-2 fs-7 bg-hover-primary nav-icon-hover position-relative z-index-5" href="javascript:void(0)">
+                                  <i class="ti ti-photo-plus"></i>
+                                </a>
+                              </li>
+                              <li>
+                                <a class="text-dark px-2 fs-7 bg-hover-primary nav-icon-hover position-relative z-index-5" href="javascript:void(0)">
+                                  <i class="ti ti-paperclip"></i>
+                                </a>
+                              </li>
+                              <li>
+                                <a class="text-dark px-2 fs-7 bg-hover-primary nav-icon-hover position-relative z-index-5" href="javascript:void(0)">
+                                  <i class="ti ti-microphone"></i>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="app-chat-offcanvas border-start">
+                        <div class="custom-app-scroll mh-n100" data-simplebar>
+                          <div class="p-3 d-flex align-items-center justify-content-between">
+                            <h6 class="fw-semibold mb-0 text-nowrap">
+                              Online User <span class="text-muted" id="liveUsers"></span>
+                            </h6>
+                            <a class="chat-menu d-lg-none d-block text-dark fs-6 bg-hover-primary nav-icon-hover position-relative z-index-5" href="javascript:void(0)">
+                              <i class="ti ti-x"></i>
+                            </a>
+                          </div>
+                          <div class="offcanvas-body p-9">
+							<div id="userList"></div>
+                           
+                            <div class="files-chat">
+                              <h6 class="fw-semibold mb-3 text-nowrap">
+                                Offline User <span class="text-muted" id="unLiveUsers"></span>
+                              </h6>
+                              <div id="unUserList"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="offcanvas offcanvas-start user-chat-box chat-offcanvas" tabindex="-1" id="chat-sidebar" aria-labelledby="offcanvasExampleLabel">
+                <div class="offcanvas-header">
+                  <h5 class="offcanvas-title" id="offcanvasExampleLabel">
+                    Chats
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="px-4 pt-9 pb-6">
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="d-flex align-items-center">
+                      <div class="position-relative">
+                        <img src="${pageContext.request.contextPath }/resources/assets/images/profile/user-1.jpg" alt="user1" width="54" height="54" class="rounded-circle" />
+                        <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
+                          <span class="visually-hidden">New alerts</span>
+                        </span>
+                      </div>
+                      <div class="ms-3">
+                        <h6 class="fw-semibold mb-2">넌누구냐</h6>
+                        <p class="mb-0 fs-2">DESSSSSS</p>
+                      </div>
+                    </div>
+                    <div class="dropdown">
+                      <a class="text-dark fs-6 nav-icon-hover" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="ti ti-dots-vertical"></i>
+                      </a>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center gap-2 border-bottom" href="javascript:void(0)">
+                            <span>
+                              <i class="ti ti-settings fs-4"></i>
+                            </span>Setting
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center gap-2" href="javascript:void(0)">
+                            <span>
+                              <i class="ti ti-help fs-4"></i>
+                            </span>Help
+                            and feedback
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center gap-2" href="javascript:void(0)">
+                            <span>
+                              <i class="ti ti-layout-board-split fs-4"></i>
+                            </span>Enable split View mode
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center gap-2 border-bottom" href="javascript:void(0)">
+                            <span>
+                              <i class="ti ti-table-shortcut fs-4"></i>
+                            </span>Keyboard
+                            shortcut
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center gap-2" href="javascript:void(0)">
+                            <span>
+                              <i class="ti ti-login fs-4"></i>
+                            </span>Sign
+                            Out
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <form class="position-relative mb-4">
+                    <input type="text" class="form-control search-chat py-2 ps-5" id="text-srh" placeholder="Search Contact" />
+                    <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
+                  </form>
+                  <div class="dropdown">
+                    <a class="text-muted fw-semibold d-flex align-items-center" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Recent Chats<i class="ti ti-chevron-down ms-1 fs-5"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a class="dropdown-item" href="javascript:void(0)">Sort by time</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item border-bottom" href="javascript:void(0)">Sort by Unread</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="javascript:void(0)">Hide favourites</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="app-chat">
+                  <ul class="chat-users mh-n100" data-simplebar>
+                    <li>
+                      <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user bg-light-subtle" id="chat_user_1" data-user-id="1">
+                        <div class="d-flex align-items-center">
+                          <span class="position-relative">
+                            <img src="${pageContext.request.contextPath }/resources/assets/images/profile/user-2.jpg" alt="user1" width="48" height="48" class="rounded-circle" />
+                            <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
+                              <span class="visually-hidden">New alerts</span>
+                            </span>
+                          </span>
+                          <div class="ms-3 d-inline-block w-75">
+                            <h6 class="mb-1 fw-semibold chat-title" data-username="James Anderson">
+                              Michell Flintoff
+                            </h6>
+                            <span class="fs-3 text-truncate text-body-color d-block">You: Yesterdy was great...</span>
+                          </div>
+                        </div>
+                        <p class="fs-2 mb-0 text-muted">15 mins</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user" id="chat_user_2" data-user-id="2">
+                        <div class="d-flex align-items-center">
+                          <span class="position-relative">
+                            <img src="${pageContext.request.contextPath }/resources/assets/images/profile/user-2.jpg" alt="user-2" width="48" height="48" class="rounded-circle" />
+                            <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-danger">
+                              <span class="visually-hidden">New alerts</span>
+                            </span>
+                          </span>
+                          <div class="ms-3 d-inline-block w-75">
+                            <h6 class="mb-1 fw-semibold chat-title" data-username="James Anderson">
+                              Bianca Anderson
+                            </h6>
+                            <span class="fs-3 text-truncate text-dark fw-semibold d-block">Nice looking dress
+                              you...</span>
+                          </div>
+                        </div>
+                        <p class="fs-2 mb-0 text-muted">30 mins</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user" id="chat_user_3" data-user-id="3">
+                        <div class="d-flex align-items-center">
+                          <span class="position-relative">
+                            <img src="${pageContext.request.contextPath }/resources/assets/images/profile/user-8.jpg" alt="user-8" width="48" height="48" class="rounded-circle" />
+                            <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-warning">
+                              <span class="visually-hidden">New alerts</span>
+                            </span>
+                          </span>
+                          <div class="ms-3 d-inline-block w-75">
+                            <h6 class="mb-1 fw-semibold chat-title" data-username="James Anderson">
+                              Andrew Johnson
+                            </h6>
+                            <span class="fs-3 text-truncate text-body-color d-block">Sent a photo</span>
+                          </div>
+                        </div>
+                        <p class="fs-2 mb-0 text-muted">2 hrs</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user" id="chat_user_4" data-user-id="4">
+                        <div class="d-flex align-items-center">
+                          <span class="position-relative">
+                            <img src="${pageContext.request.contextPath }/resources/assets/images/profile/user-4.jpg" alt="user-4" width="48" height="48" class="rounded-circle" />
+                            <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
+                              <span class="visually-hidden">New alerts</span>
+                            </span>
+                          </span>
+                          <div class="ms-3 d-inline-block w-75">
+                            <h6 class="mb-1 fw-semibold chat-title" data-username="James Anderson">
+                              Daisy Wilson
+                            </h6>
+                            <span class="fs-3 text-truncate text-body-color d-block">Lorem ispusm text sud...</span>
+                          </div>
+                        </div>
+                        <p class="fs-2 mb-0 text-muted">5 days</p>
+                      </a>
+                    </li>
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+   
+<script type="text/javascript">
+$(function(){
+	let myId = $('#userId').text();
+	console.log('myId::'+myId);
+	let webSocket;
+	let chatList = $('.app-chat');
+	let chatBox = $('.active-chat');
+	let msgBox = $('#msgBox');
+	
+	var roomNo;
+	// 채팅메시지가 있으면 보낸다.
+	msgBox.on('keyup', enterKey);
+	
+	// websocket 연결
+	connect();
+	
+	$('#myId').html(myId);
+	
+	//onlineUser, offlineUser on/off button
+	$("body").on("click", ".chat-menu", function () {
+		  $(".parent-chat-box").toggleClass("app-chat-right");
+		  $(this).toggleClass("app-chat-active");
+	});
+	
+	// OnlineUser, OfflineUser를 클릭했을때 실행되는 function
+	
+	$(this).on('click','.selectUser',function(){
+		var empNo = $(this).data('empno');
+		var empId = $(this).data('empid');
+		roomNo = $(this).data('roomno');
+// 		console.log('roomNO ::: ' + roomNo);
+
+		// 이 사람과 1:1채팅방이 있는가?
+		if(roomNo === 0){
+			let userList = [];
+			userList.push(myId);
+			userList.push(empId);
+			console.log('create room');
+			
+			$.ajax({
+				url : '/common/createRoom',
+				type : 'post',
+				data : JSON.stringify(userList),
+				contentType : 'application/json; charset=utf-8',
+				success : function(res){
+					webSocket.send(JSON.stringify({type : "refresh"}));
+				}
+				
+			});
+		} else {
+			console.log('loading message...');
+			// 있으면 메시지를 가져온다.
+			$.ajax({
+				url : '/common/getMsg',
+				type : 'get',
+				data : { roomNo : roomNo },
+				success : function(res){
+					if(res.length == 0){
+						chatBox.html('');
+					} else {
+						var chatHtml = ""; 
+						for(var i = 0 ; i < res.length; i++){
+							if(res[i].chatSender === myId){
+								chatHtml += `<div class="hstack gap-3 align-items-start mb-7 justify-content-end">
+		                            <div class="text-end">
+		                              <h6 class="fs-2 text-muted">(시간넣기)</h6>
+		                              <div class="p-2 bg-info-subtle text-dark rounded-1 d-inline-block fs-3">
+		                                \${res[i].chatMsg}
+		                              </div>
+		                            </div>
+		                          </div>`;
+							} else {
+								chatHtml += `<div class="hstack gap-3 align-items-start mb-7 justify-content-start">
+		                              <img src="${pageContext.request.contextPath }/resources/assets/images/profile/default.png" alt="user8" width="40" height="40" class="rounded-circle" />
+		                              <div>
+		                                <h6 class="fs-2 text-muted">
+		                                  \${res[i].chatSender}, (시간넣기)
+		                                </h6>
+		                                <div class="p-2 text-bg-light rounded-1 d-inline-block text-dark fs-3">
+		                                  \${res[i].chatMsg}
+		                                </div>
+		                              </div>
+		                            </div>`;
+							}
+						}
+						chatBox.html(chatHtml);
+					}
+				}
+				
+				
+			});
+		}
+
+	});
+	
+	// 엔터키 이벤트 생성
+	function enterKey(event) {
+        if(msgBox.val().trim() == "") {
+            return false;
+        }
+        if (event.keyCode == 13) {
+        	console.log('ready');
+            send();
+        }
+    }
+	
+	
+	function singleRecentMsg(){
+		$.ajax({
+			type : 'get',
+			url : '/common/singleRecentMsg',
+			data : { userId : myId },
+			success : function(res){
+				singleHtml = "<ul>";
+				for(var i = 0; i < res.length ; i++){
+					singleHtml += `<li>
+                      <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user selectUser" data-roomno="\${res[i].roomNo}">
+                        <div class="d-flex align-items-center">
+                          <span class="position-relative">
+                            <img src="${pageContext.request.contextPath }/resources/assets/images/profile/default.png" alt="user-8" width="48" height="48" class="rounded-circle" />
+                            <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-warning">
+                              <span class="visually-hidden">New alerts</span>
+                            </span>
+                          </span>
+                          <div class="ms-3 d-inline-block w-75">
+                            <h6 class="mb-1 fw-semibold chat-title">
+                              \${res[i].otherUserId}
+                            </h6>
+                            <span class="fs-3 text-truncate text-body-color d-block">\${res[i].chatMsg}</span>
+                          </div>
+                        </div>
+                        <p class="fs-2 mb-0 text-muted">\${res[i].chatDate}</p>
+                      </a>
+                    </li>`
+				}
+				singleHtml += "</ul>";
+				$('#singleMsg').html(singleHtml);
+			}
+			
+		});	
+	}
+	
+	// 메시지를 websocket으로 보내고, db에도 넣는 function
+	function send() {
+        let msg = msgBox.val();
+        var msgData = JSON.stringify({
+            chatSender : myId,
+            chatMsg : msg,
+            roomNo : roomNo
+        });
+        
+        
+        $.ajax({
+            type: 'post',
+            url: '/common/sendMsg',
+            data: msgData,
+            contentType: 'application/json; charset=utf-8',
+            success: function(res) {
+            		// JSON 형식으로 메시지를 전송
+                webSocket.send(JSON.stringify({ type: "chat", userId: myId, message: msg , date : Date.now(), senderRoom : res}));    		
+            	console.log('Message sent and stored.');
+            }
+        });
+        msgBox.val('');
+    }
+	
+	let userData;
+	function fMessage(event) {
+		let data;    
+
+        try {
+        	console.log(event.data);
+            data = JSON.parse(event.data); // JSON 형식으로 파싱
+            console.log('data ::: ' + JSON.stringify(data.list));
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            return; // 파싱 에러 발생 시 함수 종료
+        }
+        
+        
+        if (data.type === "userList") {
+			userData = data.list;
+			sessionUser(userData);
+        } else if (data.type === "chat") {
+            // 일반 메시지 처리
+            if(data.senderRoom === roomNo){
+            var msgHtml = "";
+        	if(data.userId === myId){
+        		msgHtml = `<div class="hstack gap-3 align-items-start mb-7 justify-content-end">
+                    <div class="text-end">
+                      <h6 class="fs-2 text-muted">\${data.date}</h6>
+                      <div class="p-2 bg-info-subtle text-dark rounded-1 d-inline-block fs-3">
+                        \${data.message}
+                      </div>
+                    </div>
+                  </div>`;
+			} else {
+				msgHtml = `<div class="hstack gap-3 align-items-start mb-7 justify-content-start">
+                      <img src="${pageContext.request.contextPath }/resources/assets/images/profile/default.png" alt="user8" width="40" height="40" class="rounded-circle" />
+                      <div>
+                        <h6 class="fs-2 text-muted">
+                          \${data.userId}, \${data.date}
+                        </h6>
+                        <div class="p-2 text-bg-light rounded-1 d-inline-block text-dark fs-3">
+                          \${data.message}
+                        </div>
+                      </div>
+                    </div>`;
+			} 
+        	chatBox.append(msgHtml);
+//         	chatBox.scrollTop(chatBox[0].scrollHeight);
+			$('.chat-box-inner.p-9').scrollTop($('.chat-box-inner.p-9')[0].scrollHeight);
+            }
+            //메시지 최신화
+        	singleRecentMsg();
+
+        } else if(data.type === "refresh"){
+        	console.log('userData ::: ' + userData);
+			sessionUser(userData);
+        } 
+        
+//         c_chatWin.scrollTop(c_chatWin[0].scrollHeight);
+    }
+
+	function sessionUser(userData){
+		$.ajax({
+        	url : '/common/sessionUser',
+        	type : 'post',
+        	data : JSON.stringify({
+        		userList : userData,
+        		sessionUserId : myId
+        	}),
+        	contentType : 'application/json; charset=utf-8',
+        	success : function(res){
+        		updateUserList(res.users);
+        		updateUnUserList(res.unUsers);
+        	}
+        });
+	}
+	
+	// 유저 리스트 업데이트 함수(OnlineUser)
+    function updateUserList(users) {
+        let userListHtml = "";
+
+        users.forEach(user => {
+			userListHtml += "<div class='hstack gap-3 file-chat-hover justify-content-between text-nowrap mb-9 selectUser' style='cursor: pointer;' data-empno='"+ user.empNo + "' data-empid='"+ user.empId + "' data-roomno='"+ user.roomNo + "'>"; 
+			userListHtml += "<div class='d-flex align-items-center gap-3'>"; 
+			userListHtml += 	"<div class='rounded-1 text-bg-light p-6'>"; 
+			userListHtml += 		"<img src='${pageContext.request.contextPath }/resources/assets/images/profile/" + user.empImage + "' alt='modernize-img' width='24' height='24' />";
+			userListHtml += 	"</div>";
+			userListHtml += "<div>";
+			userListHtml += "<h6 class='fw-semibold'>" + user.empName + "</h6>";
+			userListHtml += "<div class='d-flex align-items-center gap-3 fs-2 text-muted'>";
+			userListHtml += "<span>" + user.empDept + "</span>";
+			userListHtml += "<span>" + user.empPosition + "</span>";
+			userListHtml += "</div>";
+			userListHtml += "</div>";
+			userListHtml += "</div>";
+			userListHtml += "<span class='position-relative nav-icon-hover download-file'>";
+// 			unUserListHtml += "<i class='ti ti-download text-dark fs-6 bg-hover-primary'></i>";
+			userListHtml += "</span></div>";
+		});
+        $('#userList').html(userListHtml);
+        $('#liveUsers').html("("+users.length+")");
+	}
+	
+ 	// 유저 리스트 업데이트 함수(OfflineUser)
+	function updateUnUserList(unUsers){
+	let unUserListHtml = "";
+		unUsers.forEach(unUser => {
+			unUserListHtml += "<div class='hstack gap-3 file-chat-hover justify-content-between text-nowrap mb-9 selectUser' style='cursor: pointer;' data-empno='"+ unUser.empNo + "' data-empid='"+ unUser.empId + "' data-roomno='"+ unUser.roomNo + "'>"; 
+			unUserListHtml += "<div class='d-flex align-items-center gap-3'>"; 
+			unUserListHtml += 	"<div class='rounded-1 text-bg-light p-6'>"; 
+			unUserListHtml += 		"<img src='${pageContext.request.contextPath }/resources/assets/images/profile/default.png' alt='modernize-img' width='24' height='24' />";
+			unUserListHtml += 	"</div>";
+			unUserListHtml += "<div>";
+			unUserListHtml += "<h6 class='fw-semibold'>" + unUser.empName + "</h6>";
+			unUserListHtml += "<div class='d-flex align-items-center gap-3 fs-2 text-muted'>";
+			unUserListHtml += "<span>" + unUser.empDept + "</span>";
+			unUserListHtml += "<span>" + unUser.empPosition + "</span>";
+			unUserListHtml += "</div>";
+			unUserListHtml += "</div>";
+			unUserListHtml += "</div>";
+			unUserListHtml += "<span class='position-relative nav-icon-hover download-file'>";
+// 			unUserListHtml += "<i class='ti ti-download text-dark fs-6 bg-hover-primary'></i>";
+			unUserListHtml += "</span></div>";
+		});
+		
+        // 유저 리스트를 표시할 HTML 요소에 삽입
+        
+        $('#unUserList').html(unUserListHtml);
+        $('#unLiveUsers').html("("+unUsers.length+")");
+    }
+	
+	function connect() {
+        webSocket = new WebSocket("ws://192.168.36.61/ws-chat?userId=" + myId);
+        
+        webSocket.onopen = function() {
+            console.log("WebSocket connection established");
+            singleRecentMsg();
+        };
+
+        webSocket.onmessage = fMessage;
+
+        webSocket.onerror = function(event) {
+            console.error("WebSocket error observed:", event);
+            disconnect();
+        };
+		
+        
+        webSocket.onclose = function(event) {
+            console.log("WebSocket connection clo11sed:", event);
+            
+        };
+    }
+	
+	function disconnect() {
+        if (webSocket) {
+            webSocket = null;
+            
+        }
+    }
+	
+	
+	
+});
+
+</script>
+</html>

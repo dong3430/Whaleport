@@ -1,0 +1,107 @@
+package kr.or.ddit.common.mypage.web;
+
+import javax.inject.Inject;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import kr.or.ddit.common.login.vo.LoginCommonVO;
+import kr.or.ddit.common.mypage.service.IAttendanceService;
+import kr.or.ddit.common.mypage.vo.EmpWorkVO;
+import kr.or.ddit.util.security.CustomUser;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("/common")
+public class AttendanceController {
+	
+	@Inject
+	private IAttendanceService attService;
+	
+	static LoginCommonVO loginCommonVO;
+	
+
+	// 직원 근태 현황 조회
+	@GetMapping("/attendance")
+	public String attendance(Model model) {
+		log.info("attendance()실행...!");
+		CustomUser auth = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		loginCommonVO = auth.getMember();
+		//LoginCommonVO(empNo=1, empId=emp_test,...
+	    log.info("loginCommonVO ::: " + loginCommonVO);
+	    
+	    EmpWorkVO empWorkVO = attService.selectEmpWork(loginCommonVO);
+	    model.addAttribute("empWorkVO", empWorkVO);
+		return "common/myPage/attendance";
+	}
+	
+	// 출근 시간 입력
+	@ResponseBody
+	@GetMapping("/attendanceArrive")
+	public ResponseEntity<EmpWorkVO> attendanceArrive() {
+		log.info("attendanceArrive()실행...!");
+		
+		EmpWorkVO empWorkVO = new EmpWorkVO();
+		empWorkVO.setEmpNo(loginCommonVO.getEmpNo());
+		
+		int result = attService.insertWorkArrive(empWorkVO); // sysdate로 출근 시간 삽입->workNo 사용가능
+		
+		if(result > 0) {
+			empWorkVO = attService.selectWorkArrive(empWorkVO.getWorkNo());
+		}else {
+			empWorkVO = null;	
+		}
+		
+		return new ResponseEntity<EmpWorkVO>(empWorkVO, HttpStatus.OK);
+	}
+
+	// 퇴근 시간 입력
+	@ResponseBody
+	@GetMapping("/attendanceLeave")
+	public ResponseEntity<EmpWorkVO> attendanceLeave() {
+		log.info("attendanceLeave()실행...!");
+		
+		EmpWorkVO empWorkVO = attService.selectEmpWork(loginCommonVO);
+		
+		int result = attService.insertWorkLeave(empWorkVO);
+		String status = "";
+		if(result > 0) {
+			status = "SUCCESS";
+		}else {
+			status = "FAIL";	
+		}
+		
+		return new ResponseEntity<EmpWorkVO>(empWorkVO, HttpStatus.OK);
+	}
+	
+	// 출근한 날 입력
+//	@ResponseBody
+//	@GetMapping("/attendanceToday")
+//	public ResponseEntity<String> attendanceToday(EmpWorkVO empWorkVO) {
+//		log.info("attendanceToday()실행...!");
+//		empWorkVO.setEmpNo(loginCommonVO.getEmpNo());
+//		
+//		int result = attService.insertWorkToday(empWorkVO);
+//		String status = "";
+//		if(result > 0) {
+//			status = "SUCCESS";
+//		}else {
+//			status = "ALREADY";	
+//		}
+//		
+//		return new ResponseEntity<String>(status, HttpStatus.OK);
+//	}
+	
+	
+	
+	
+	
+
+}

@@ -1,0 +1,14 @@
+package kr.or.ddit.common.mypage.mapper;
+
+import java.util.List;
+
+import kr.or.ddit.common.login.vo.LoginCommonVO;
+
+public interface CommMyPageMapper {
+	
+	// 직원 정보 수정 화면
+	public List<LoginCommonVO> selectComm(String empId);
+	
+	// 직원 정보 수정
+	public int updateProfile(LoginCommonVO loginCommonVO);
+}

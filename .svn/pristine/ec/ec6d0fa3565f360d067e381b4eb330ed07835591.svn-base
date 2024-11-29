@@ -1,0 +1,55 @@
+package kr.or.ddit.management.airService.notice.service;
+
+import java.util.List;
+
+import kr.or.ddit.customer.notice.vo.UserFAQVO;
+import kr.or.ddit.customer.notice.vo.UserNoticeVO;
+import kr.or.ddit.util.vo.FileVO;
+import kr.or.ddit.util.vo.PaginationVO;
+
+
+public interface IUNManagingService {
+
+	// FAQ
+	
+	public List<UserFAQVO> faqList();
+
+	public void faqUpdate(UserFAQVO notice);
+
+	public void faqDelete(int faqNo);
+
+	public void faqAdd(UserFAQVO notice);
+	
+	// Notice
+
+	public List<UserNoticeVO> noticeList();
+
+	public void noticeAdd(UserNoticeVO userNoticeVO);
+
+	public UserNoticeVO noticeDetail(int noNo);
+
+	public void noticeDelete(int noNo);
+
+	public void noticeUpdate(UserNoticeVO userNoticeVO);
+
+	
+	// QNA
+	
+	
+	
+	//PAGING
+
+	public int userNoticeCount(PaginationVO<UserNoticeVO> pagingVO);
+
+	public List<UserNoticeVO> userNoticeList(PaginationVO<UserNoticeVO> pagingVO);
+	
+	
+	// DOWNLOAD FILE
+
+	public void saveFile(FileVO fileVO);
+
+	public FileVO takeNoticeFile(int noNo);
+	
+	
+	
+}

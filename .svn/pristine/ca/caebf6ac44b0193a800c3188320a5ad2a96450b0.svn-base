@@ -1,0 +1,38 @@
+package kr.or.ddit.common.mypage.service.impl;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.common.login.vo.LoginCommonVO;
+import kr.or.ddit.common.mypage.mapper.CommMyPageMapper;
+import kr.or.ddit.common.mypage.service.CommMyPageService;
+import kr.or.ddit.common.mypage.web.ServiceResult;
+
+@Service
+public class CommMyPageServiceImpl implements CommMyPageService {
+	
+	@Inject
+	private CommMyPageMapper commMapper;
+	
+	// 직원 정보 수정 화면
+	@Override
+	public List<LoginCommonVO> selectComm(String empId) {
+		return commMapper.selectComm(empId);
+	}
+	
+	// 직원 정보 수정
+	@Override
+	public ServiceResult updateProfile(LoginCommonVO loginCommonVO) {
+		ServiceResult result = null;
+		int status = commMapper.updateProfile(loginCommonVO);
+		if(status > 0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAILED;
+		}
+		return result;
+	}
+}

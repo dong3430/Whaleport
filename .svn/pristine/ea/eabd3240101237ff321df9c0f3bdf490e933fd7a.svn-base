@@ -1,0 +1,27 @@
+package kr.or.ddit.common.etc.calendar.vo;
+
+import java.util.Date;
+
+import lombok.Data;
+
+@Data
+public class CalendarVO {
+	private int calNo;
+	private String solarDate;
+	private Date datevalue;
+	private String calTitle;
+	private String lunarDate;
+	private String calContent;
+	private int year;
+	private Date calStartdate;
+	private int month;
+	private Date calEnddate;
+	private int day;
+	private int empNo;
+	private String dayofweek;
+	private String calFilecode;
+	private String yun;
+	private String ganji;
+	private String holiday;
+	private String note;
+}

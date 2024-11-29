@@ -1,0 +1,9 @@
+package kr.or.ddit.management.partner.airportSchedule.mapper;
+
+import kr.or.ddit.customer.airport.airportReserve.vo.PlaneScheduleVO;
+
+public interface AirportMapper {
+
+	public void insert(PlaneScheduleVO pVO);
+
+}

@@ -1,0 +1,24 @@
+package kr.or.ddit.customer.reserve.meeting.vo;
+
+import java.util.Date;
+
+import lombok.Data;
+
+@Data
+public class MeetingVO {
+
+	private int mrNo;
+	private String mrName;
+	private String mrLoc;
+	private int mrCapacity;
+	
+	private int mrrNo;
+	private String mrrName;
+	private String mrrTel;
+	private Date mrrStart;
+	private Date mrrEnd;
+	private Date mrrDate;
+	private String mrrUse;
+	private String mrrStatus;
+	private int cusNo;
+}

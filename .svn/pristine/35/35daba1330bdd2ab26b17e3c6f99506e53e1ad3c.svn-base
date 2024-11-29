@@ -1,0 +1,26 @@
+package kr.or.ddit.management.partner.facilities.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("/management/facility")
+public class FacilityController {
+	
+	@GetMapping("/report")
+	public String facilityReportList() {
+		log.info("facilityReportList()...실행!");
+		return "management/partner/facilityReportList";
+	}
+	
+	@GetMapping("/schedule")
+	public String facilityScheduleList() {
+		log.info("facilityScheduleList()...실행!");
+		return "management/partner/facilityScheduleList";
+	}
+
+}

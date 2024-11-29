@@ -1,0 +1,71 @@
+package kr.or.ddit.user.reserve.hotel.web;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import kr.or.ddit.user.reserve.hotel.service.IHotelService;
+import kr.or.ddit.user.reserve.hotel.vo.HotelVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("/user/reserve/hotel")
+public class HotelController {
+
+	@Inject
+	private IHotelService service;
+	
+	@GetMapping("/list")
+	public String hotelList(Model model) {
+		log.info("hotelList() 실행...!");
+		List<HotelVO> hotelList = service.list();
+		model.addAttribute("hotelList", hotelList);
+		return "user/reserve/hotelList";
+	}
+	
+	@PostMapping("/registerForm")
+	public String hotelForm(HotelVO hotelVO, Model model) {
+		log.info("hotelForm() 실행...!");
+//		model.addAttribute("hotelVO", hotelVO);
+		int htNo = hotelVO.getHtNo();
+		
+		HotelVO hotelVO2 = service.select(htNo);
+		hotelVO2.setHrCheckin(hotelVO.getHrCheckin());
+		
+		model.addAttribute("hotelVO", hotelVO2);
+		return "user/reserve/hotelRegister";
+	}
+	
+	
+	@PostMapping("/register")
+	public String hotelRegister(HotelVO hotelVO, Model model, RedirectAttributes ra) {
+		log.info("hotelRegister() 실행...!");
+		service.register(hotelVO);
+		ra.addFlashAttribute("msg", "등록");
+		ra.addFlashAttribute("message", "등록이 완료되었습니다!");
+		return "redirect:/user/reserve/hotel/list";
+	}
+	
+	@ResponseBody
+	@PostMapping("/checkin")
+	public String check(@RequestBody HotelVO hotelVO) {
+		int cnt = service.check(hotelVO);		
+		if(cnt == 5) {
+			return "impossible"; 
+		} else {
+			return "possible";
+		}
+		
+	}
+
+}

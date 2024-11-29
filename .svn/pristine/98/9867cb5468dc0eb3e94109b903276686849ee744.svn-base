@@ -1,0 +1,18 @@
+package kr.or.ddit.partner.store.warehouse.service;
+
+import java.util.List;
+
+import kr.or.ddit.partner.store.warehouse.vo.WarehouseStockVO;
+import kr.or.ddit.partner.store.warehouse.vo.WarehouseVO;
+
+
+public interface IPWarehouseService {
+
+	public List<WarehouseStockVO> list(String whNo);
+
+	public WarehouseStockVO detail(String wsNo);
+
+	public List<WarehouseVO> warehouseList();
+	
+
+}

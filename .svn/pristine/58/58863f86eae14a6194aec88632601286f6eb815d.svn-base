@@ -1,0 +1,19 @@
+package kr.or.ddit.customer.notice.vo;
+
+import java.time.LocalDate;
+
+import lombok.Data;
+
+@Data
+public class UserQnAVO {
+	private int qnaNo;
+	private int cusNo;
+	private int empNo;
+	private String qnaTitle;
+	private String qnaContent;
+	private String qnaAns;
+	private String qnaFilecode;
+	private int qnaCount;
+	private String qnaDelyn;
+	private LocalDate qnaDate;
+}

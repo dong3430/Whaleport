@@ -1,0 +1,53 @@
+package kr.or.ddit.customer.airport.airportReserve.web;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.or.ddit.customer.airport.airportReserve.service.IAirportReserveService;
+import kr.or.ddit.customer.airport.airportReserve.vo.IATACodeVO;
+import kr.or.ddit.customer.airport.airportReserve.vo.PlaneScheduleVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@RequestMapping("/customer")
+@Slf4j
+public class AirportReserveUserController {
+
+	@Inject
+	private IAirportReserveService airportService;
+	
+	
+	@GetMapping("/reserve")
+	public String reserve(Model model) {
+		List<IATACodeVO> IATACode = airportService.codeList();
+		PlaneScheduleVO scheduleVO = new PlaneScheduleVO();
+		// 나중에 데이터 연결받아서 진행시키면 됨
+		scheduleVO.setScBoarding("ICN");
+		scheduleVO.setScArrived("NRT");
+		Calendar cal = Calendar.getInstance();
+		cal.set(2024, 11, 30);
+		Date date = cal.getTime();
+		scheduleVO.setScStdate(date);
+		
+		List<PlaneScheduleVO> searchList = airportService.searchList(scheduleVO);
+		log.info("searchList size :: " + searchList.size());
+		model.addAttribute("IATACode", IATACode);
+		model.addAttribute("searchList", searchList);
+		return "customer/airportReserve/reserve";
+	}
+	
+	@GetMapping("/reserve/detail")
+	public String reserveDetail() {
+		return "customer/airportReserve/reserveDetail";
+	}
+	
+	
+}

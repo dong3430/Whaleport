@@ -1,0 +1,14 @@
+package kr.or.ddit.management.partner.partner.service;
+
+import java.util.List;
+
+import kr.or.ddit.management.partner.partner.vo.StoreVO;
+import kr.or.ddit.util.vo.PaginationVO;
+
+public interface IStoreManagementService {
+
+	public int selectStoreCount(PaginationVO<StoreVO> pagingVO);
+
+	public List<StoreVO> selectStoreList(PaginationVO<StoreVO> pagingVO);
+
+}

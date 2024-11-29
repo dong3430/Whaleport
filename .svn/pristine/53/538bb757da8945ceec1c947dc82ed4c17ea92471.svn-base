@@ -1,0 +1,13 @@
+package kr.or.ddit.management.partner.airportSchedule.service;
+
+import java.util.List;
+
+import kr.or.ddit.customer.airport.airportReserve.vo.PlaneScheduleVO;
+
+public interface IAirportScheduleService {
+
+	public void insert(List<PlaneScheduleVO> planeVO);
+
+	public List<PlaneScheduleVO> getData();
+
+}

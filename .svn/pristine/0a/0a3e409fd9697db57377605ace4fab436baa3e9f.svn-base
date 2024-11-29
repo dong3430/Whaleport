@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="kr.or.ddit.partner.common.qna.mapper.PartnerQnaMapper">
+  	 <resultMap type="kr.or.ddit.partner.common.qna.vo.PartnerQnaVO" id="PartnerQnaVO">
+  	 	<result property="qnaNo" column="qna_no" />
+		<result property="ptNo" column="pt_no" />
+		<result property="qnaTitle" column="qna_title" />
+		<result property="qnaContent" column="qna_content" />
+		<result property="qnaAns" column="qna_ans" />
+		<result property="aFilecode" column="a_filecode" />
+		<result property="qFilecode" column="q_filecode" />
+		<result property="qnaDate" column="qna_date" />
+		<result property="qnaState" column="qna_state" />
+		<result property="ptName" column="pt_name" />
+  	 </resultMap>
+  
+     <sql id="search">
+      <if test="searchWord != null and searchType == 'title'">
+         and (qna_title like '%' || #{searchWord} || '%')
+      </if>
+      <if test="searchWord != null and searchType == 'writer'">
+         and (pt_name like '%' || #{searchWord} || '%')
+      </if>
+    </sql>
+ 	
+ 	<insert id="register" parameterType="kr.or.ddit.partner.common.qna.vo.PartnerQnaVO">
+ 		INSERT INTO PARTNER_QNA(
+ 			QNA_NO, PT_NO, QNA_TITLE, QNA_CONTENT, Q_FILECODE, QNA_DATE, QNA_STATE 
+ 		)VALUES(
+ 			SEQ_PARTNER_QNA.NEXTVAL, 1, #{qnaTitle}, #{qnaContent}, 1, SYSDATE, '답변 대기'
+ 		)
+ 	</insert>
+ 	
+ 	<select id="list" resultType="kr.or.ddit.partner.common.qna.vo.PartnerQnaVO">
+		SELECT 
+			CDC.COMD_NAME, QNA.QNA_NO, QNA.QNA_TITLE, QNA.QNA_CONTENT, PT.PT_NAME, QNA.QNA_DATE, QNA.QNA_STATE
+		FROM PARTNER PT, PARTNER_QNA QNA, COMMON_DETAIL_CODE CDC
+		WHERE PT.PT_NO = QNA.PT_NO
+		AND PT.PT_CODE = CDC.COMD_CODE
+		ORDER BY QNA.QNA_NO DESC
+ 	</select>
+
+ 	<select id="detail" parameterType="int" resultType="kr.or.ddit.partner.common.qna.vo.PartnerQnaVO">
+		SELECT 
+			CDC.COMD_NAME, QNA.QNA_NO, QNA.QNA_TITLE, QNA.QNA_CONTENT, PT.PT_NAME, QNA.QNA_DATE, QNA.QNA_STATE
+		FROM PARTNER PT, PARTNER_QNA QNA, COMMON_DETAIL_CODE CDC
+		WHERE PT.PT_NO = QNA.PT_NO
+		AND PT.PT_CODE = CDC.COMD_CODE
+		AND QNA.QNA_NO = #{qnaNo}
+ 	</select>
+ 	
+ 	<update id="update" parameterType="kr.or.ddit.partner.common.qna.vo.PartnerQnaVO">
+ 		UPDATE PARTNER_QNA
+ 		SET 
+ 			QNA_TITLE = #{qnaTitle},
+ 			QNA_CONTENT = #{qnaContent}
+ 		WHERE QNA_NO = #{qnaNo}
+ 	</update>
+ 	
+ 	<delete id="delete" parameterType="int">
+ 		DELETE FROM PARTNER_QNA
+ 		WHERE QNA_NO = #{qnaNo}
+ 	</delete>
+ 	
+ 	<select id="qnaCount" parameterType="kr.or.ddit.partner.common.qna.vo.PartnerQnaVO" resultType="int">
+    	SELECT COUNT(QNA_NO)
+        FROM PARTNER_QNA
+        WHERE 1=1
+        <include refid="search"/>
+    </select>
+    
+    <!-- selectNoticeList 쿼리 추가 -->
+    <select id="qnaList" parameterType="kr.or.ddit.partner.common.qna.vo.PartnerQnaVO" resultType="kr.or.ddit.partner.common.qna.vo.PartnerQnaVO">
+        SELECT 
+            b.*
+        FROM (
+            SELECT 
+                a.*, row_number() over(order by a.qna_no desc) rnum
+            FROM (
+                SELECT 
+					CDC.COMD_NAME, QNA.QNA_NO, QNA.QNA_TITLE, QNA.QNA_CONTENT, PT.PT_NAME, QNA.QNA_DATE, QNA.QNA_STATE
+				FROM PARTNER PT, PARTNER_QNA QNA, COMMON_DETAIL_CODE CDC
+				WHERE PT.PT_NO = QNA.PT_NO
+					AND PT.PT_CODE = CDC.COMD_CODE
+					AND 1=1
+                <include refid="search"/>
+                ORDER BY QNA.QNA_NO DESC
+            ) a
+        ) b
+        <![CDATA[
+            WHERE b.rnum >= #{startRow} AND b.rnum <= #{endRow}
+        ]]>
+    </select>
+ 	
+<!--  	<select id="search" parameterType="Board" resultType="Board"> -->
+<!--  		select -->
+<!--  			board_no, title, content, writer, reg_date -->
+<!--  		from board -->
+<!--  		where 1=1 -->
+<!--  		<if test="title != null and title != ''"> -->
+<!--  			and title like '%'||#{title}||'%' -->
+<!--  		</if> -->
+<!--  		order by board_no desc -->
+<!--  	</select> -->
+ 
+ </mapper>

@@ -1,0 +1,57 @@
+package kr.or.ddit.common.login.service.impl;
+
+import java.util.Map;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.common.login.mapper.LoginCommonMapper;
+import kr.or.ddit.common.login.service.LoginCommonService;
+import kr.or.ddit.common.login.vo.LoginCommonVO;
+
+@Service
+public class LoginCommonServiceImpl implements LoginCommonService {
+	
+	@Inject
+	private LoginCommonMapper loginCommonMapper;
+	
+	// 직원, 협력업체 로그인
+	@Override
+	public LoginCommonVO loginChk(LoginCommonVO member) {
+		return loginCommonMapper.loginChk(member);
+	}
+	
+	// 아이디 찾기
+	@Override
+	public String idForget(LoginCommonVO loginCommonVO) {
+		return loginCommonMapper.idForget(loginCommonVO);
+	}
+
+	// 암호화 된 임시비밀번호 DB 저장
+	@Override
+	public void updtTempPw(LoginCommonVO loginCommonVO) {
+//		loginCommonVO.setTempPassword(pe.encode(loginCommonVO.getTempPassword()));
+		loginCommonMapper.updtTempPw(loginCommonVO);
+	}
+	
+//	@Override
+//	public void updtTempPw(LoginCommonVO loginCommonVO) {
+//	    // 임시 비밀번호를 암호화하기 전에 empDepw에 원본 임시 비밀번호를 저장
+//	    String tempPassword = loginCommonVO.getTempPassword();
+//	    loginCommonVO.setEmpDepw(tempPassword); 
+//
+//	    // 암호화된 비밀번호를 다시 tempPassword에 저장
+//	    loginCommonVO.setTempPassword(pe.encode(tempPassword));
+//
+//	    // DB 업데이트
+//	    loginCommonMapper.updtTempPw(loginCommonVO);
+//	}
+
+	
+	// 계정 잠금 여부
+	@Override
+	public void lockAccount(Map<String, String> param) {
+		loginCommonMapper.lockAccount(param);
+	}
+}

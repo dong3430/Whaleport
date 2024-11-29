@@ -1,0 +1,9 @@
+package kr.or.ddit.common.etc.calendar.service;
+
+import kr.or.ddit.common.etc.calendar.vo.CalendarVO;
+
+public interface ICalendarService {
+
+	public void addEvent(CalendarVO calendarVO);
+
+}

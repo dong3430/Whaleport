@@ -1,0 +1,45 @@
+package kr.or.ddit.management.userManagement.web;
+
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("/management/user")
+public class UserManagementController {
+	
+	// 공항서빗관리 > 회원관리(회원 목록)
+	@GetMapping("/list")
+	public String userList() {
+		log.info("userList()실행...!");
+		
+		return "management/userManagement/userList";
+	}
+	
+	// 공항서비스 관리 > 시설 예약관리
+	@GetMapping("/reservation")
+	public String userReservation() {
+		log.info("userReservation()실행...!");
+		
+		
+		return "management/userManagement/userReservationList";
+	}
+
+	// 공항서비스 관리 > 항공편 스케줄 안냐
+	@GetMapping("/airlineSchedule")
+	public String airlineSchedule() {
+		log.info("airlineSchedule()실행...!");
+		
+		
+		return "management/userManagement/airlineSchedule";
+	}
+	
+	
+	
+	
+
+}

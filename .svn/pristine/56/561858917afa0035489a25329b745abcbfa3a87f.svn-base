@@ -1,0 +1,22 @@
+package kr.or.ddit.management;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+@RequestMapping("/common")
+public class MainHomeController {
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping("/home")
+	public String home() {
+		log.info("home()실행...!");
+		return "common/home";
+	}
+
+}

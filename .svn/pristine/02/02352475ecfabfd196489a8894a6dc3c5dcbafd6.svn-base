@@ -1,0 +1,23 @@
+package kr.or.ddit.customer.airport.airportReserve.vo;
+
+import java.util.Date;
+
+import lombok.Data;
+
+@Data
+public class TicketingVO {
+	private int tkNo;
+	private int cusNo;
+	private int tkAge;
+	private int tkFlight;
+	private String tkSeat;
+	private String tkDepart;
+	private Date tkDepartdate;
+	private String tkArrival;
+	private Date tkArridate;
+	private String tkPassport;
+	private int tkPrice;
+	private String tkEngfirst;
+	private String tkLastname;
+	private int tkWeight;
+}

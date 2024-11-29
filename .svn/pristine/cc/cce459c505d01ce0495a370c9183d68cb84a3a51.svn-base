@@ -1,0 +1,12 @@
+package kr.or.ddit.user.reserve.meeting.service;
+
+import java.util.List;
+
+import kr.or.ddit.user.reserve.meeting.vo.MeetingVO;
+
+
+public interface IMeetingService {
+
+	public List<MeetingVO> list();
+
+}

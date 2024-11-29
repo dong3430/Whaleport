@@ -1,0 +1,282 @@
+package kr.or.ddit.management.airService.customerManagement.web;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import kr.or.ddit.customer.reserve.hotel.vo.HotelVO;
+import kr.or.ddit.customer.reserve.meeting.vo.MeetingVO;
+import kr.or.ddit.customer.reserve.parking.vo.ParkingVO;
+import kr.or.ddit.customer.reserve.rounge.vo.RoungeVO;
+import kr.or.ddit.management.airService.customerManagement.service.IHotelReserveService;
+import kr.or.ddit.management.airService.customerManagement.service.IMeetingReserveService;
+import kr.or.ddit.management.airService.customerManagement.service.IParkingReserveService;
+import kr.or.ddit.management.airService.customerManagement.service.IRoungeReserveService;
+import kr.or.ddit.partner.common.account.vo.PartnerVO;
+import kr.or.ddit.util.vo.PaginationVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("/management/reserve")
+public class CustomerReserveController {
+	
+	@Inject
+	private IHotelReserveService service;
+	
+	@Inject
+	private IRoungeReserveService service1;
+	
+	@Inject
+	private IParkingReserveService service2;
+	
+	@Inject
+	private IMeetingReserveService service3;
+	
+	// 호텔내역 조회
+	@GetMapping("/hotelList")
+	public String hotelList(
+			@RequestParam(name="page", required=false, defaultValue = "1") int currentPage,
+			@RequestParam(required = false, defaultValue = "title") String searchType,
+			@RequestParam(required = false) String searchWord,
+			@RequestParam(required = false) String selectedItem,
+			Model model
+			) {
+		log.info("hotelList() 실행...!");
+
+		PaginationVO<HotelVO> pagingVO = new PaginationVO<HotelVO>(10,5);
+		HotelVO countVO = service.count1();
+		
+		// 검색 기능 추가
+		if(StringUtils.isNotBlank(searchWord)) {
+			pagingVO.setSearchWord(searchWord);
+			pagingVO.setSearchType(searchType);
+			model.addAttribute("searchWord", searchWord);
+			model.addAttribute("searchType", searchType);
+		}
+		
+        // 상태 필터링 추가
+        if (StringUtils.isNotBlank(selectedItem)) {
+            pagingVO.setSelectedItem(selectedItem);
+            model.addAttribute("selectedItem", selectedItem);
+        }
+        
+        
+		// startRow, endRow, startPage, endPage를 결정한다.
+		pagingVO.setCurrentPage(currentPage);
+		// 총 게시글 수를 이용하여 총 페이지수를 결정하기 위해 총 게시글 수인 totalRecord를 얻어온다.
+		int totalRecord = service.count(pagingVO);
+		// totalPage를 결정한다.
+		pagingVO.setTotalRecord(totalRecord);
+		// 총 게시글 수 및 총 페이지 수, startRow, endRow의 값들을 이용하여 초기 1페이지에 들어있는 총 screenSize 개수만큼의 리스트 데이터를 가져온다.
+		List<HotelVO> dataList = service.list(pagingVO);
+		pagingVO.setDataList(dataList);
+		model.addAttribute("pagingVO", pagingVO);
+		model.addAttribute("countVO", countVO);
+		return "management/reserve/hotelList";
+	}
+	
+	// 호텔내역 상세 조회
+//	@GetMapping("/hotelDetail")
+//	public String hotelDetail(int hrNo, Model model) {
+//		log.info("hotelDetail() 실행...!");
+//		HotelVO hotelVO = service.detail(hrNo);
+//		model.addAttribute("hotelVO", hotelVO);
+//		return "management/reserve/hotelDetail";
+//	}
+//	
+	// 호텔내역 승인
+	@PostMapping("/hotelStatus")
+	public String hotelStatus(HotelVO hotelVO, Model model, RedirectAttributes ra) {
+		log.info("hotelStatus() 실행...!");
+		service.status(hotelVO);
+	    return "redirect:/management/reserve/hotelList";
+	}
+	
+	// 호텔내역 수정 폼
+//	@GetMapping("/hotelUpdate")
+//	public String hotelUpdateForm(int hrNo, Model model) {
+//		log.info("hotelUpdateForm() 실행...!");
+//		HotelVO hotelVO = service.detail(hrNo);
+//		model.addAttribute("hotelVO", hotelVO);
+//		return "management/reserve/hotelUpdate";
+//	}
+//	
+//	// 호텔내역 수정
+//	@PostMapping("/hotelUpdate")
+//	public String hotelUpdate(HotelVO hotelVO, Model model, RedirectAttributes ra) {
+//		log.info("hotelUpdate() 실행...!");
+//		service.update(hotelVO);
+//		ra.addFlashAttribute("msg", "취소");
+//		ra.addFlashAttribute("message", "예약이 취소되었습니다!");
+//	    return "redirect:/management/reserve/hotelDetail?hrNo=" + hotelVO.getHrNo();
+//	}
+	
+	// 라운지내역 조회
+	@GetMapping("/roungeList")
+	public String roungeList(
+			@RequestParam(name="page", required=false, defaultValue = "1") int currentPage,
+			@RequestParam(required = false, defaultValue = "title") String searchType,
+			@RequestParam(required = false) String searchWord,
+			@RequestParam(required = false) String selectedItem,
+			Model model
+			) {
+		log.info("roungeList() 실행...!");
+
+		PaginationVO<RoungeVO> pagingVO = new PaginationVO<RoungeVO>(10,5);
+		RoungeVO countVO = service1.count1();
+		
+		// 검색 기능 추가
+		if(StringUtils.isNotBlank(searchWord)) {
+			pagingVO.setSearchWord(searchWord);
+			pagingVO.setSearchType(searchType);
+			model.addAttribute("searchWord", searchWord);
+			model.addAttribute("searchType", searchType);
+		}
+		
+        // 상태 필터링 추가
+        if (StringUtils.isNotBlank(selectedItem)) {
+            pagingVO.setSelectedItem(selectedItem);
+            model.addAttribute("selectedItem", selectedItem);
+        }
+        
+        
+		// startRow, endRow, startPage, endPage를 결정한다.
+		pagingVO.setCurrentPage(currentPage);
+		// 총 게시글 수를 이용하여 총 페이지수를 결정하기 위해 총 게시글 수인 totalRecord를 얻어온다.
+		int totalRecord = service1.count(pagingVO);
+		// totalPage를 결정한다.
+		pagingVO.setTotalRecord(totalRecord);
+		// 총 게시글 수 및 총 페이지 수, startRow, endRow의 값들을 이용하여 초기 1페이지에 들어있는 총 screenSize 개수만큼의 리스트 데이터를 가져온다.
+		List<RoungeVO> dataList = service1.list(pagingVO);
+		pagingVO.setDataList(dataList);
+		model.addAttribute("pagingVO", pagingVO);
+		model.addAttribute("countVO", countVO);
+		return "management/reserve/roungeList";
+	}
+	
+
+	// 라운지내역 승인
+	@PostMapping("/roungeStatus")
+	public String roungeStatus(RoungeVO roungeVO, Model model, RedirectAttributes ra) {
+		log.info("roungeStatus() 실행...!");
+		service1.status(roungeVO);
+	    return "redirect:/management/reserve/roungeList";
+	}
+	
+	
+	// 주차장내역 조회
+	@GetMapping("/parkingList")
+	public String parkingList(
+			@RequestParam(name="page", required=false, defaultValue = "1") int currentPage,
+			@RequestParam(required = false, defaultValue = "title") String searchType,
+			@RequestParam(required = false) String searchWord,
+			@RequestParam(required = false) String selectedItem,
+			Model model
+			) {
+		log.info("parkingList() 실행...!");
+
+		PaginationVO<ParkingVO> pagingVO = new PaginationVO<ParkingVO>(10,5);
+		ParkingVO countVO = service2.count1();
+		
+		// 검색 기능 추가
+		if(StringUtils.isNotBlank(searchWord)) {
+			pagingVO.setSearchWord(searchWord);
+			pagingVO.setSearchType(searchType);
+			model.addAttribute("searchWord", searchWord);
+			model.addAttribute("searchType", searchType);
+		}
+		
+        // 상태 필터링 추가
+        if (StringUtils.isNotBlank(selectedItem)) {
+            pagingVO.setSelectedItem(selectedItem);
+            model.addAttribute("selectedItem", selectedItem);
+        }
+        
+        
+		// startRow, endRow, startPage, endPage를 결정한다.
+		pagingVO.setCurrentPage(currentPage);
+		// 총 게시글 수를 이용하여 총 페이지수를 결정하기 위해 총 게시글 수인 totalRecord를 얻어온다.
+		int totalRecord = service2.count(pagingVO);
+		// totalPage를 결정한다.
+		pagingVO.setTotalRecord(totalRecord);
+		// 총 게시글 수 및 총 페이지 수, startRow, endRow의 값들을 이용하여 초기 1페이지에 들어있는 총 screenSize 개수만큼의 리스트 데이터를 가져온다.
+		List<ParkingVO> dataList = service2.list(pagingVO);
+		pagingVO.setDataList(dataList);
+		model.addAttribute("pagingVO", pagingVO);
+		model.addAttribute("countVO", countVO);
+		return "management/reserve/parkingList";
+	}
+	
+	
+	// 주차장내역 승인
+	@PostMapping("/parkingStatus")
+	public String parkingStatus(ParkingVO parkingVO, Model model, RedirectAttributes ra) {
+		log.info("parkingStatus() 실행...!");
+		service2.status(parkingVO);
+	    return "redirect:/management/reserve/parkingList";
+	}
+	
+	
+	// 회의실내역 조회
+	@GetMapping("/meetingList")
+	public String meetingList(
+			@RequestParam(name="page", required=false, defaultValue = "1") int currentPage,
+			@RequestParam(required = false, defaultValue = "title") String searchType,
+			@RequestParam(required = false) String searchWord,
+			@RequestParam(required = false) String selectedItem,
+			Model model
+			) {
+		log.info("meetingList() 실행...!");
+
+		PaginationVO<MeetingVO> pagingVO = new PaginationVO<MeetingVO>(10,5);
+		MeetingVO countVO = service3.count1();
+		
+		// 검색 기능 추가
+		if(StringUtils.isNotBlank(searchWord)) {
+			pagingVO.setSearchWord(searchWord);
+			pagingVO.setSearchType(searchType);
+			model.addAttribute("searchWord", searchWord);
+			model.addAttribute("searchType", searchType);
+		}
+		
+        // 상태 필터링 추가
+        if (StringUtils.isNotBlank(selectedItem)) {
+            pagingVO.setSelectedItem(selectedItem);
+            model.addAttribute("selectedItem", selectedItem);
+        }
+        
+        
+		// startRow, endRow, startPage, endPage를 결정한다.
+		pagingVO.setCurrentPage(currentPage);
+		// 총 게시글 수를 이용하여 총 페이지수를 결정하기 위해 총 게시글 수인 totalRecord를 얻어온다.
+		int totalRecord = service3.count(pagingVO);
+		// totalPage를 결정한다.
+		pagingVO.setTotalRecord(totalRecord);
+		// 총 게시글 수 및 총 페이지 수, startRow, endRow의 값들을 이용하여 초기 1페이지에 들어있는 총 screenSize 개수만큼의 리스트 데이터를 가져온다.
+		List<MeetingVO> dataList = service3.list(pagingVO);
+		pagingVO.setDataList(dataList);
+		model.addAttribute("pagingVO", pagingVO);
+		model.addAttribute("countVO", countVO);
+		return "management/reserve/meetingList";
+	}
+	
+	// 회의실내역 승인
+	@PostMapping("/meetingStatus")
+	public String meetingStatus(MeetingVO meetingVO, Model model, RedirectAttributes ra) {
+		log.info("meetingStatus() 실행...!");
+		service3.status(meetingVO);
+	    return "redirect:/management/reserve/meetingList";
+	}
+
+
+}

@@ -1,0 +1,16 @@
+package kr.or.ddit.management.partner.airportSchedule.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/management/airport")
+public class AirportScheduleController {
+	
+	@GetMapping("/schedule")
+	public String airlineSchedule() {
+		return "management/partner/airportScheduleList";
+	}
+
+}

@@ -1,0 +1,25 @@
+package kr.or.ddit.partner.common.qna.vo;
+
+import java.sql.Date;
+
+import lombok.Data;
+
+@Data
+public class PartnerQnaVO {
+	private int qnaNo;
+	private int ptNo;
+	private String qnaTitle;
+	private String qnaContent;
+	private String qnaAns;
+	private String aFilecode;
+	private String qFilecode;
+	private Date qnaDate;
+	private String qnaState;
+	
+	private String comdName;
+	private String comdCode;
+	private String ptName;
+	private String ptCode;
+	
+	
+}

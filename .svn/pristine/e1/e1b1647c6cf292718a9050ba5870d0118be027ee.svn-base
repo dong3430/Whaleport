@@ -1,0 +1,263 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bs-theme="light"
+	data-color-theme="Blue_Theme" data-layout="vertical">
+<style>
+	table tr:nth-child(5){
+		visibility : hidden;
+	}
+	table td:hover {
+    background-color: #f0f8ff; /* 배경색을 연한 파란색으로 변경 */
+    border: 1px solid #333; /* 테두리 추가 */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+	}
+	
+	td:nth-child(-n+7){
+		width : 50px;
+		height : 48px;
+		background-color : azure;
+		border : solid 1px blue; 
+		border-radius : 5px;
+
+	}
+	.table-border{
+		border-collapse: separate;
+    	border-spacing: 5px;
+	}
+	
+	tbody tr th{
+		width : 50px;
+		height : 48px;
+		text-align : center;
+	}
+</style>
+
+<div class="main-wrapper overflow-hidden">
+	<section class="bg-primary-subtle custom-height">
+		<div class="container-fluid">
+			<div class="text-center">
+				<p class="text-primary fs-4 fw-bolder">airplane</p>
+				<h1 class="fw-bolder fs-12">항공권</h1>
+			</div>
+		</div>
+	</section>
+</div>
+<div class="body-wrapper">
+	<div class="col-6 mx-auto">
+	<!-- ///좌석 시작 /// -->
+		<table class="table-border">
+			<thead style="text-align: center;">
+				<th>A</th>
+				<th>B</th>
+				<th>C</th>
+				<th></th>
+				<th>D</th>
+				<th>E</th>
+				<th>F</th>
+			</thead>
+			<tbody>
+			<tr>
+				<td></td>
+				<th></th>
+				<td></td>
+				<th>1</th>
+				<td></td>
+				<th></th>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<th></th>
+				<td></td>
+				<th>2</th>
+				<td></td>
+				<th></th>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<th></th>
+				<td></td>
+				<th>3</th>
+				<td></td>
+				<th></th>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<th></th>
+				<td></td>
+				<th>4</th>
+				<td></td>
+				<th></th>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<th></th>
+				<td></td>
+				<th></th>
+				<td></td>
+				<th></th>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<th>5</th>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<th>6</th>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<th>7</th>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<th>8</th>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<th>9</th>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<th>10</th>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<th>11</th>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<th>12</th>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<th>13</th>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<th>14</th>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<th>15</th>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<th>16</th>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<th>17</th>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<th>18</th>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			</tbody>
+		</table>
+	
+	<!-- ///좌석 끝 /// -->
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$('td').on('click',function() {
+		
+	    // 클릭한 td의 부모 tr의 인덱스 찾기
+	    var rowIndex = $(this).closest('tr').index() + 1;
+	    // 클릭한 td의 인덱스 찾기
+	    var columnIndex = $(this).closest('td').index() + 1;
+		if(columnIndex > 4){
+			columnIndex = columnIndex - 1;
+		}
+		if(rowIndex >= 5){
+			rowIndex = rowIndex - 1;
+		}
+		if(rowIndex >= 10){
+			rowIndex = "0" + (String)(rowIndex);
+		} else {
+			rowIndex = "00" + (String)(rowIndex);
+		}
+	    var seatNum = String.fromCharCode(columnIndex + 64) + rowIndex;
+		console.log('seatNum ::: ' + seatNum);
+		
+		$(this).css('background-color','green');
+	});
+});
+</script>
+</html>

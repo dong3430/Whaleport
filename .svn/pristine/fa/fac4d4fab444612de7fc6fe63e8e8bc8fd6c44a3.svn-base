@@ -1,0 +1,34 @@
+package kr.or.ddit.management.partner.airportSchedule.service.impl;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.customer.airport.airportReserve.vo.PlaneScheduleVO;
+import kr.or.ddit.management.partner.airportSchedule.mapper.AirportMapper;
+import kr.or.ddit.management.partner.airportSchedule.service.IAirportScheduleService;
+
+@Service
+public class AirportScheduleImpl implements IAirportScheduleService{
+	
+	@Inject
+	private AirportMapper mapper;
+	
+	@Override
+	public void insert(List<PlaneScheduleVO> planeVO) {
+		
+		for(PlaneScheduleVO pVO : planeVO) {
+			mapper.insert(pVO);
+		}
+		
+		
+	}
+
+	@Override
+	public List<PlaneScheduleVO> getData() {
+		return mapper.getData();
+	}
+
+}

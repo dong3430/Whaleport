@@ -1,0 +1,31 @@
+package kr.or.ddit.management.userManagement.web;
+
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+@Controller
+@RequestMapping("/management/user")
+public class UserManagementController {
+	
+	@GetMapping("/list")
+	public String userList() {
+		
+		
+		return "management/userManagement/userList";
+	}
+	
+	@GetMapping("/reservation")
+	public String userReservation() {
+		
+		
+		return "management/userManagement/userReservationList";
+	}
+	
+	
+	
+	
+
+}

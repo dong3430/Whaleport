@@ -1,0 +1,100 @@
+package kr.or.ddit.customer.notice.service.impl;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.customer.notice.mapper.IUserNoticeMapper;
+import kr.or.ddit.customer.notice.service.IUserNoticeService;
+import kr.or.ddit.customer.notice.vo.UserFAQVO;
+import kr.or.ddit.customer.notice.vo.UserNoticeVO;
+import kr.or.ddit.customer.notice.vo.UserQnAVO;
+import kr.or.ddit.util.vo.FileVO;
+import kr.or.ddit.util.vo.PaginationVO;
+
+
+@Service
+public class UserNoticeServiceImpl implements IUserNoticeService {
+	
+	@Inject
+	private IUserNoticeMapper mapper;
+
+	// FAQ
+	@Override
+	public List<UserFAQVO> faqList() {
+		return mapper.faqList();
+	}
+
+	
+	// NOTICE
+	@Override
+	public List<UserNoticeVO> noticeList() {
+		return mapper.noticeList();
+	}
+
+	@Override
+	public int userNoticeCount(PaginationVO<UserNoticeVO> pagingVO) {
+		return mapper.userNoticeCount(pagingVO);
+	}
+
+	@Override
+	public List<UserNoticeVO> userNoticeList(PaginationVO<UserNoticeVO> pagingVO) {
+		return mapper.userNoticeList(pagingVO);
+	}
+
+
+	@Override
+	public UserNoticeVO noticeDetail(int noNo) {
+		return mapper.noticeDetail(noNo);
+	}
+
+
+	@Override
+	public FileVO takeNoticeFile(int noNo) {
+		return mapper.takeNoticeFile(noNo);
+	}
+
+
+
+	// QNA
+	@Override
+	public void qnaRegister(UserQnAVO userQnAVO) {
+		mapper.qnaRegister(userQnAVO);
+	}
+
+
+	@Override
+	public void saveFile(FileVO fileVO) {
+		mapper.saveFile(fileVO);
+	}
+
+
+	@Override
+	public int userQnACount(PaginationVO<UserQnAVO> pagingVO) {
+		return mapper.userQnACount(pagingVO);
+	}
+
+
+	@Override
+	public List<UserQnAVO> userQnAList(PaginationVO<UserQnAVO> pagingVO) {
+		return mapper.userQnAList(pagingVO);
+	}
+
+
+	@Override
+	public UserQnAVO qnaDetail(int qnaNo) {
+		return mapper.qnaDetail(qnaNo);
+	}
+
+
+	@Override
+	public FileVO takeQnAFile(int qnaNo) {
+		return mapper.takeQnAFile(qnaNo);
+	}
+
+
+
+
+}

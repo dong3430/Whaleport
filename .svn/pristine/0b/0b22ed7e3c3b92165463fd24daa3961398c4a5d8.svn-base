@@ -1,0 +1,107 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+
+<style>
+.chat-box{
+	border:1px solid #87CEFA;
+	border-radius: 10px;
+	max-height: calc(100vh - 150px); /* 헤더 높이를 고려하여 최대 높이 설정 */
+    overflow-y: auto; /* 세로 스크롤 가능 */
+}
+
+.email-box {
+    width: 40%!important;
+    margin: 0 auto;
+}
+</style>
+
+<div class="body-wrapper">
+    <div class="container-fluid">
+        <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+           <div class="card-body px-4 py-3">
+             <div class="row align-items-center" style="margin-top:20px;">
+               <div class="col-9">
+                 <h4 class="fw-semibold mb-8">온라인 출입증 상세 보기</h4>
+                 <nav aria-label="breadcrumb">
+                   <ol class="breadcrumb">
+                     <li class="breadcrumb-item">
+                       <a class="text-muted text-decoration-none" href="../main/index.html">home</a>
+                     </li>
+                     <li class="breadcrumb-item" aria-current="page">온라인 출입증 상세 보기</li>
+                   </ol>
+                 </nav>
+               </div>
+               <div class="col-3">
+                 <div class="text-center mb-n4">
+                   <img src="${pageContext.request.contextPath }/resources/assets/images/logos/symbol-01.png" alt="modernize-img" class="img-fluid" style="width: 120px; height: auto;">
+                 </div>
+               </div>
+             </div>
+           </div>
+        </div>
+        <div class="card w-100 position-relative overflow-hidden">
+            <div class="card-header text-bg-primary">
+                <h5 class="mb-0 text-white">직원 출입증</h5>
+            </div>
+                  <div style="height:50px;"></div>
+                  <div class="d-flex justify-content-center">
+			        <div class="col-lg-3 d-flex justify-content-center align-items-stretch">
+			            <div class="card w-100" style="border-radius: 15px; overflow: hidden; height: 500px;">
+			                <div class="card-body" style="background-image: url('${pageContext.request.contextPath}/resources/assets/images/profile/pass.png'); background-size: cover; background-position: center; padding: 20px;">
+			                    <div class="chat-list chat active-chat" style="margin-top:100px;">
+<!-- 			                        <div class="hstack align-items-start mb-7 pb-1 align-items-center justify-content-between"> -->
+<!-- 			                            <div class="d-flex align-items-center gap-3"> -->
+<!-- 			                            </div> -->
+<!-- 			                        </div> -->
+			                        <div style="text-align: center;">
+			                                <img src="${employeeVO.empImage }" alt="user4" width="100" height="100" class="rounded-circle"><br>
+			                            <p class="mb-1 fs-3"><strong>Name</strong></p>
+			                            <h6 class="fs-4 mb-0" style="font-size: 30px !important;">${employeeVO.empName }</h6><br>
+			                        <div class="row" style="text-align: center;"> <!-- 중앙 정렬을 위한 스타일 추가 -->
+										    <div class="col-6 mb-9"> <!-- col-6으로 변경 -->
+										        <p class="mb-1 fs-3"><strong>Department</strong></p>
+										        <h6 class="fw-semibold mb-0"  style="font-size: 18px;">${employeeVO.empDept }</h6>
+										    </div>
+										    <div class="col-6 mb-7"> <!-- col-6으로 변경 -->
+										        <p class="mb-1 fs-3"><strong>Position</strong></p>
+										        <h6 class="fw-semibold mb-0" style="font-size: 18px;">${employeeVO.empPosition }</h6>
+										    </div>
+										</div>
+										<div class="row" style="text-align: center;"> <!-- QR Code 섹션을 위한 새로운 row 추가 -->
+										    <div class="col-12 mb-7"> <!-- col-12로 전체 너비 사용 -->
+										        <p class="mb-1 fs-3"><strong>QR Code</strong></p>
+										        <h6 class="fw-semibold mb-0" style="font-size: 18px;">큐알코드 들어올곳</h6>
+										    </div>
+										</div>
+			                        </div>
+			                        <br/>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			    <div ></div>
+			    </div>
+                         
+                         
+                        </div>
+                       </div>
+					 <div class="card card-body">
+		              <div class="row">
+		                <div class="col-md-4 col-xl-3">
+		                 
+		                </div>
+		                <div class="col-md-8 col-xl-9 text-end d-flex justify-content-md-end justify-content-center mt-3 mt-md-0">
+		                  <div class="action-btn" style="display: flex; justify-content: center; align-items: center;" -btn="" show-btn"="">
+		                  </div>
+		                  <input type="hidden" name="empId" value="${employeeVO.empId }"/>
+		                  <a href="/management/empDetail?empId=${employeeVO.empId }" class="btn btn-outline-primary d-flex align-items-center">
+		                     이전
+		                  </a>
+		                </div>
+		              </div>
+		            </div>
+                              
+               
+ 

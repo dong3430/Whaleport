@@ -1,0 +1,14 @@
+package kr.or.ddit.customer.airport.airportReserve.service;
+
+import java.util.List;
+
+import kr.or.ddit.customer.airport.airportReserve.vo.IATACodeVO;
+import kr.or.ddit.customer.airport.airportReserve.vo.PlaneScheduleVO;
+
+public interface IAirportReserveService {
+
+	public List<IATACodeVO> codeList();
+
+	public List<PlaneScheduleVO> searchList(PlaneScheduleVO scheduleVO);
+
+}

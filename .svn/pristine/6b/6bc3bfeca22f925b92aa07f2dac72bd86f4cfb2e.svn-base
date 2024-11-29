@@ -1,0 +1,15 @@
+package kr.or.ddit.user.airport.realtime.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/user/realtime")
+public class RealtimAirportController {
+
+	@GetMapping("/airport")
+	public String airport() {
+		return "user/realtimeAirport/realtimeAirport";
+	}
+}

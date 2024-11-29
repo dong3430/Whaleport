@@ -1,0 +1,31 @@
+package kr.or.ddit.customer.airport.airportReserve.service.impl;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.customer.airport.airportReserve.mapper.AirportReserveServiceMapper;
+import kr.or.ddit.customer.airport.airportReserve.service.IAirportReserveService;
+import kr.or.ddit.customer.airport.airportReserve.vo.IATACodeVO;
+import kr.or.ddit.customer.airport.airportReserve.vo.PlaneScheduleVO;
+
+@Service
+public class AirportReserveServiceImpl implements IAirportReserveService {
+
+	@Inject
+	private AirportReserveServiceMapper mapper;
+
+	@Override
+	public List<IATACodeVO> codeList() {
+		return mapper.codeList();
+	}
+
+	@Override
+	public List<PlaneScheduleVO> searchList(PlaneScheduleVO scheduleVO) {
+		return mapper.searchList(scheduleVO);
+	}
+	
+	
+}

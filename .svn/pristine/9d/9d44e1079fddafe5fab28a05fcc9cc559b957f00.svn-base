@@ -1,0 +1,40 @@
+package kr.or.ddit.customer.myPage.service.impl;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.customer.myPage.mapper.CustomerMyPageMapper;
+import kr.or.ddit.customer.myPage.service.CustomerMyPageService;
+import kr.or.ddit.customer.myPage.vo.CustomerMyPageVO;
+import kr.or.ddit.util.vo.PaginationVO;
+
+@Service
+public class CustomerMyPageServiceImpl implements CustomerMyPageService{
+
+	@Inject
+	private CustomerMyPageMapper mapper;
+	
+	@Override
+	public CustomerMyPageVO myInfomation(String cusId) {
+		return mapper.myInfomation(cusId);
+	}
+
+	@Override
+	public void myInfoUpdate(CustomerMyPageVO customerVO) {
+		mapper.myInfoUpdate(customerVO);
+	}
+
+	@Override
+	public int myBoardCount(PaginationVO<CustomerMyPageVO> pagingVO) {
+		return 0;
+	}
+
+	@Override
+	public List<CustomerMyPageVO> myBoardList(PaginationVO<CustomerMyPageVO> pagingVO) {
+		return null;
+	}
+
+}

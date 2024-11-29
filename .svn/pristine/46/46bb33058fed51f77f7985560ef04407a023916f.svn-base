@@ -1,0 +1,17 @@
+package kr.or.ddit.management.human.etc.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/etc")
+public class EtcManagementController {
+
+	// 직원 근태 현황 조회
+	@GetMapping("/attendanceChart")
+	public String attendanceChart() {
+		return "management/etc/attendanceChart";
+	}
+
+}

@@ -1,0 +1,15 @@
+package kr.or.ddit.partner.facilities.mapper;
+
+import java.util.List;
+
+import kr.or.ddit.partner.facilities.vo.PartnerInspectionVO;
+import kr.or.ddit.util.vo.FileVO;
+import kr.or.ddit.util.vo.PaginationVO;
+
+public interface PartnerInspectionMapper {
+	public int reportRegister(PartnerInspectionVO inspectionVO);
+	public void insertReportFile(FileVO fileVO);
+	public List<PartnerInspectionVO> reportList(PaginationVO<PartnerInspectionVO> pagingVO);
+	public int reportCount(PaginationVO<PartnerInspectionVO> pagingVO);
+	public PartnerInspectionVO reportDetail(PartnerInspectionVO inspectionVO);
+}

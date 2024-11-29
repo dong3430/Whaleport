@@ -1,0 +1,26 @@
+package kr.or.ddit.partner.facilities.service;
+
+
+import java.util.List;
+
+import kr.or.ddit.partner.facilities.vo.PartnerInspectionVO;
+import kr.or.ddit.util.vo.PaginationVO;
+
+
+public interface IPartnerInspectionService {
+	public int reportRegister(PartnerInspectionVO inspectionVO);
+	public List<PartnerInspectionVO> reportList(PaginationVO<PartnerInspectionVO> pagingVO);
+	public int reportCount(PaginationVO<PartnerInspectionVO> pagingVO);
+	public PartnerInspectionVO reportDetail(PartnerInspectionVO inspectionVO);
+//	public PartnerQnaVO detail(PartnerQnaVO partnerQnaVO);
+//	public int update(PartnerQnaVO partnerQnaVO);
+//	public int delete(int qnaNo);
+//	public List<PartnerQnaVO> qnaList(PaginationVO<PartnerQnaVO> pagingVO);
+//	public FileVO qnaDownload(int fileNo);
+//	public int answer(PartnerQnaVO partnerQnaVO);
+//	public List<PartnerFaqVO> faqList();
+//	public int register(PartnerFaqVO partnerFaqVO);
+//	public int faqDelete(int faqNo);
+//	public int faqUpdate(PartnerFaqVO partnerFaqVO);
+
+}

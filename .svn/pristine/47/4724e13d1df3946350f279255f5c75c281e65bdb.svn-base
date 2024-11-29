@@ -1,0 +1,36 @@
+package kr.or.ddit.common.etc.calendar.web;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.or.ddit.common.etc.calendar.service.ICalendarService;
+import kr.or.ddit.common.etc.calendar.vo.CalendarVO;
+
+
+@Controller
+@RequestMapping("/common")
+public class CalendarController {
+
+	@Inject
+	private ICalendarService calendarService;
+	
+	@GetMapping("/calendar")
+	public String calendarPages() {
+		return "common/calendar/calendar";
+	}
+
+	// 일정 등록
+	@PostMapping("/addEvent")
+	public String addEvent(@RequestBody CalendarVO calendarVO, Model model) {
+		calendarService.addEvent(calendarVO);
+		return "redirect:/common/calendar";
+	}
+}
+
+

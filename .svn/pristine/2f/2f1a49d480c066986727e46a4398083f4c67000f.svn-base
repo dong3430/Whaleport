@@ -1,0 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>415error</title>
+</head>
+<body>
+<div class="front" style="background-image: url('${pageContext.request.contextPath }/resources/assets/images/error/415.png'); background-size: 100%;">
+</div>
+<h1>415</h1>
+
+</body>
+</html>

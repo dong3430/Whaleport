@@ -1,0 +1,140 @@
+package kr.or.ddit.management.airService.notice.service.impl;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.customer.notice.vo.UserFAQVO;
+import kr.or.ddit.customer.notice.vo.UserNoticeVO;
+import kr.or.ddit.customer.notice.vo.UserQnAVO;
+import kr.or.ddit.management.airService.notice.mapper.IUNManagingMapper;
+import kr.or.ddit.management.airService.notice.service.IUNManagingService;
+import kr.or.ddit.util.vo.FileVO;
+import kr.or.ddit.util.vo.PaginationVO;
+
+
+@Service
+public class UNManagingServiceImpl implements IUNManagingService {
+
+	@Inject
+	private IUNManagingMapper unmapper;
+	
+	
+	// FAQ
+	
+	@Override
+	public List<UserFAQVO> faqList() {
+		return unmapper.faqList();
+	}
+
+	@Override
+	public void faqUpdate(UserFAQVO notice) {
+		unmapper.faqUpdate(notice);
+	}
+
+	@Override
+	public void faqDelete(int faqNo) {
+		unmapper.faqDelete(faqNo);
+	}
+
+	@Override
+	public void faqAdd(UserFAQVO notice) {
+		unmapper.faqAdd(notice);
+	}
+	
+	
+	// NOTICE
+
+	@Override
+	public List<UserNoticeVO> noticeList() {
+		return unmapper.noticeList();
+	}
+
+	@Override
+	public void noticeAdd(UserNoticeVO userNoticeVO) {
+		unmapper.noticeAdd(userNoticeVO);
+	}
+
+	@Override
+	public UserNoticeVO noticeDetail(int noNo) {
+		return unmapper.noticeDetail(noNo);
+	}
+
+	@Override
+	public void noticeDelete(int noNo) {
+		unmapper.noticeDelete(noNo);
+	}
+
+	@Override
+	public void noticeUpdate(UserNoticeVO userNoticeVO) {
+		unmapper.noticeUpdate(userNoticeVO);
+	}
+
+
+	
+	// QNA
+	
+	@Override
+	public int userQnACount(PaginationVO<UserQnAVO> pagingVO) {
+		return unmapper.userQnACount(pagingVO);
+	}
+	
+	@Override
+	public List<UserQnAVO> userQnAList(PaginationVO<UserQnAVO> pagingVO) {
+		return unmapper.userQnAList(pagingVO);
+	}
+	
+	@Override
+	public UserQnAVO qnaDetail(int qnaNo) {
+		return unmapper.qnaDetail(qnaNo);
+	}
+	
+	@Override
+	public FileVO takeQnAFile(int qnaNo) {
+		return unmapper.takeQnAFile(qnaNo);
+	}
+	
+	@Override
+	public void qnaDelete(int qnaNo) {
+		unmapper.qnaDelete(qnaNo);
+	}
+
+	@Override
+	public void qnaUpdate(UserQnAVO userQnAVO) {
+		unmapper.qnaUpdate(userQnAVO);
+	}
+
+	
+	
+	// PAGING
+	
+	@Override
+	public int userNoticeCount(PaginationVO<UserNoticeVO> pagingVO) {
+		return unmapper.userNoticeCount(pagingVO);
+	}
+	
+	@Override
+	public List<UserNoticeVO> userNoticeList(PaginationVO<UserNoticeVO> pagingVO) {
+		return unmapper.userNoticeList(pagingVO);
+	}
+
+	
+	// DOWNLOAD FILE
+	@Override
+	public void saveFile(FileVO fileVO) {
+		unmapper.saveFile(fileVO);
+	}
+
+	@Override
+	public FileVO takeNoticeFile(int noNo) {
+		return unmapper.takeNoticeFile(noNo);
+	}
+
+
+
+
+	
+	
+}

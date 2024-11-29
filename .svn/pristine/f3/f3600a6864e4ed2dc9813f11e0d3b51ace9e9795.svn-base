@@ -1,0 +1,22 @@
+package kr.or.ddit.user.login.login.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/user")
+public class LoginUserController {
+	
+	// 고객 로그인 화면 이동
+	@GetMapping("/login")
+	public String login() {
+		return "login/userLogin";
+	}
+	
+	// 고객 회원가입 화면 이동
+	@GetMapping("/signup")
+	public String signUp() {
+		return "register/userRegister";
+	}
+}

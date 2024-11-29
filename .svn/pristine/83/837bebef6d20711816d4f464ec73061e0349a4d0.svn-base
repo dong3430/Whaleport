@@ -1,0 +1,163 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/libs/quill/dist/quill.snow.css">
+<script src="${pageContext.request.contextPath}/resources/assets/libs/quill/dist/quill.js"></script>
+<style>
+span{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.UNclickArea{
+	cursor : pointer;
+}
+#UNfaq, #UNqna{
+	color : gray;
+}
+#UNfaqArea, #UNqnaArea{
+	display: none;
+}
+.selNoticenoNo{
+	cursor: pointer;
+}
+
+</style>
+
+<div class="body-wrapper">
+    <div class="container-fluid" align="center">
+        <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4" style="width: 80%;">
+            <div class="card-body px-4 py-3">
+                <div>
+                    <div>
+                        <h3 class="fw-semibold"><span id="UNqna" class="UNclickArea">문의사항</span> <span>|</span> <span id="UNnotice" class="UNclickArea">공지사항</span> <span>|</span> <span id="UNfaq" class="UNclickArea">FAQ</span></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- notice 영역 시작 -->
+       <div id="UNqnaAre a">
+			<div class="row justify-content-end" style="width: 80%;">
+		<div class="col-md-4 col-xl-3">
+			<form action="/user/notice/list" method="get"
+				class="position-relative w-100">
+				<input type="text" class="form-control product-search ps-5 pe-5"
+					id="input-search" name="searchWord"
+					placeholder="Search Contacts..." value="${searchWord}" /> <i
+					class="ti ti-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
+				<button type="submit"
+					class="btn btn-primary position-absolute top-50 end-0 translate-middle-y"
+					style="padding: 0.25rem 0.5rem; margin-right: 0.5rem;">검색</button>
+				<input type="hidden" name="searchType" value="${searchType}" />
+			</form>
+		</div>
+	</div>
+	<div id="UNnoticeArea">
+        	<div class="table-responsive mb-4 border rounded-1" style="width: 80%">
+                <table class="table text-nowrap mb-0 align-middle" style="table-layout: fixed; width: 100%">
+                  <thead class="text-dark fs-4">
+                    <tr>
+                      <th style="width: 10%">
+                        <h6 class="fs-4 fw-semibold mb-0">번호</h6>
+                      </th>
+                      <th style="width: 45%">
+                        <h6 class="fs-4 fw-semibold mb-0">제목</h6>
+                      </th>
+                      <th style="width: 15%">
+                        <h6 class="fs-4 fw-semibold mb-0">첨부파일</h6>
+                      </th>
+                      <th style="width: 15%">
+                        <h6 class="fs-4 fw-semibold mb-0">작성자</h6>
+                      </th>
+                      <th style="width: 15%">
+                        <h6 class="fs-4 fw-semibold mb-0">등록일</h6>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <c:choose>
+					    <c:when test="${empty pagingVO.dataList}">
+					        <tr>
+					            <td colspan="5">공지사항이 없습니다.</td>
+					        </tr>
+					    </c:when>
+					    <c:otherwise>
+					        <c:forEach items="${pagingVO.dataList}" var="notice">
+					            <tr class="selNoticenoNo" onclick="location.href='/customer/notice/detail?noNo=${notice.noNo}'">
+					                <td>
+					                    <p class="mb-0 fw-normal fs-4">${notice.noNo }</p>
+					                </td>
+					                <td>
+					                    <a href="/customer/notice/detail?noNo=${notice.noNo }">${notice.noTitle }</a>
+					                </td>
+					                <td>
+					                	<c:if test="${notice.noFilecode eq 02}">
+					                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-download">
+											  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+											  <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+											  <path d="M7 11l5 5l5 -5" />
+											  <path d="M12 4l0 12" />
+											</svg>
+					                	</c:if>
+					                </td>
+					                <td>
+					                    <p class="mb-0 fw-normal fs-4">${notice.empNo }</p>
+					                </td>
+					                <td>
+					                    <h6 class="fs-4 fw-semibold mb-0">${notice.noDate }</h6>
+					                </td>
+					            </tr>
+					        </c:forEach>
+					    </c:otherwise>
+					</c:choose>
+                  </tbody>
+                </table>
+              </div>
+              <!-- Pagination 시작 -->
+				<div class="d-flex justify-content-center" style="margin-top: 20px;">
+					<nav aria-label="...">
+						<ul class="pagination">
+							<li
+								class="page-item <c:if test='${pagingVO.currentPage == 1}'>disabled</c:if>">
+								<a class="page-link" href="?page=${pagingVO.currentPage - 1}"
+								tabindex="-1" aria-disabled="true">Previous</a>
+							</li>
+							<c:forEach begin="1" end="${pagingVO.totalPage}" var="pageNum">
+								<li
+									class="page-item <c:if test='${pagingVO.currentPage == pageNum}'>active</c:if>">
+									<a class="page-link" href="?page=${pageNum}">${pageNum}</a>
+								</li>
+							</c:forEach>
+							<li
+								class="page-item <c:if test='${pagingVO.currentPage == pagingVO.totalPage}'>disabled</c:if>">
+								<a class="page-link" href="?page=${pagingVO.currentPage + 1}">Next</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+        </div>
+        <!-- notice 영역 끝 -->
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+	var faq = $("#UNfaq");
+	var notice = $("#UNnotice");
+	var qna = $("#UNqna");
+	var faqArea = $("#UNfaqArea");
+	var noticeArea = $("#UNnoticeArea");
+	var qnaArea = $("#UNqnaArea");
+	
+	faq.on("click", function(){
+		location.href = '/customer/faq/list';
+	});
+	
+	qna.on("click", function(){
+		location.href = '/customer/qna/list';
+	});
+	
+});
+
+</script>

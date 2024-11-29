@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.customer.login.login.mapper.LoginCustomerMapper">
+	<select id="loginCheck" parameterType="kr.or.ddit.customer.login.login.vo.LoginCustomerVO" resultType="kr.or.ddit.customer.login.login.vo.LoginCustomerVO">
+		SELECT
+		    CUS_NO
+		  , CUS_ID
+		  , CUS_PW
+		  , CUS_EMAIL
+		  , CUS_TEL
+		  , CUS_GENDER
+		  , CUS_BIRTH
+		  , CUS_SEND
+		  , CUS_NAME
+		  , CUS_ADD
+		  , CUS_ADD2
+		  , CUS_POSTCODE
+		FROM CUSTOMER
+		WHERE CUS_ID = #{cusId}
+		AND CUS_PW = #{cusPw}
+	</select>
+</mapper>

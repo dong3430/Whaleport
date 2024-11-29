@@ -1,0 +1,30 @@
+package kr.or.ddit.management.partner.partner.service.impl;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.management.partner.partner.mapper.IStoreManagementMapper;
+import kr.or.ddit.management.partner.partner.service.IStoreManagementService;
+import kr.or.ddit.management.partner.partner.vo.StoreVO;
+import kr.or.ddit.util.vo.PaginationVO;
+
+@Service
+public class StoreManagementServiceImpl implements IStoreManagementService {
+
+	@Inject
+	private IStoreManagementMapper storeMapper;
+	
+	@Override
+	public int selectStoreCount(PaginationVO<StoreVO> pagingVO) {
+		return storeMapper.selectStoreCount(pagingVO);
+	}
+
+	@Override
+	public List<StoreVO> selectStoreList(PaginationVO<StoreVO> pagingVO) {
+		return storeMapper.selectStoreList(pagingVO);
+	}
+
+}

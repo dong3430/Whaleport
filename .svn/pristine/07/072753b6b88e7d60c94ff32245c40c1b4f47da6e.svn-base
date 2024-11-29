@@ -1,0 +1,87 @@
+package kr.or.ddit.customer.myPage.web;
+
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import kr.or.ddit.customer.login.login.vo.LoginCustomerVO;
+import kr.or.ddit.customer.myPage.service.CustomerMyPageService;
+import kr.or.ddit.customer.myPage.vo.CustomerMyPageVO;
+import kr.or.ddit.util.vo.PaginationVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("/customer")
+public class CustomerMyPage {
+
+	@Inject
+	private CustomerMyPageService service;
+	
+	// 고객 마이페이지
+	@GetMapping("/myPage")
+	public String myPage(HttpServletRequest req, Model model) {
+		log.info("CustomerMyPage myPage() 실행...!");
+		// HttpSession : 로그인 처리 후 세션 정보에서 얻어온 회원 정보를 활용하기 위한 준비
+		HttpSession session = req.getSession();
+		// SessionInfo : 키를 이용하여 세션에서 회원정보 가져오기
+		LoginCustomerVO loginCustomerVO = (LoginCustomerVO) session.getAttribute("SessionInfo");
+		
+		log.info("loginCustomerVO : " + loginCustomerVO);
+		String cusId= loginCustomerVO.getCusId();
+		// 내 정보 보기
+		CustomerMyPageVO customerVO = service.myInfomation(cusId);
+		model.addAttribute("customerVO", customerVO);
+		return "customer/myPage/customerProfile";
+	}
+	
+	// 내 정보 수정
+	@PostMapping("/myInfoUpdate")
+	public String myInfoUpdate(CustomerMyPageVO customerVO, Model model, RedirectAttributes ra) {
+		log.info("myInfoUpdate()실행...!");
+		service.myInfoUpdate(customerVO);
+		ra.addFlashAttribute("message", "수정이 완료되었습니다!");
+		return "redirect:/customer/myPage";
+	}
+	
+	// 내 게시글 조회(문의사항)
+	@GetMapping("/myBoardList")
+	public String myBoardList(@RequestParam(name="page", required=false, defaultValue = "1") int currentPage,
+			@RequestParam(required = false, defaultValue = "title") String searchType,
+			@RequestParam(required = false) String searchWord, Model model, String cusId
+			) {
+		log.info("myBoardList() 실행...!");
+
+		PaginationVO<CustomerMyPageVO> pagingVO = new PaginationVO<CustomerMyPageVO>(10,5);
+		
+		// 검색 기능 추가
+		if(StringUtils.isNotBlank(searchWord)) {
+			pagingVO.setSearchWord(searchWord);
+			pagingVO.setSearchType(searchType);
+			model.addAttribute("searchWord", searchWord);
+			model.addAttribute("searchType", searchType);
+		}
+		// startRow, endRow, startPage, endPage를 결정한다.
+		pagingVO.setCurrentPage(currentPage);
+		// 총 게시글 수를 이용하여 총 페이지수를 결정하기 위해 총 게시글 수인 totalRecord를 얻어온다.
+		int totalRecord = service.myBoardCount(pagingVO);
+		// totalPage를 결정한다.
+		pagingVO.setTotalRecord(totalRecord);
+		// 총 게시글 수 및 총 페이지 수, startRow, endRow의 값들을 이용하여 초기 1페이지에 들어있는 총 screenSize 개수만큼의 리스트 데이터를 가져온다.
+		List<CustomerMyPageVO> dataList = service.myBoardList(pagingVO);
+		pagingVO.setDataList(dataList);
+		model.addAttribute("pagingVO", pagingVO);
+		return "customer/myPage/myBoardList";
+	}
+}

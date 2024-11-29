@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.customer.airport.airportReserve.mapper.AirportReserveServiceMapper">
+	
+	<select id="codeList" resultType="kr.or.ddit.customer.airport.airportReserve.vo.IATACodeVO">
+		select ic_code, ic_kr, ic_country
+		from iata_code
+	</select>
+	
+	<select id="searchList" parameterType="kr.or.ddit.customer.airport.airportReserve.vo.PlaneScheduleVO" resultType="kr.or.ddit.customer.airport.airportReserve.vo.PlaneScheduleVO">
+    SELECT sc_no, sc_airfln, sc_airline, SC_BOARDING, SC_ARRIVED, SC_CITY, SC_LINE, SC_STDATE, SC_STD, SC_GATE, SC_CHECKIN, SC_SEATQTY, SC_PRICE
+	FROM plane_schedule
+	WHERE 1=1
+	  AND sc_boarding = #{scBoarding}
+	  AND sc_arrived = #{scArrived}
+	  AND TRUNC(sc_stdate) = #{scStdate}
+	ORDER BY sc_stdate ASC
+	</select>
+
+</mapper>

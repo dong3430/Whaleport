@@ -1,0 +1,115 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+
+<style>
+.chat-box{
+	border:1px solid #87CEFA;
+	border-radius: 10px;
+	max-height: calc(100vh - 150px); /* 헤더 높이를 고려하여 최대 높이 설정 */
+    overflow-y: auto; /* 세로 스크롤 가능 */
+}
+
+.email-box {
+    width: 40%!important;
+    margin: 0 auto;
+}
+</style>
+
+
+<div class="body-wrapper">
+<div class="w-100">
+<div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+            <div class="card-body px-4 py-3">
+              <div class="row align-items-center">
+                <div class="col-9">
+                  <h4 class="fw-semibold mb-8">온라인 출입증 상세보기</h4>
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a class="text-muted text-decoration-none" href="../main/index.html">Home</a>
+                      </li>
+                      <li class="breadcrumb-item" aria-current="page">온라인 출입증 상세보기</li>
+                    </ol>
+                  </nav>
+                </div>
+                <div class="col-3">
+                  <div class="text-center mb-n5">
+                    <img src="${pageContext.request.contextPath }/resources/assets/images/breadcrumb/ChatBc.png" alt="modernize-img" class="img-fluid mb-n4">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+                  <div class="chat-container h-100 w-100">
+                    <div class="chat-box-inner-part h-100">
+                      <div class="chatting-box app-email-chatting-box">
+                       
+                        <div class="position-relative overflow-hidden">
+                          <div class="position-relative">
+                          
+                            <div class="chat-box email-box mh-n100 p-9" data-simplebar="init">
+
+   								<div class="border-bottom pb-7 mb-4"><h5 class="text-center">Access Card</h5>
+                                </div>
+
+                              <div class="chat-list chat active-chat" style="width:300px; margin: 0 auto;" data-user-id="1">
+                                <div class="hstack align-items-start mb-7 pb-1 align-items-center justify-content-between">
+                                  <div class="d-flex align-items-center gap-3">
+                                    <img src="${employeeVO.empImage }" alt="user4" width="300" height="300" class="rounded-circle">
+                                  </div>
+                                </div><br/>
+                                    <div>
+                                      <p class="mb-1 fs-2">Name</p>
+                                      <h6 class="fs-4 mb-0" style="width:200px; font-size: 30px !important;">${employeeVO.empName }</h6>
+                                    </div><br/>
+                                <div class="row">
+                                  <div class="col-4 mb-9">
+                                    <p class="mb-1 fs-2" >Department</p>
+                                    <h6 class="fw-semibold mb-0" style="width: 600px;">${employeeVO.empDept }</h6>
+                                  </div>
+                                  <div class="col-8 mb-7">
+                                    <p class="mb-1 fs-2">Position</p>
+                                    <h6 class="fw-semibold mb-0">${employeeVO.empPosition }</h6>
+                                  </div>
+                                  </div>
+                                 
+                                  <div class="col-8 mb-7">
+                                    <p class="mb-1 fs-2">QR Code</p>
+                                    <h6 class="fw-semibold mb-0">큐알코드 들어올곳</h6>
+                                  </div>
+                                </div>
+                                <div class="border-bottom pb-7 mb-4">
+                                 
+                                </div>
+                                <div class="d-flex align-items-center gap-6" style="justify-content: center; gap: 10px;">
+                                  <!-- <button class="btn btn-primary" fdprocessedid="pk6kl8">Edit</button>
+                                  <button class="btn bg-danger-subtle text-danger" fdprocessedid="83zpb">Delete</button> -->
+                                </div>
+                              </div>
+                             </div>
+                            </div>
+                           </div>
+                          </div>
+                         </div>
+                         
+                         
+                        </div>
+                       </div>
+					 <div class="card card-body">
+		              <div class="row">
+		                <div class="col-md-4 col-xl-3">
+		                 
+		                </div>
+		                <div class="col-md-8 col-xl-9 text-end d-flex justify-content-md-end justify-content-center mt-3 mt-md-0">
+		                  <div class="action-btn" style="display: flex; justify-content: center; align-items: center;" -btn="" show-btn"="">
+		                  </div>
+		                  <input type="hidden" name="empId" value="${employeeVO.empId }"/>
+		                  <a href="/management/empDetail?empId=${employeeVO.empId }" class="btn btn-outline-primary d-flex align-items-center">
+		                     이전
+		                  </a>
+		                </div>
+		              </div>
+		            </div>
+                              
+               

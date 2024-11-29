@@ -1,0 +1,106 @@
+package kr.or.ddit.partner.common.qna.web;
+
+import java.util.List;
+import javax.inject.Inject;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import kr.or.ddit.partner.common.qna.service.IPartnerQnaService;
+import kr.or.ddit.partner.common.qna.vo.PartnerQnaVO;
+import kr.or.ddit.util.vo.PaginationVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("/partner/qna")
+public class PartnerQnaController {
+
+	@Inject
+	private IPartnerQnaService service;
+	
+	@GetMapping("/register")
+	public String qnaForm() {
+		log.info("qnaForm() 실행...!");
+		return "partner/common/qnaRegister";
+	}
+	
+	@PostMapping("/register")
+	public String qnaRegister(PartnerQnaVO partnerQnaVO, Model model, RedirectAttributes ra) {
+		log.info("qnaRegister() 실행...!");
+		service.register(partnerQnaVO);
+		ra.addFlashAttribute("msg", "등록 완료");
+		ra.addFlashAttribute("message", "등록이 완료되었습니다!");
+		return "redirect:/partner/qna/list";
+	}
+
+	@GetMapping("/list")
+	public String qnaList(
+			@RequestParam(name="page", required=false, defaultValue = "1") int currentPage,
+			@RequestParam(required = false, defaultValue = "title") String searchType,
+			@RequestParam(required = false) String searchWord, Model model
+			) {
+		log.info("qnaList() 실행...!");
+
+		PaginationVO<PartnerQnaVO> pagingVO = new PaginationVO<PartnerQnaVO>(10,5);
+		
+		// 검색 기능 추가
+		if(StringUtils.isNotBlank(searchWord)) {
+			pagingVO.setSearchWord(searchWord);
+			pagingVO.setSearchType(searchType);
+			model.addAttribute("searchWord", searchWord);
+			model.addAttribute("searchType", searchType);
+		}
+		// startRow, endRow, startPage, endPage를 결정한다.
+		pagingVO.setCurrentPage(currentPage);
+		// 총 게시글 수를 이용하여 총 페이지수를 결정하기 위해 총 게시글 수인 totalRecord를 얻어온다.
+		int totalRecord = service.qnaCount(pagingVO);
+		// totalPage를 결정한다.
+		pagingVO.setTotalRecord(totalRecord);
+		// 총 게시글 수 및 총 페이지 수, startRow, endRow의 값들을 이용하여 초기 1페이지에 들어있는 총 screenSize 개수만큼의 리스트 데이터를 가져온다.
+		List<PartnerQnaVO> dataList = service.qnaList(pagingVO);
+		pagingVO.setDataList(dataList);
+		model.addAttribute("pagingVO", pagingVO);
+		return "partner/common/qnaList";
+	}
+	
+	@GetMapping("/detail")
+	public String qnaDetail(int qnaNo, Model model) {
+		log.info("qnaDetail() 실행...!");
+		PartnerQnaVO partnerQnaVO = service.detail(qnaNo);
+		model.addAttribute("partnerQnaVO", partnerQnaVO);
+		return "partner/common/qnaDetail";
+	}
+	
+	@GetMapping("/update")
+	public String qnaUpdateForm(int qnaNo, Model model) {
+		log.info("qnaUpdateForm() 실행...!");
+		PartnerQnaVO partnerQnaVO = service.detail(qnaNo);
+		model.addAttribute("partnerQnaVO", partnerQnaVO);
+		return "partner/common/qnaUpdate";
+	}
+	
+	@PostMapping("/update")
+	public String qnaUpdate(PartnerQnaVO partnerQnaVO, Model model, RedirectAttributes ra) {
+		log.info("qnaUpdate() 실행...!");
+		service.update(partnerQnaVO);
+		ra.addFlashAttribute("msg", "수정");
+		ra.addFlashAttribute("message", "수정이 완료되었습니다!");
+	    return "redirect:/partner/qna/detail?qnaNo=" + partnerQnaVO.getQnaNo();
+	}
+	
+	@PostMapping("/delete")
+	public String qnaDelete(int qnaNo, Model model, RedirectAttributes ra) {
+		log.info("qnaDelete() 실행...!");
+		service.delete(qnaNo);
+		ra.addFlashAttribute("msg", "삭제");
+		ra.addFlashAttribute("message", "삭제가 완료되었습니다!");
+		return "redirect:/partner/qna/list";
+	}
+	
+}

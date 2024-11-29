@@ -1,0 +1,167 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="vertical">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<div class="body-wrapper">
+    <div class="container-fluid">
+        <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+            <div class="card-body px-4 py-3">
+                <div class="row align-items-center">
+                    <div class="col-9">
+                        <h4 class="fw-semibold mb-8">Calendar</h4>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a class="text-muted text-decoration-none" href="../main/index.html">Home</a>
+                                </li>
+                                <li class="breadcrumb-item" aria-current="page">Calendar</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-center mb-n5">
+                            <img src="../assets/images/breadcrumb/ChatBc.png" alt="modernize-img" class="img-fluid mb-n4" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div id="calendar"></div>
+        </div>
+        
+        <!-- BEGIN MODAL -->
+        <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="eventModalLabel">일정 추가</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div>
+                                    <label class="form-label">일정 제목</label>
+                                    <input id="event-title" type="text" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-6">
+                                <div>
+                                    <label class="form-label">일정 색상</label>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="n-chk">
+                                        <div class="form-check form-check-primary form-check-inline">
+                                            <input class="form-check-input" type="radio" name="event-level" value="Danger" id="modalDanger" />
+                                            <label class="form-check-label" for="modalDanger">Danger</label>
+                                        </div>
+                                    </div>
+                                    <div class="n-chk">
+                                        <div class="form-check form-check-warning form-check-inline">
+                                            <input class="form-check-input" type="radio" name="event-level" value="Success" id="modalSuccess" />
+                                            <label class="form-check-label" for="modalSuccess">Success</label>
+                                        </div>
+                                    </div>
+                                    <div class="n-chk">
+                                        <div class="form-check form-check-success form-check-inline">
+                                            <input class="form-check-input" type="radio" name="event-level" value="Primary" id="modalPrimary" />
+                                            <label class="form-check-label" for="modalPrimary">Primary</label>
+                                        </div>
+                                    </div>
+                                    <div class="n-chk">
+                                        <div class="form-check form-check-danger form-check-inline">
+                                            <input class="form-check-input" type="radio" name="event-level" value="Warning" id="modalWarning" />
+                                            <label class="form-check-label" for="modalWarning">Warning</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mt-6">
+                                <div>
+                                    <label class="form-label">시작일</label>
+                                    <input id="event-start-date" type="date" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mt-6">
+                                <div>
+                                    <label class="form-label">종료일</label>
+                                    <input id="event-end-date" type="date" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-add-event">등록</button>
+                        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END MODAL -->
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth', // 초기 뷰가 월단위
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        dateClick: function(info) {
+            // 날짜 클릭 시 모달 열기
+            $('#eventModal').modal('show');
+            document.getElementById('event-start-date').value = info.dateStr; // 클릭한 날짜를 시작 날짜로 설정
+            document.getElementById('event-end-date').value = info.dateStr; // 클릭한 날짜를 종료 날짜로 설정
+        }
+    });
+
+    calendar.render();
+
+    // 이벤트 추가 버튼 클릭 시
+    document.querySelector('.btn-add-event').addEventListener('click', function() {
+        var title = document.getElementById('event-title').value;
+		console.log("title : " + title);        
+        var startDate = document.getElementById('event-start-date').value;
+        var endDate = document.getElementById('event-end-date').value;
+        var selectedColor = document.querySelector('input[name="event-level"]:checked').value;
+
+        $.ajax({
+            url: '/common/addEvent', 
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                calTitle: title,
+                calStartdate: startDate, 
+                calEnddate: endDate,
+                empNo: 2 // 예시 직원번호
+            }),
+            success: function(response) {
+                $('#eventModal').modal('hide');
+                calendar.addEvent({
+                    title: title,
+                    start: startDate,
+                    end: endDate,
+                    color: selectedColor // 색상 선택 컬럼 추가?
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error adding event:', error);
+            }
+        });
+
+    });
+});
+</script>

@@ -1,0 +1,101 @@
+package kr.or.ddit.management.human.management.service.impl;
+
+import java.io.File;
+import java.util.List;
+import java.util.UUID;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import kr.or.ddit.management.human.management.mapper.ManagementMapper;
+import kr.or.ddit.management.human.management.service.IManagementService;
+import kr.or.ddit.management.human.management.vo.EmployeeVO;
+import kr.or.ddit.util.vo.PaginationVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+public class ManagementServiceImpl implements IManagementService {
+
+	@Inject
+	private PasswordEncoder pe;
+	
+	@Inject
+	private ManagementMapper mapper;
+	
+	@Override
+	public List<EmployeeVO> empList() {
+		log.info("# ManagementServiceImpl list");
+		return mapper.empList();
+	}
+
+	@Override
+	public int empRegister(HttpServletRequest req, EmployeeVO employeeVO) {
+		log.info("# ManagementServiceImpl register");
+		
+		String uploadPath = req.getServletContext().getRealPath("/resources/profile");
+		log.info("파일 업로드 경로: " + uploadPath);
+		File file = new File(uploadPath);
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+		
+		employeeVO.setEmpPw(pe.encode(employeeVO.getEmpDepw()));
+		
+		String profileImg = ""; // 회원정보에 추가할 프로필 이미지 경로
+		log.info("프로필 이미지 경로: " + profileImg);
+		try {
+			MultipartFile profileImgFile = employeeVO.getImgFile(); // 넘겨받은 회원정보에서 프로필 데이터 가져오기
+			
+			// 넘겨받은 파일 데이터가 존재할 때
+			if(profileImgFile != null && profileImgFile.getOriginalFilename() != null &&
+					!profileImgFile.getOriginalFilename().equals("")) {
+				String fileName = UUID.randomUUID().toString();	// UUID 파일명 생성
+				
+				fileName += "_" + profileImgFile.getOriginalFilename();	// UUID_원본파일명
+				uploadPath += "/" + fileName;	// 업로드하기 위한 경로 생성(/resources/profile/UUID_원본파일명)
+				profileImgFile.transferTo(new File(uploadPath));	// 파일 복사
+				profileImg = "/resources/profile/" + fileName;	// 파일 복사가 일어난 파일의 위치로 접근하기 위한 URI 설정
+			}
+			employeeVO.setEmpImage(profileImg);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+		return mapper.empRegister(employeeVO);
+	}
+
+	@Override
+	public EmployeeVO empDetail(String empId) {
+		log.info("# ManagementServiceImpl detail");
+		return mapper.empDetail(empId);
+	}
+
+	@Override
+	public void empUpdate(EmployeeVO employeeVO) {
+		log.info("# ManagementServiceImpl update");
+		mapper.empUpdate(employeeVO);
+	}
+
+	@Override
+	public void empDelete(String empId) {
+		mapper.empDelete(empId);
+	}
+
+	@Override
+	public int selectEmpCount(PaginationVO<EmployeeVO> pagingVO) {
+		return mapper.selectEmpCount(pagingVO);
+	}
+
+	@Override
+	public List<EmployeeVO> selectEmpList(PaginationVO<EmployeeVO> pagingVO) {
+		return mapper.selectEmpList(pagingVO);
+	}
+
+	
+
+}

@@ -1,0 +1,14 @@
+package kr.or.ddit.common.etc.chat.vo;
+
+import lombok.Data;
+
+@Data
+public class ChatRoomVO {
+	private int roomNo;
+	private int empNo;
+	private String roomName;
+	private String roomCreate;
+	private String singleChat;
+	
+	private String myId;
+}

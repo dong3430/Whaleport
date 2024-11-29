@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="kr.or.ddit.partner.common.account.mapper.PartnerAccountMapper">
+	<resultMap type="kr.or.ddit.partner.common.account.vo.PartnerVO" id="PartnerVO">
+		<result property="ptNo" column="pt_no" />
+		<result property="ptMoney" column="pt_money" />
+		<result property="ptName" column="pt_name" />
+		<result property="ptStartdate" column="pt_startdate" />
+		<result property="ptEnddate" column="pt_enddate" />
+		<result property="ptBusnum" column="pt_busnum" />
+		<result property="ptId" column="pt_id" />
+		<result property="ptPw" column="pt_pw" />
+		<result property="ptFilecode" column="pt_filecode" />
+		<result property="ptImage" column="pt_image" />
+		<result property="ptXpos" column="pt_xpos" />
+		<result property="ptYpos" column="pt_ypos" />
+		<result property="ptOpendate" column="pt_opendate" />
+		<result property="ptCode" column="pt_code" />
+		<result property="ptAdd" column="pt_add" />
+		<result property="ptAdd2" column="pt_add2" />
+		<result property="ptPostcode" column="pt_postcode" />
+		<result property="ptApproval" column="pt_approval" />
+		<result property="ptReject" column="pt_reject" />
+		<result property="ptMgrname" column="pt_mgrname" />
+		<result property="ptMgremail" column="pt_mgremail" />
+		<result property="ptMgrtel" column="pt_mgrtel" />
+		<result property="ptCeo" column="pt_ceo" />
+		<result property="comdName" column="comdName" />
+	</resultMap>
+  
+	<sql id="search">
+	    <if test="searchWord != null and searchWord != ''">
+	        and (
+	            pt_name like '%' || #{searchWord} || '%' or 
+	            pt_busnum like '%' || #{searchWord} || '%'
+	        )
+	    </if>
+	    <if test="selectedItem != null">
+	    	and (
+	    		pt_approval = #{selectedItem}
+	    	)
+	    </if>
+	</sql>
+
+ 	<insert id="register" parameterType="kr.or.ddit.partner.common.account.vo.PartnerVO">
+ 		INSERT INTO PARTNER(
+ 			PT_NO, PT_CODE, PT_BUSNUM, PT_NAME, PT_CEO, PT_OPENDATE, PT_POSTCODE, PT_ADD, PT_ADD2, PT_MGRNAME, PT_MGREMAIL, PT_MGRTEL, PT_APPROVAL  
+ 		)VALUES(
+ 			SEQ_PARTNER.NEXTVAL, #{ptCode}, #{ptBusnum}, #{ptName}, #{ptCeo}, #{ptOpendate}, #{ptPostcode}, #{ptAdd}, #{ptAdd2}, #{ptMgrname}, #{ptMgremail}, #{ptMgrtel}, 'H'
+ 		)
+ 	</insert>
+
+    <select id="list" parameterType="kr.or.ddit.util.vo.PaginationVO" resultType="kr.or.ddit.partner.common.account.vo.PartnerVO">
+        SELECT 
+            b.*
+        FROM (
+            SELECT 
+                a.*, row_number() over(order by a.pt_no desc) rnum
+            FROM (
+                SELECT 
+					PT.PT_NO, PT.PT_NAME, PT.PT_BUSNUM, PT_CODE, PT_APPROVAL, PT_OPENDATE, CDC.COMD_NAME, PT_CEO, PT_MGRTEL
+				FROM PARTNER PT, COMMON_DETAIL_CODE CDC
+				WHERE PT.PT_CODE = CDC.COMD_CODE
+				AND 1=1
+                <include refid="search"/>
+                ORDER BY PT.PT_NO DESC
+            ) a
+        ) b
+        <![CDATA[
+             WHERE b.rnum >= #{startRow} AND b.rnum <= #{endRow} 
+         ]]> 
+    </select>
+
+ 	<select id="accountCount" parameterType="kr.or.ddit.util.vo.PaginationVO" resultType="int">
+    	SELECT COUNT(PT_NO)
+        FROM PARTNER
+        WHERE 1=1
+        <include refid="search"/>
+    </select>
+    
+    <select id="detail" parameterType="int" resultType="kr.or.ddit.partner.common.account.vo.PartnerVO">
+        SELECT 
+			PT.PT_NO, PT.PT_NAME, PT.PT_BUSNUM, PT.PT_CODE, PT.PT_APPROVAL, PT.PT_OPENDATE, CDC.COMD_NAME, PT.PT_CEO, PT.PT_POSTCODE, PT.PT_ADD, PT.PT_ADD2, PT.PT_REJECT, 
+			PT.PT_MGRNAME, PT.PT_MGREMAIL, PT.PT_MGRTEL, PT.PT_ID, PT.PT_STARTDATE, PT.PT_ENDDATE, PT.PT_FILECODE, PT.PT_MONEY
+		FROM PARTNER PT, COMMON_DETAIL_CODE CDC
+		WHERE PT.PT_CODE = CDC.COMD_CODE
+		AND PT.PT_NO = #{ptNo}
+ 	</select>
+ 	
+ 	<update id="approve" parameterType="kr.or.ddit.partner.common.account.vo.PartnerVO">
+		UPDATE PARTNER
+		SET PT_APPROVAL = #{ptApproval},
+			PT_REJECT = #{ptReject}
+		WHERE PT_NO = #{ptNo}
+ 	</update>
+ 	
+ 	<update id="idIssue" parameterType="kr.or.ddit.partner.common.account.vo.PartnerVO">
+		UPDATE PARTNER
+		SET PT_ID = #{ptId},
+			PT_PW = #{ptPw}
+		WHERE PT_NO = #{ptNo}
+ 	</update>
+
+ 	<update id="update" parameterType="kr.or.ddit.partner.common.account.vo.PartnerVO">
+	    UPDATE PARTNER PT
+	    SET PT.PT_NAME = #{ptName},
+	        PT.PT_STARTDATE = #{ptStartdate},
+	        PT.PT_ENDDATE = #{ptEnddate},
+	        PT.PT_OPENDATE = #{ptOpendate},
+	        PT.PT_MONEY = #{ptMoney},
+	        PT.PT_BUSNUM = #{ptBusnum},
+	        PT.PT_CEO = #{ptCeo},
+	        PT.PT_ADD = #{ptAdd},
+	        PT.PT_ADD2 = #{ptAdd2},
+	        PT.PT_MGRNAME = #{ptMgrname},
+	        PT.PT_MGREMAIL = #{ptMgremail},
+	        PT.PT_MGRTEL = #{ptMgrtel},
+	        PT.PT_CODE = #{ptCode}
+	    WHERE PT.PT_NO = #{ptNo}
+ 	</update>
+ 	
+	<select id="count" resultType="kr.or.ddit.partner.common.account.vo.PartnerVO">
+	    SELECT 
+	        SUM(CASE WHEN PT_APPROVAL = 'Y' THEN 1 ELSE 0 END) AS countY,
+	        SUM(CASE WHEN PT_APPROVAL = 'N' THEN 1 ELSE 0 END) AS countN,
+	        SUM(CASE WHEN PT_APPROVAL = 'H' THEN 1 ELSE 0 END) AS countH,
+	        COUNT(PT_NO) AS totalCount
+	    FROM PARTNER
+	    WHERE 1=1
+	</select>
+	
+
+ </mapper>

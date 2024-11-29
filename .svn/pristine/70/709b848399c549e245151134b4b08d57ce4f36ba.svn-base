@@ -1,0 +1,23 @@
+package kr.or.ddit.common.etc.calendar.service.impl;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.common.etc.calendar.mapper.CalendarMapper;
+import kr.or.ddit.common.etc.calendar.service.ICalendarService;
+import kr.or.ddit.common.etc.calendar.vo.CalendarVO;
+
+
+@Service
+public class CalendarServiceImpl implements ICalendarService{
+
+	@Inject
+	private CalendarMapper mapper;
+	
+	@Override
+	public void addEvent(CalendarVO calendarVO) {
+		mapper.addEvent(calendarVO);
+	}
+
+}

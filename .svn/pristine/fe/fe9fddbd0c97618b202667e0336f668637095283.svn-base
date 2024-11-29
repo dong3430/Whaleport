@@ -1,0 +1,352 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<style>
+.card11 {
+	width: 350px;
+	height: 350px;
+	perspective: 1100px;
+	position: relative;
+	margin: 10px;
+	transition: transform 1.0s;
+	transform-style: preserve-3d;
+	cursor: pointer;
+	transform: rotateY(0deg);
+}
+
+.front, .back {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+.front {
+	background: teal;
+}
+
+.back {
+	background: white;
+	display: flex; /* Flexbox를 사용하여 내용 중앙 정렬 */
+	justify-content: center;
+	align-items: center;
+	text-align: center; /* 텍스트 중앙 정렬 */
+	transform: rotateY(180deg);
+}
+</style>
+<!-- index5.html 사용 -->
+<div class="body-wrapper">
+        <div class="container-fluid">
+          <div class="row">
+<!--             <div class="col-12"> -->
+<!--               <div class="d-flex align-items-center gap-4 mb-4"> -->
+<!--                 <div class="position-relative"> -->
+<!--                   <div class="border border-2 border-primary rounded-circle"> -->
+<!--                     <img src="../assets/images/profile/user-1.jpg" class="rounded-circle m-1" alt="user1" width="60" /> -->
+<!--                   </div> -->
+<!--                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-primary"> 3 -->
+<!--                     <span class="visually-hidden">unread messages</span> -->
+<!--                   </span> -->
+<!--                 </div> -->
+<!--                 <div> -->
+<!--                   <h3 class="fw-semibold">Mathew Anderson</span> -->
+<!--                   </h3> -->
+<!--                   <span>Cheers, and happy activities - July 6 2024</span> -->
+<!--                 </div> -->
+<!--               </div> -->
+<!--             </div> -->
+
+			<!-- 에바 -->
+          <div class="col-lg-3 d-flex justify-content-center align-items-stretch">
+                <div class="card11 w-100" style="border-radius: 15px; overflow: hidden; height: 500px;">
+                    <div class="front" style="background-image: url('${pageContext.request.contextPath}/resources/assets/images/profile/pass.png'); background-size: cover; background-position: center; padding: 20px;z-index:2000">
+                        <div class="chat-list chat active-chat" style="margin-top:100px;">
+                            <div style="text-align: center;">
+                                <img src="${employeeVO.empImage }" alt="user4" width="150" height="180" class="rounded-circle"><br>
+                                <p class="mb-1 fs-3"><strong>Name</strong></p>
+                                <h6 class="fs-4 mb-0" style="font-size: 30px !important;"><strong>${employeeVO.empName }</strong></h6><br>
+                                <div class="row" style="text-align: center;">
+                                    <div class="col-6 mb-9">
+                                        <p class="mb-1 fs-3"><strong>Department</strong></p>
+                                        <h6 class="fw-semibold mb-0" style="font-size: 15px;">${employeeVO.empDept }</h6>
+                                    </div>
+                                    <div class="col-6 mb-9">
+                                        <p class="mb-1 fs-3"><strong>Position</strong></p>
+                                        <h6 class="fw-semibold mb-0" style="font-size: 15px;">${employeeVO.empPosition }</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+                    <div class="back" style="background-image: url('${pageContext.request.contextPath}/resources/assets/images/profile/pass2.png'); background-size: cover; background-position: center; padding: 20px;">
+                        <div class="row" style="text-align: center;">
+                            <div class="col-12 mb-7">
+                                <h6 class="fw-semibold mb-0" style="font-size: 15px;">${employeeVO.empId }</h6>
+                                <img src="${pageContext.request.contextPath}/resources/assets/images/svgs/QR.png" alt="QR Code" style="width: 150px; height: 150px; margin-top: 10px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 끝 -->
+            
+	        <!-- 급식 API 넣을 예정 -->
+            <div class="col-lg-9 d-flex align-items-stretch">
+              <div class="card w-100 bg-primary-subtle overflow-hidden">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <h5 class="card-title fw-semibold">Sales Hourly</h5>
+                      <div class="d-flex gap-2">
+                        <span>
+                          <span class="round-8 text-bg-primary rounded-circle d-inline-block"></span>
+                        </span>
+                        <span>Your data updates every 3 hours</span>
+                      </div>
+                    </div>
+                    <div class="ms-auto d-flex align-items-stretch gap-2">
+                      <a href="javascript:void(0)" class="btn btn-primary">
+                        <i class="ti ti-download fs-6"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div id="activity-status"></div>
+              </div>
+            </div>
+            
+            
+			<!-- 공지사항 -->
+			<div class="col-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="d-md-flex align-items-center mb-4">
+        <div>
+          <h4 class="card-title fw-semibold">공지사항</h4>
+          <p class="card-subtitle">전체 ${pagingVO.totalRecord}건</p>
+        </div>
+        <div class="ms-auto mt-4 mt-md-0">
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link rounded active" href="/info/notice/list">
+                <span>더보기</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 공지사항 글 목록 -->
+      <div class="tab-content mt-3">
+        <div class="tab-pane active" id="home" role="tabpanel">
+          <div class="table-responsive">
+            <table class="table align-middle mb-0 text-center">
+              <thead>
+                <tr>
+                  <th>제목</th>
+                  <th>내용</th>
+                  <th>작성자</th>
+                  <th>작성일</th>
+                </tr>
+              </thead>
+              <tbody>
+                <c:set value="${pagingVO.dataList}" var="noticeList" />
+                <c:choose>
+                  <c:when test="${empty noticeList}">
+                    <tr>
+                      <td colspan="4">조회하신 게시글이 존재하지 않습니다.</td>
+                    </tr>
+                  </c:when>
+                  <c:otherwise>
+                    <c:forEach items="${noticeList}" var="notice">
+                      <tr>
+                        <td><a href="/info/notice/detail?noNo=${notice.noNo}">${notice.noTitle}</a></td>
+                        <td>${notice.noContent}</td>
+                        <td>${notice.empName}</td>
+                        <td>${notice.noDate}</td>
+                      </tr>
+                    </c:forEach>
+                  </c:otherwise>
+                </c:choose>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+			
+
+
+
+
+
+			<div class="col-lg-5 d-flex align-items-stretch">
+              <div class="card w-100">
+                <div class="card-body">
+                  <h4 class="card-title fw-semibold">Tasks</h4>
+                  <p class="card-subtitle">The Power of Prioritizing Your Tasks</p>
+                  <div class="mt-4 pb-3 border-bottom">
+                    <div class="d-flex align-items-center">
+                      <span class="bg-primary-subtle text-primary badge">Inprogress</span>
+                      <span class="fs-3 ms-auto">8 March 2020</span>
+                    </div>
+                    <h6 class="mt-3">NFT Landing Page</h6>
+                    <span class="fs-3 lh-sm">Designing an NFT-themed website with a creative concept so th...</span>
+                    <div class="hstack gap-3 mt-3">
+                      <a href="javascript:void(0)" class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
+                        <i class="ti ti-clipboard fs-6 text-primary me-2 d-flex"></i> 2 Tasks
+                      </a>
+                      <a href="javascript:void(0)" class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
+                        <i class="ti ti-message-dots fs-6 text-primary me-2 d-flex"></i> 13 Commets
+                      </a>
+                    </div>
+                  </div>
+                  <div class="py-3 border-bottom">
+                    <div class="d-flex align-items-center">
+                      <span class="bg-danger-subtle text-danger badge">Inpending</span>
+                      <span class="fs-3 ms-auto">8 Jan 2024</span>
+                    </div>
+                    <h6 class="mt-3">Dashboard Finanace Management</h6>
+                    <span class="fs-3 lh-sm">Designing an NFT-themed website with a creative concept so th...</span>
+                    <div class="hstack gap-3 mt-3">
+                      <a href="javascript:void(0)" class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
+                        <i class="ti ti-clipboard fs-6 text-primary me-2 d-flex"></i> 4 Tasks
+                      </a>
+                      <a href="javascript:void(0)" class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
+                        <i class="ti ti-message-dots fs-6 text-primary me-2 d-flex"></i> 50 Commets
+                      </a>
+                    </div>
+                  </div>
+                  <div class="pt-3">
+                    <div class="d-flex align-items-center">
+                      <span class="bg-success-subtle text-success badge">Completed</span>
+                      <span class="fs-3 ms-auto">8 Feb 2024</span>
+                    </div>
+                    <h6 class="mt-3">Logo Branding</h6>
+                    <span class="fs-3 lh-sm">Designing an NFT-themed website with a creative concept so th...</span>
+                    <div class="hstack gap-3 mt-3">
+                      <a href="javascript:void(0)" class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
+                        <i class="ti ti-clipboard fs-6 text-primary me-2 d-flex"></i> 1 Task
+                      </a>
+                      <a href="javascript:void(0)" class="fs-3 text-bodycolor d-flex align-items-center text-decoration-none">
+                        <i class="ti ti-message-dots fs-6 text-primary me-2 d-flex"></i> 12 Commets
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-7 d-flex align-items-stretch">
+              <div class="card w-100">
+                <div class="card-body border-bottom">
+                  <div class="d-md-flex align-items-center">
+                    <div>
+                      <h5 class="card-title fw-semibold">Team Performance</h5>
+                      <p class="card-subtitle">How to Measure Team Performance</p>
+                    </div>
+                    <div class="ms-auto mt-4 mt-md-0">
+                      <div class="hstack">
+                        <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="John Deo">
+                          <img src="../assets/images/profile/user-2.jpg" class="rounded-circle border border-2 border-white" width="35" alt="u1" />
+                        </a>
+                        <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Mark Smith" class="ms-n2">
+                          <img src="../assets/images/profile/user-3.jpg" class="rounded-circle border border-2 border-white" width="35" alt="u2" />
+                        </a>
+                        <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Jonthan Leo" class="ms-n2">
+                          <img src="../assets/images/profile/user-4.jpg" class="rounded-circle border border-2 border-white" width="35" alt="u3" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-4">
+                    <div class="col-md-6">
+                      <div class="hstack p-3 border rounded mb-3 mb-md-0">
+                        <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="John Deo">
+                          <img src="../assets/images/profile/user-2.jpg" class="rounded-circle border border-2 border-white" width="30" alt="u4" />
+                        </a>
+                        <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Mark Smith" class="ms-n2">
+                          <img src="../assets/images/profile/user-3.jpg" class="rounded-circle border border-2 border-white" width="30" alt="u2" />
+                        </a>
+                        <div class="ms-3">
+                          <h6 class="mb-0 fs-3">Monster Dashboard</h6>
+                          <span class="fs-2">46%</span>
+                          <span class="fs-2 ms-4">Due in 3 days</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="hstack p-3 border rounded">
+                        <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="John Deo">
+                          <img src="../assets/images/profile/user-4.jpg" class="rounded-circle border border-2 border-white" width="30" alt="u3" />
+                        </a>
+                        <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Mark Smith" class="ms-n2">
+                          <img src="../assets/images/profile/user-5.jpg" class="rounded-circle border border-2 border-white" width="30" alt="u4" />
+                        </a>
+                        <div class="ms-3">
+                          <h6 class="mb-0 fs-3">Xtreme Dashboard</h6>
+                          <span class="fs-2">87%</span>
+                          <span class="fs-2 ms-4">Due in 7 days</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-4">
+                    <div id="team-performance"></div>
+                  </div>
+                  <div class="text-center">
+                    <span class="d-block">Your team performance is 5% better this week.</span>
+                    <a href="javascript:void(0)" class="btn btn-primary mt-4">View Details</a>
+                  </div>
+                </div>
+                <div class="p-3">
+                  <div class="hstack gap-3 justify-content-center">
+                    <div>
+                      <span>
+                        <span class="round-8 text-bg-primary rounded-circle d-inline-block me-2"></span>
+                      </span>
+                      <span class="fs-3 text-dark">Completed 124</span>
+                    </div>
+                    <div>
+                      <span>
+                        <span class="round-8 text-bg-danger rounded-circle d-inline-block me-2"></span>
+                      </span>
+                      <span class="fs-3 text-dark">Percentage 86%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll(".card11");
+    for (const card of cards) {
+        card.addEventListener("click", flipper);
+    }
+    
+//     $(".front").on("click", function () {
+// 		$(this).css("transform","rotateY(90deg)");
+// 	});
+    
+    function flipper(event) {
+        const target = event.currentTarget;
+        // 현재 회전 상태에 따라 회전
+        if (target.style.transform === "rotateY(0deg)" || target.style.transform === "") {
+            target.style.transform = "rotateY(180deg)";
+        	setTimeout(() => {
+	        	$(".front").css("z-index", "0");
+	        	$(".back").css("z-index", "1000");
+			}, 250);
+        } else {
+        	setTimeout(() => {
+	        	$(".back").css("z-index", "0");
+	        	$(".front").css("z-index", "1000");
+			}, 250);
+        	target.style.transform = "rotateY(0deg)";
+        }
+    }
+});
+</script>
+      

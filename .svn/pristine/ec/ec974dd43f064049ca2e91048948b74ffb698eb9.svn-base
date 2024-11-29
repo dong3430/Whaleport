@@ -1,0 +1,289 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<style>
+    .table th {
+        text-align: center;
+    }
+    .table td {
+        text-align: center;
+    }
+</style>
+<div class="body-wrapper">
+    <div class="container-fluid">
+    <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+            <div class="card-body px-4 py-3">
+              <div class="row align-items-center">
+                <div class="col-9">
+                  <h4 class="fw-semibold mb-8">근태 현황</h4>
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a class="text-muted text-decoration-none" href="/common/home">DashBoard</a>
+                      </li>
+                      <li class="breadcrumb-item" aria-current="page">Attendance</li>
+                    </ol>
+                  </nav>
+                </div>
+                <div class="col-3">
+                 <div class="text-center mb-n4">
+                    <img src="${pageContext.request.contextPath }/resources/assets/images/logos/symbol-01.png" alt="modernize-img" class="img-fluid" style="width: 120px; height: auto;">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <div class="card w-100 position-relative overflow-hidden">
+<!--      <div class="card-body p-4"> -->
+     <div >
+		
+        <span class="badge bg-success-subtle text-success fw-semibold fs-2 gap-1 d-inline-flex align-items-center">
+                <button class="ti ti-circle fs-3" id="btnArrive" onclick="goToWork()" style="border:0; background: rgb(0,0,0,0); color: #13DEB9;">ON</button>
+        </span>
+        <br/>
+        
+        <div class="col-md-6" style="display: inline-block;">
+<!--         <div class="col-md-3" style="display: inline-block;"> -->
+<!--             <div class="col-md-6" > -->
+            <div>
+              <div class="card text-bg-success">
+                <div class="card-body text-white">
+                  <div class="d-flex flex-row align-items-center">
+                    <div class="round-40 rounded-circle d-flex align-items-center justify-content-center bg-white">
+                      <i class="ti ti-credit-card fs-6 text-success"></i>
+                    </div>
+                    <div class="ms-3">
+                      <h4 class="mb-0 text-white fs-6">Total Income</h4>
+                      <span class="text-white-50">Income</span>
+                    </div>
+                    <div class="ms-auto">
+                      <h2 class="fs-7 mb-0 text-white">
+                        $2900
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+<!--              <div class="col-md-6"> -->
+             <div>
+              <div class="card text-bg-info">
+                <div class="card-body text-white">
+                  <div class="d-flex flex-row align-items-center">
+                    <div class="round-40 rounded-circle d-flex align-items-center justify-content-center bg-white">
+                      <i class="ti ti-credit-card fs-6 text-info"></i>
+                    </div>
+                    <div class="ms-3">
+                      <h4 class="mb-0 text-white fs-6">Total Products</h4>
+                      <span class="text-white-50">Users</span>
+                    </div>
+                    <div class="ms-auto">
+                      <h2 class="fs-7 mb-0 text-white">
+                        $2690
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+           
+<!--            <div class="col-md-3" style="display: inline-block;"> -->
+           <div class="col-md-6" style="display: inline-block;">
+           <h1>여기</h1>
+           </div>
+        
+        
+        <c:choose>
+        	<c:when test="${not empty empWorkVO.workArrive }">
+        	${empWorkVO.workArrive }
+        	</c:when>
+        	<c:otherwise>
+				<span id="workArriveArea"></span>
+        	</c:otherwise>
+        </c:choose>
+        
+		<br/>
+		
+		
+		<!-- 출근버튼 누르면 지나가는 시간 -->
+		<span id="time"></span>
+		<br>
+		
+
+        <span class="badge text-bg-light text-dark fw-semibold fs-2 gap-1 d-inline-flex align-items-center">
+           <button class="ti ti-clock-hour-4 fs-3" id="btnLeave" onclick="goToHome()" style="border:0; background: rgb(0,0,0,0); color: #2A3547;">OFF</button>
+        </span>
+        
+        <c:choose>
+        	<c:when test="${not empty empWorkVO.workLeave }">
+        	${empWorkVO.workLeave }
+        	
+        	</c:when>
+        	<c:otherwise>
+				<span id="workLeaveArea"></span>
+        	</c:otherwise>
+        </c:choose>
+        
+        
+		<br>
+		
+	        총<span id="total">
+        <c:choose>
+        	<c:when test="${not empty empWorkVO.workLeave }">
+    			${empWorkVO.workTime }
+        	</c:when>
+        	<c:otherwise>
+        	</c:otherwise>
+        </c:choose>
+		</span>
+		
+		
+		<br><br>
+
+
+ <div class="table-responsive mb-4 border rounded-1 mt-3">
+                    <table class="table table-hover text-nowrap mb-0 align-middle" style="table-layout: fixed;">
+                        <thead class="text-dark fs-4">
+                            <tr>
+                                <th width=""><h6 class="fs-4 fw-semibold mb-0">정상출근</h6></th>
+                                <th width=""><h6 class="fs-4 fw-semibold mb-0">지각</h6></th>
+                                <th width=""><h6 class="fs-4 fw-semibold mb-0">조기 퇴근</h6></th>
+                                <th width=""><h6 class="fs-4 fw-semibold mb-0">결근</h6></th>
+                                <th width=""><h6 class="fs-4 fw-semibold mb-0">퇴근 미체크</h6></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+							<tr>   
+							<c:choose>
+							<c:when test="${not empty empWorkVO.workLeave }">
+                                <td><p id="ew1" class="mb-0 fw-normal fs-4">${empWorkVO.workNormal}</p></td>
+                                <td><p id="ew2" class="mb-0 fw-normal fs-4">${empWorkVO.workLate}</p></td>
+                                <td><p id="ew3" class="mb-0 fw-normal fs-4">${empWorkVO.workEarly}</p></td>
+                                <td><p id="ew4" class="mb-0 fw-normal fs-4">${empWorkVO.workOff}</p></td>
+                                <td><p id="ew5" class="mb-0 fw-normal fs-4">${empWorkVO.workNochk}</p></td>
+    						</c:when>                                         
+    						<c:otherwise>
+                                <td><p id="ew1" class="mb-0 fw-normal fs-4"></p></td>
+                                <td><p id="ew2" class="mb-0 fw-normal fs-4"></p></td>
+                                <td><p id="ew3" class="mb-0 fw-normal fs-4"></p></td>
+                                <td><p id="ew4" class="mb-0 fw-normal fs-4"></p></td>
+                                <td><p id="ew5" class="mb-0 fw-normal fs-4"></p></td>
+    						</c:otherwise>
+							</c:choose>
+                           </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+		
+    </div>
+   </div>
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){
+	var interval; // 출근 버튼 누르면 흘러가는 시간
+	var workArrive; // 출근 시간
+	var workLeave;	// 퇴근 시간
+	
+	
+
+	
+	
+});
+
+
+
+
+
+// 출근 버튼 
+function goToWork(){
+	
+	$.ajax({
+		url : "/common/attendanceArrive",
+		type : "get",
+		success : function(result){
+			console.log("workArrive:"+result.workArrive);
+			$("#workArriveArea").html(result.workArrive);
+// 			$("#btnLeave").html("on/"+result.workArrive);
+			 	
+			$("#btnArrive").attr("disabled",true);
+		}
+	});
+	
+	displayDateBtn();
+	
+}
+
+//시간이 계속 바뀌는 타이머로 설정
+function displayDateBtn(){
+	interval = setInterval("displayDate()",1000);
+}
+
+//시계
+function displayDate() {
+	
+	let d = new Date();	
+	
+	let dVal = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+" "
+						+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+	document.getElementById("time").innerHTML = dVal;
+	
+	
+}
+
+// 퇴근 버튼
+function goToHome(){
+	
+	clearInterval(interval);
+	
+	
+	$.ajax({
+		url : "/common/attendanceLeave",
+		type : "get",
+		success : function(result){
+			console.log("workLeave:"+result.workLeave);
+			$("#workLeaveArea").html(result.workLeave);
+// 			$("#btnLeave").html("off/"+result.workLeave);
+			
+			$("#total").html(result.workTime);
+			$("#ew1").html(result.workNormal);
+			$("#ew2").html(result.workLate);
+			$("#ew3").html(result.workEarly);
+			$("#ew4").html(result.workOff);
+			$("#ew5").html(result.workNochk);
+			
+			 	
+			$("#btnLeave").attr("disabled",true);
+		}
+	});
+
+}
+
+if("${empWorkVO.workArrive}" != "" && "${empWorkVO.workLeave}" == ""){
+	displayDateBtn();
+}
+
+
+
+
+	
+	
+	
+	
+	
+	
+
+	
+	
+
+
+
+
+</script>
+

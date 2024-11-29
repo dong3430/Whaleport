@@ -1,0 +1,16 @@
+package kr.or.ddit.management.partner.popup.service;
+
+import java.util.List;
+
+import kr.or.ddit.management.partner.popup.vo.PopupVO;
+import kr.or.ddit.util.vo.PaginationVO;
+
+public interface IPopupService {
+
+	public int selectPopupCount(PaginationVO<PopupVO> pagingVO);
+
+	public List<PopupVO> selectPopupList(PaginationVO<PopupVO> pagingVO);
+
+	public int insert(PopupVO eventVO);
+
+}

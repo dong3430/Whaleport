@@ -1,0 +1,94 @@
+package kr.or.ddit.management.info.info.web;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import kr.or.ddit.management.human.management.vo.EmployeeVO;
+import kr.or.ddit.management.info.info.service.IInfoService;
+import kr.or.ddit.util.vo.PaginationVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("/info")
+public class InfoController {
+
+	@Inject
+	private IInfoService infoService;
+	
+	// 등록신청한 직원 목록 페이지
+	@GetMapping("/empInsertList")
+	public String empInsertList(
+			@RequestParam(name="page", required=false, defaultValue = "1") int currentPage,
+			@RequestParam(required = false, defaultValue = "name") String searchType,
+			@RequestParam(required = false) String searchWord, Model model) {
+		log.info("empInsertList() 실행...!");
+		
+		PaginationVO<EmployeeVO> pagingVO = new PaginationVO<EmployeeVO>(10,5);
+		
+		//List<EmployeeVO> empList = infoService.empList();
+		//model.addAttribute("empList" ,empList);
+		
+		// 검색 기능 추가
+		if(StringUtils.isNotBlank(searchWord)) {
+			pagingVO.setSearchWord(searchWord);
+			pagingVO.setSearchType(searchType);
+			model.addAttribute("searchWord", searchWord);
+			model.addAttribute("searchType", searchType);
+		}
+		// startRow, endRow, startPage, endPage를 결정한다.
+		pagingVO.setCurrentPage(currentPage);
+		// 총 게시글 수를 이용하여 총 페이지수를 결정하기 위해 총 게시글 수인 totalRecord를 얻어온다.
+		int totalRecord = infoService.selectEmpCount(pagingVO);
+		// totalPage를 결정한다.
+		pagingVO.setTotalRecord(totalRecord);
+		// 총 게시글 수 및 총 페이지 수, startRow, endRow의 값들을 이용하여 초기 1페이지에 들어있는 총 screenSize 개수만큼의 리스트 데이터를 가져온다.
+		List<EmployeeVO> dataList = infoService.selectEmpList(pagingVO);
+		pagingVO.setDataList(dataList);
+		model.addAttribute("pagingVO", pagingVO);
+		
+		return "management/info/empInsertList";
+	}
+	
+	// 등록신청한 직원 상세보기 페이지
+	@GetMapping("/empInsertDetail")
+	public String empInsertDetail(String empId, Model model) {
+		log.info("empInsertDetail() 실행...!");
+		EmployeeVO employeeVO = infoService.empDetail(empId);
+		model.addAttribute("employeeVO",employeeVO);
+		return "management/info/empInsertDetail";
+	}
+	
+	// 직원 부서(권한) 변경 기능
+	@PostMapping("/deptUpdate")
+	public String empDeptUpdate(EmployeeVO employeeVO, Model model) {
+		log.info("empDeptUpdate() 실행...!");
+		infoService.empDeptUpdate(employeeVO);
+		return "redirect:/info/empInsertDetail?empId=" + employeeVO.getEmpId();
+	}
+	
+	// 직원 등록 승인 기능
+	@PostMapping("/empApproval")
+	public String empApproval(EmployeeVO employeeVO, Model model) {
+		log.info("empApproval() 실행...!");
+		infoService.empApproval(employeeVO);
+		return "redirect:/info/empInsertList";
+	}
+	
+	// 직원 등록 반려 기능
+	@PostMapping("/empApprovalRe")
+	public String empApproval2(EmployeeVO employeeVO, Model model) {
+		log.info("empApproval2() 실행...!");
+		infoService.empApprovalRe(employeeVO);
+		return "redirect:/info/empInsertList";
+	}
+}

@@ -1,0 +1,18 @@
+package kr.or.ddit.customer.myPage.service;
+
+import java.util.List;
+
+import kr.or.ddit.customer.myPage.vo.CustomerMyPageVO;
+import kr.or.ddit.util.vo.PaginationVO;
+
+public interface CustomerMyPageService {
+
+	public CustomerMyPageVO myInfomation(String cusId);
+
+	public void myInfoUpdate(CustomerMyPageVO customerVO);
+
+	public int myBoardCount(PaginationVO<CustomerMyPageVO> pagingVO);
+
+	public List<CustomerMyPageVO> myBoardList(PaginationVO<CustomerMyPageVO> pagingVO);
+
+}

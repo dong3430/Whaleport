@@ -1,0 +1,691 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+	
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://developers.kakao.com/v2/kakaomap.js"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_APP_KEY&libraries=services"></script>
+
+
+  
+<style>
+.custom-height {
+	height: 250px; 
+	display: flex;
+	align-items: center; 
+	justify-content: center; 
+}
+</style>
+
+<div class="main-wrapper overflow-hidden">
+	<!-- ------------------------------------- -->
+	<!-- banner Start -->
+	<!-- ------------------------------------- -->
+	<section class="bg-primary-subtle custom-height">
+		<div class="container-fluid">
+			<div class="text-center">
+				<p class="text-primary fs-4 fw-bolder">MYPAGE</p>
+				<h1 class="fw-bolder fs-12">마이페이지</h1>
+			</div>
+		</div>
+	</section>
+</div>
+<%-- <div class="card bg-primary-gt text-white overflow-hidden shadow-none">
+                <div class="card-body">
+                  <div class="row justify-content-between align-items-center">
+                    <div class="col-sm-6">
+                      <h5 class="fw-semibold mb-9 fs-5 text-white">Welcome back Natalia!</h5>
+                      <p class="mb-9 opacity-75">
+                        You have earned 54% more than last month
+                        which is great thing.
+                      </p>
+                      <button type="button" class="btn btn-danger">Check</button>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="position-relative mb-n7 text-end">
+                        <img src="${pageContext.request.contextPath }/resources/assets/images/logos/symbol-01.png" style="width:100px;" alt="modernize-img" class="img-fluid">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> --%>
+<div class="body-wrapper bg-primary-subtle">
+
+<div class="row ms-10">
+  <div class="card col-11 mx-auto">
+                <div class="card-body">
+                  <div class="d-flex flex-row">
+                    <div>
+                      <img src="${pageContext.request.contextPath }/resources/assets/images/profile/user-6.jpg" alt="user" class="rounded-circle" width="100" />
+                    </div>
+                   <div class="ps-3 d-flex align-items-center"> <!-- d-flex 클래스를 추가하여 flexbox 사용 -->
+					    <div class="me-2"> <!-- 버튼과 텍스트 사이의 간격을 위해 margin-end 추가 -->
+					        <h4 class="card-title mb-0">Welcome!</h4> <!-- mb-0으로 아래 마진 제거 -->
+					        <h2 class="mb-2 mt-2">${customerVO.cusName } 님, <span class="card-title mb-2">환영합니다!</span></h2>
+					        <button class="btn bg-primary-subtle btn-sm text-primary" id="myInfo" data-bs-toggle="modal" data-bs-target="#infoModal">내 정보</button>
+					        <button class="btn bg-primary-subtle btn-sm text-primary" id="myBoard" onclick="location.href='/customer/myBoardList?cusId=${customerVO.cusId}'">내 게시글</button>
+					         <!-- mb-0으로 아래 마진 제거 -->
+					    </div>
+				   </div>
+
+                  </div>
+                  <div class="row mt-5">
+                   <div class="col-md-4 col-lg-2 border-end d-flex justify-content-center align-items-center" style="height: 200px;">
+				    <div class="text-center"> <!-- 텍스트를 수평 중앙 정렬 -->
+				        <h2 class="fs-7">2<span class="fs-5 ms-2" style="color: gray;">건</span></h2>
+				        <h6 class="mb-0">나의 항공권</h6>
+				    </div>
+				  </div>
+
+
+             <div class="col-md-4 col-lg-5 d-flex align-items-stretch">
+              <div class="card w-100 rounded-bottom-0">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <h4 class="card-title mb-0">인천공항 출발 <i class="ti ti-line-dotted fs-4 ms-2 me-2"></i>
+                    	칼리보공항 도착 
+                    </h4>
+                    <div class="ms-auto">
+                      <span class="text-danger fs-3 "><i class="ti ti-caret-down fs-4"></i> 편도</span>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center my-3">
+                    <div class="border-end pe-3">
+                      <h6 class="text-muted fw-normal">출발지 <i class="ti ti-plane-departure fs-4 text-info"></i></h6>
+                      <b>인천 공항</b>
+                    </div>
+                    <div class="ms-3 border-end pe-3">
+                      <h6 class="text-muted fw-normal">출발 시간</h6>
+                      <b>24/11/19 13:10</b>
+                    </div>
+                    <div class="ms-3">
+                      <h6 class="text-muted fw-normal">FLIGHT</h6>
+                      <b>14ILD23</b>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center my-3">
+                    <div class="border-end pe-3">
+                      <h6 class="text-muted fw-normal">도착지 <i class="ti ti-plane-arrival fs-4 text-info"></i></h6>
+                      <b>칼리보 공항</b>
+                    </div>
+                    <div class="ms-3 border-end pe-3">
+                      <h6 class="text-muted fw-normal">도착시간</h6>
+                      <b>24/11/19 16:25</b>
+                    </div>
+                    <div class="ms-3 border-end pe-3">
+                      <h6 class="text-muted fw-normal">GATE</h6>
+                      <b>11</b>
+                    </div>
+                    <div class="ms-3">
+                      <h6 class="text-muted fw-normal">SEAT</h6>
+                      <b>17A</b>
+                    </div>
+                  </div>
+                  <button class="btn bg-primary-subtle btn-sm text-primary" data-bs-toggle="modal" data-bs-target="#passportModal">여권 정보</button>
+                </div>
+                <div class="progress text-bg-light">
+                  <div class="progress-bar progress-bar-striped text-bg-secondary progress-bar-animated" style="width: 100%; height: 6px;" role="progressbar">
+                    <span class="sr-only">100% Complete</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+             <div class="col-md-4 col-lg-5 d-flex align-items-stretch">
+              <div class="card w-100 rounded-bottom-0">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <h4 class="card-title mb-0">칼리보공항 출발
+                    <i class="ti ti-line-dotted fs-4 ms-2 me-2"></i>
+                    	인천공항 도착 
+                    </h4>
+                    <div class="ms-auto">
+                      <span class="text-danger fs-3 "><i class="ti ti-caret-down fs-4"></i> 왕복</span>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center my-3">
+                    <div class="border-end pe-3">
+                       <h6 class="text-muted fw-normal">출발지 <i class="ti ti-plane-departure fs-4 text-info"></i></h6>
+                      <b>칼리보 공항</b>
+                    </div>
+                    <div class="ms-3 border-end pe-3">
+                      <h6 class="text-muted fw-normal">출발 시간</h6>
+                      <b>24/11/19 13:10</b>
+                    </div>
+                    <div class="ms-3">
+                      <h6 class="text-muted fw-normal">FLIGHT</h6>
+                      <b>14ILD23</b>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center my-3">
+                    <div class="border-end pe-3">
+                      <h6 class="text-muted fw-normal">도착지 <i class="ti ti-plane-arrival fs-4 text-info"></i></h6>
+                      <b>인천 공항</b>
+                    </div>
+                    <div class="ms-3 border-end pe-3">
+                      <h6 class="text-muted fw-normal">도착시간</h6>
+                      <b>24/11/19 16:25</b>
+                    </div>
+                    <div class="ms-3 border-end pe-3">
+                      <h6 class="text-muted fw-normal">GATE</h6>
+                      <b>11</b>
+                    </div>
+                    <div class="ms-3">
+                      <h6 class="text-muted fw-normal">SEAT</h6>
+                      <b>17A</b>
+                    </div>
+                  </div>
+                  
+                </div>
+                <div class="progress text-bg-light">
+                  <div class="progress-bar progress-bar-striped text-bg-primary progress-bar-animated" style="width: 100%; height: 6px;" role="progressbar">
+                    <span class="sr-only">100% Complete</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+                  </div>
+                </div>
+                <div>
+                  <hr />
+                  <div class="col-lg-12"> <!-- 두 번째 카드 -->
+      <div class="card mx-2 mb-10"> <!-- mx-2로 간격 조정 -->
+        <div class="card-body">
+          <h4 class="card-title fw-semibold mb-7">나의 여정</h4>
+              
+            <div class="row justify-content-center">
+    <div class="col-lg-2 col-md-6">
+        <div class="card card-hover">
+            <div class="card-body d-flex align-items-center"> <!-- Flexbox 추가 -->
+                <div class="d-flex align-items-center">
+                    <div class="bg-warning-subtle text-warning rounded d-flex align-items-center p-3 justify-content-center me-3"> <!-- p-3로 패딩 조정 -->
+                        <i class="ti ti-car fs-8"></i>
+                    </div>
+                    <div>
+                        <h4 class="card-title mb-0">1 <span class="fs-4 ms-2" style="color: gray;">건</span></h4> <!-- mb-0로 아래 여백 제거 -->
+                        <h6 class="card-subtitle mb-0">주차장</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-2 col-md-6">
+        <div class="card card-hover">
+            <div class="card-body d-flex align-items-center"> <!-- Flexbox 추가 -->
+                <div class="d-flex align-items-center">
+                    <div class="bg-primary-subtle text-primary rounded d-flex align-items-center p-3 justify-content-center me-3"> <!-- p-3로 패딩 조정 -->
+                        <i class="ti ti-building fs-8"></i>
+                    </div>
+                    <div>
+                        <h4 class="card-title mb-0">1 <span class="fs-4 ms-2" style="color: gray;">건</span></h4> <!-- mb-0로 아래 여백 제거 -->
+                        <h6 class="card-subtitle mb-0">캡슐호텔</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-2 col-md-6">
+        <div class="card card-hover">
+            <div class="card-body d-flex align-items-center"> <!-- Flexbox 추가 -->
+                <div class="d-flex align-items-center">
+                    <div class="bg-danger-subtle text-danger rounded d-flex align-items-center p-3 justify-content-center me-3"> <!-- p-3로 패딩 조정 -->
+                        <i class="ti ti-brand-hipchat fs-8"></i>
+                    </div>
+                    <div>
+                        <h4 class="card-title mb-0">0 <span class="fs-4 ms-2" style="color: gray;">건</span></h4> <!-- mb-0로 아래 여백 제거 -->
+                        <h6 class="card-subtitle mb-0">회의실</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-2 col-md-6">
+        <div class="card card-hover">
+            <div class="card-body d-flex align-items-center"> <!-- Flexbox 추가 -->
+                <div class="d-flex align-items-center">
+                    <div class="bg-success-subtle text-success rounded d-flex align-items-center p-3 justify-content-center me-3"> <!-- p-3로 패딩 조정 -->
+                        <i class="ti ti-armchair-2 fs-8"></i>
+                    </div>
+                    <div>
+                        <h4 class="card-title mb-0">1 <span class="fs-4 ms-2" style="color: gray;">건</span></h4> <!-- mb-0로 아래 여백 제거 -->
+                        <h6 class="card-subtitle mb-0">라운지</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-2 col-md-6">
+        <div class="card card-hover">
+            <div class="card-body d-flex align-items-center"> <!-- Flexbox 추가 -->
+                <div class="d-flex align-items-center">
+                    <div class="bg-info-subtle text-info rounded d-flex align-items-center p-3 justify-content-center me-3"> <!-- p-3로 패딩 조정 -->
+                        <i class="ti ti-plane-inflight fs-8"></i>
+                    </div>
+                    <div>
+                        <h4 class="card-title mb-0">2</h4> <!-- mb-0로 아래 여백 제거 -->
+                        <h6 class="card-subtitle mb-0">항공권</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+              
+              
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+   <div class="mt-2"> 
+  <div class="tab-pane" id="reserve" role="tabpanel" aria-labelledby="pills-bills-tab" tabindex="0">
+                  <div class="row justify-content-center">
+                    
+                    <div class="col-lg-5">
+                      <div class="card border shadow-none">
+                        <div class="card-body p-4">
+                          <h4 class="card-title">선택한 예약 정보  <span class="text-success ms-3">주차장</span>
+                          </h4>
+                          <p class="card-subtitle">예약 내역을 확인하고 취소할 수 있습니다.</p>
+                          <div class="d-flex align-items-center justify-content-between mt-7 mb-3">
+                            <div class="d-flex align-items-center gap-3">
+                              <div class="text-bg-light rounded-1 p-6 d-flex align-items-center justify-content-center">
+                                <i class="ti ti-package text-dark d-block fs-7" width="22" height="22"></i>
+                              </div>
+                              <div>
+                                <p class="mb-0">현재 예약 내역</p>
+                                <h5 class="fs-4 fw-semibold">750.000 Monthly Visits</h5>
+                              </div>
+                            </div>
+                            <a class="text-dark fs-6 d-flex align-items-center justify-content-center bg-transparent p-2 fs-4 rounded-circle" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add">
+                              <i class="ti ti-circle-plus"></i>
+                            </a>
+                          </div>
+                          <div class="d-flex align-items-center gap-3">
+                            <button class="btn btn-primary">Change Plan</button>
+                            <button class="btn bg-danger-subtle text-danger">Reset Plan</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-5">
+                      <div class="card border shadow-none">
+                        <div class="card-body p-4">
+                          <h4 class="card-title">Payment Method</h4>
+                          <p class="card-subtitle">On 26 December, 2024</p>
+                          <div class="d-flex align-items-center justify-content-between mt-7">
+                            <div class="d-flex align-items-center gap-3">
+                              <div class="text-bg-light rounded-1 p-6 d-flex align-items-center justify-content-center">
+                                <i class="ti ti-credit-card text-dark d-block fs-7" width="22" height="22"></i>
+                              </div>
+                              <div>
+                                <h5 class="fs-4 fw-semibold">Visa</h5>
+                                <p class="mb-0 text-dark">*****2102</p>
+                              </div>
+                            </div>
+                            <a class="text-dark fs-6 d-flex align-items-center justify-content-center bg-transparent p-2 fs-4 rounded-circle" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit">
+                              <i class="ti ti-pencil-minus"></i>
+                            </a>
+                          </div>
+                          <p class="my-2">If you updated your payment method, it will only be dislpayed here after your
+                            next billing cycle.</p>
+                          <div class="d-flex align-items-center gap-3">
+                            <button class="btn bg-danger-subtle text-danger">Cancel Subscription</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="d-flex align-items-center justify-content-end gap-6">
+                        <button class="btn btn-primary">Save</button>
+                        <button class="btn bg-danger-subtle text-danger">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+               </div>
+    
+  </div>
+  
+  
+ </div> <!-- row 끝 -->
+ 
+ <!-- 내 정보 보기(수정) 모달 시작 -->
+ <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="info-header-modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modal-colored-header bg-info text-white">
+                <h4 class="modal-title text-white" id="info-header-modalLabel">
+                    ${customerVO.cusName } 님의 상세정보
+                </h4>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex justify-content-center align-items-center" style="min-height: 300px;"> <!-- 중앙 정렬을 위한 Flexbox 추가 -->
+                <div class="auth-max-width col-sm-8 col-md-6 col-xl-7 px-4">
+                    <div class="position-relative text-center my-4">
+                        <p class="mb-0 fs-4 px-3 d-inline-block bg-body text-dark z-index-5 position-relative">내 정보 수정이 가능합니다.</p>
+                        <span class="border-top w-100 position-absolute top-50 start-50 translate-middle"></span>
+                    </div>
+                    <form action="/customer/myInfoUpdate" method="post" id="myInfoUpdateForm">
+                        <div class="mb-3">
+                            <label class="form-label">아이디</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control"  value="${customerVO.cusId }" disabled>
+                                <input type="hidden" class="form-control" id="cusId" name="cusId" value="${customerVO.cusId }">
+                            </div>
+                            <p class="error" style="display: block;"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">이름</label>
+                            <input type="text" class="form-control" id="cusName" name="cusName"  value="${customerVO.cusName }">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">비밀번호<span class="text-danger">*</span></label>
+                            <input type="password" class="form-control passwordChk" id="cusDepw" name="cusDepw" >
+                            <p>영문, 숫자, 특수문자의 조합으로 8자 이상 12자 이하의 비밀번호를 작성 해주세요.</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">비밀번호 확인<span class="text-danger">*</span></label>
+                            <input type="password" class="form-control passwordChk" id="cusDepw2" name="cusDepw2" >
+                            <p id="pwChk"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">휴대전화</label>
+                            <input type="text" class="form-control" placeholder="'-'를 포함한 핸드폰 번호를 입력해주세요." id="cusTel" name="cusTel"  value="${customerVO.cusTel }">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">이메일</label>
+                            <input type="text" class="form-control" id="cusEmail" name="cusEmail"  value="${customerVO.cusEmail }">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">생년월일</label>
+                            <input type="date" class="form-control" id="cusBirth" name="cusBirth"  value="${customerVO.formattedCusBirth }">
+                        </div>
+                         <div class="mb-3">
+                            <label class="form-label">우편번호</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="cusPostcode" id="cusPostcode"  value="${customerVO.cusPostcode }">
+                                <button type="button" class="btn btn-primary" onclick="DaumPostcode()">검색</button>
+                            </div>
+                        </div> 
+                        <div class="mb-3">
+                            <label class="form-label">주소</label>
+                            <input type="text" class="form-control" name="cusAdd" id="cusAdd"  value="${customerVO.cusAdd }">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">상세주소</label>
+                            <input type="text" class="form-control" name="cusAdd2" id="cusAdd2" value="${customerVO.cusAdd2 }">
+                        </div>
+                        <div class="mb-3 btn-group">
+                            <label class="btn bg-primary-subtle text-primary">
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="genderM" name="cusGender" value="M">
+                                    <label class="form-check-label" for="genderM">
+                                        <span class="d-none d-md-block">남성</span>
+                                    </label>
+                                </div>
+                            </label>
+                            <label class="btn bg-primary-subtle text-primary">
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="genderF" name="cusGender" value="F">
+                                    <label class="form-check-label" for="genderF">
+                                        <span class="d-none d-md-block">여성</span>
+                                    </label>
+                                </div>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" id="myInfoUdt">
+                    수정
+                </button>
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                    닫기
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 내 정보 보기(수정) 모달 끝 -->
+
+<!-- 여권정보 보기(수정) 모달 시작 -->
+<div class="modal fade" id="passportModal" tabindex="-1" aria-labelledby="passportModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modal-colored-header bg-info text-white">
+                <h4 class="modal-title text-white" id="passportModalLabel">여권 정보</h4>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mt-2 mb-4">
+                    <a href="../main/index.html" class="text-success">
+                        <span>
+                            <img src="${pageContext.request.contextPath }/resources/assets/images/logos/whale-favi.png" class="me-3 img-fluid" style="width:40px;" alt="modernize-img">
+                        </span>
+                    </a>
+                </div>
+					 <div class="position-relative text-center my-4">
+                        <p class="mb-0 fs-4 px-3 d-inline-block bg-body text-dark z-index-5 position-relative">여권 정보 수정이 가능합니다.</p>
+                        <span class="border-top w-100 position-absolute top-50 start-50 translate-middle"></span>
+                    </div>
+                <form class="ps-3 pr-3" action="#">
+                    <div class="mb-3">
+                        <label for="username">이름</label>
+                        <input class="form-control" type="text" id="username" placeholder="김수연">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="emailaddress">영문명</label>
+                        <input class="form-control" type="text" id="emailaddress" placeholder="kim soo yeon">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="passport">여권번호</label>
+                        <input class="form-control" type="text" required id="passport" placeholder="기존 여권번호">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="telNo">연락처</label>
+                        <input class="form-control" type="text" required id="telNo" placeholder="기존 연락처">
+                    </div>
+
+                    <div class="mb-3 text-center">
+                        <button class="btn btn-info me-2" type="submit">
+                            수정
+                        </button>
+                        <button class="btn btn btn-light" data-bs-dismiss="modal">
+                            닫기
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 여권정보 보기(수정) 모달 끝 -->
+</div>
+
+ <!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../assets/libs/sweetalert2/dist/sweetalert2.min.js"></script>
+<script src="../assets/js/forms/sweet-alert.init.js"></script>   
+<script type="text/javascript">
+$(function(){
+	var myInfo = $("#myInfo");
+	var cusBirth = $("#cusBirth");
+	var infoModal = $("#infoModal");
+	var myInfoUdt = $("#myInfoUdt"); // 내 정보 수정 버튼
+	var passwordChk = $(".passwordChk");
+	
+	
+	var cusName = $("#cusName").val;
+	var cusDepw = $("#cusDepw").val;
+	var cusAdd = $("#cusAdd").val;
+	var cusAdd2 = $("#cusAdd2").val;
+	var cusPostcode = $("#cusPostcode").val;
+	var cusTel = $("#cusTel").val;
+	var cusGender = $("#cusGender").val;
+	var cusEmail = $("#cusEmail").val;
+	var cusBirth = $("#cusBirth"); 
+	
+	
+	
+	cusBirth.on('focusout', function() {
+        // 날짜 입력 요소 선택
+        var selectedDate = $(this).val();
+        
+        // 날짜 형식 변경: 2024-10-10 -> 2024/10/10
+        cusBirth = selectedDate.replace(/-/g, '/');
+        
+        // 선택한 날짜 출력
+        console.log('선택한 생년월일:', cusBirth);
+        
+         var strArr = cusBirth.split('/');
+
+         cusBirth = new Date(strArr[0], strArr[1]-1, strArr[2]); 
+        
+    }); 
+	
+	 myInfoUdt.on("click", function(){
+		var myInfoUpdateForm = $("#myInfoUpdateForm");
+		myInfoUpdateForm.submit();
+	}); 
+	
+	
+//  	myInfoUdt.on("click", function(){
+// 		var myInfoUpdateForm = $("#myInfoUpdateForm");
+// 		 var formData = new FormData(myInfoUpdateForm[0]); 
+// 		 console.log(formData); 
+		
+// 		/* var data = {
+// 			cusName : cusName,
+// 			cusDepw : cusDepw,
+// 			cusAdd : cusAdd,
+// 			cusAdd2 : cusAdd2,
+// 			cusPostcode : cusPostcode,
+// 			cusTel : cusTel,
+// 			cusGender : cusGender,
+// 			cusEmail : cusEmail,
+// 			cusBirth : cusBirth,
+// 	}
+		
+// 		console.log("cusName:" , cusName);
+// 		console.log("cusAdd:" , cusAdd);
+// 		console.log("cusGender:" , cusGender);
+// 		console.log("cusBirth:" , cusBirth); */
+		
+// 		 $.ajax({
+// 			url: '/customer/myInfoUpdate',
+// 			method : 'POST',
+// 			data : formData,
+//             contentType: false, // jQuery에서 content-type을 자동으로 설정하지 않도록
+//             processData: false, // jQuery에서 데이터 처리를 하지 않도록
+// 			success : function(response){
+// 				console.log(response);
+// 				Swal.fire(
+// 	                    '수정 완료!',
+// 	                    '고객님의 정보 수정이 완료되었습니다.',
+// 	                    'success'
+// 	                ).then(() => {
+// 	                    // SweetAlert2의 성공 메시지 후에 Form을 제출
+// 	                	location.reload();
+// 	                });	
+// 			},
+// 			error: function(xhr, status, error) {
+//                 // 오류가 발생했을 때
+//                 Swal.fire(
+//                     '오류!',
+//                     '수정 처리에 실패했습니다.',
+//                     'error'
+//                 );
+//             }
+// 		}); 
+// 	}); 
+	
+	
+
+//비밀번호 일치 확인 이벤트
+passwordChk.on("keyup", function(){
+	var cusDepw = $("#cusDepw").val();
+    var cusDepw2 = $("#cusDepw2").val();
+    var cusDepwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d!@#$%^&*]{8,12}$/;
+
+    // 비밀번호 정규화 검사
+    if (!cusDepwRegex.test(cusDepw)) {
+        $("#pwChk").html("비밀번호는 영문, 숫자, 특수문자의 조합으로 8자 이상 12자 이하이어야 합니다.").css("color", "red");
+        return false;
+    }else{
+    	pwRegexFlag = true;
+    	console.log("pwRegexFlag : " + pwRegexFlag);
+    }
+    // 비밀번호 일치 여부 검사
+    if (cusDepw !== cusDepw2) {
+        $("#pwChk").html("비밀번호가 서로 일치하지 않습니다.").css("color", "red");
+    } else {
+        $("#pwChk").html("비밀번호가 서로 일치합니다.").css("color", "green");
+        pwFlag = true;
+        console.log("pwFlag : " + pwFlag);
+    }
+});
+});
+
+//유효성 검사
+/* function validation(){
+	var msg;
+	var valiId;
+	var valiName;
+
+	var valiChk = false;
+	$('[data-validation = Y]').each(function(){
+		if($(this).val() == ''){
+			valiChk = true;
+			valiId = $(this).attr('id');
+			valiName = $(this).attr('data-name');
+			return false;
+		}
+	});
+
+	if(valiChk){
+		$('#al-warning-alert').find('p.mt-3').text(valiName + '를(을) 입력해 주세요.');
+        $('#al-warning-alert').modal('show');
+		return false;
+	}
+	return true;
+} */
+
+//카카오 주소 API
+function DaumPostcode() {
+	new daum.Postcode({
+		oncomplete : function(data) {
+			var addr = '';
+			var extraAddr = '';
+
+			if (data.userSelectedType === 'R') {
+				addr = data.roadAddress;
+			} else {
+				addr = data.jibunAddress;
+			}
+
+			if (data.userSelectedType === 'R') {
+				if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+					extraAddr += data.bname;
+				}
+				if (data.buildingName !== '' && data.apartment === 'Y') {
+					extraAddr += (extraAddr !== '' ? ', '
+							+ data.buildingName : data.buildingName);
+				}
+			}
+			document.getElementById('cusPostcode').value = data.zonecode;
+			document.getElementById("cusAdd").value = addr;
+			document.getElementById("cusAdd2").focus();
+		}
+	}).open();
+}
+</script>

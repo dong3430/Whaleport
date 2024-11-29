@@ -1,0 +1,26 @@
+package kr.or.ddit.customer.airport.airportReserve.vo;
+
+import java.util.Date;
+
+import lombok.Data;
+
+@Data
+public class PlaneScheduleVO {	
+	private int scNo;
+	private String scAirfln;	// 항공기 이름 ex) NH1160
+	private String scAirline;	// 항공사
+	private String scBoarding;	// 출발지
+	private String scArrived;	// 도착지
+	private String scCity;		// 운항구간코드
+	private String scLine;		// 국내국제구분
+	private Date scStdate;	// 출발시간
+	private Date scStd;		// 도착시간
+	private String scGate;		// 게이트
+	private String scCheckin;	// 체크인카운터
+	private String scSeatqty;	// 좌석수
+	private int scPrice;
+	
+	//데이터 삽입을위한 paging
+	private String pageNo;
+	
+}	

@@ -1,0 +1,43 @@
+package kr.or.ddit.user.airport.airportEtc.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("/user/flightInfo")
+public class FlightInformation {
+
+	@GetMapping("/departureArrival")
+	public String departureArrival() {
+		log.info("departureArrival()...! 실행");
+		return "user/flightInfo/departureArrival";
+	}
+	
+	@GetMapping("/schedule")
+	public String schedule() {
+		log.info("schedule()...! 실행");
+		return "user/flightInfo/schedule";
+	}
+	
+	@GetMapping("/boardingSimulation")
+	public String boardingSimulation() {
+		log.info("boardingSimulation()...! 실행");
+		return "user/flightInfo/boardingSimulation";
+	}
+
+	@GetMapping("/arrivalSimulation")
+	public String arrivalSimulation() {
+		log.info("arrivalSimulation()...! 실행");
+		return "user/flightInfo/arrivalSimulation";
+	}
+	@GetMapping("/OperatingAirline")
+	public String OperatingAirline() {
+		log.info("OperatingAirline()...! 실행");
+		return "user/flightInfo/OperatingAirline";
+	}
+	
+}

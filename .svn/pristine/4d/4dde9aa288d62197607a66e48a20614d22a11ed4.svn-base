@@ -1,0 +1,509 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<style>
+    .table th {
+        text-align: center;
+    }
+    .table td {
+        text-align: center;
+    }
+    
+    #chart-line-with-data-label {
+    width: 100%;
+    height: 300px; /* 원하는 높이 설정 */
+	}
+
+    
+</style>
+
+
+<script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/libs/simplebar/dist/simplebar.min.js"></script>
+<script src="../assets/js/theme/app.init.js"></script>
+<script src="../assets/js/theme/theme.js"></script>
+<script src="../assets/js/theme/app.min.js"></script>
+<script src="../assets/js/theme/sidebarmenu.js"></script>
+
+<!-- solar icons -->
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+<script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+<script src="../assets/js/apex-chart/apex.line.init.js"></script>
+<script src="../assets/js/widget/widgets-charts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../assets/js/apex-chart/apex.bar.init.js"></script>
+<script src="../assets/js/apex-chart/apex.pie.init.js"></script>
+
+
+<div class="body-wrapper">
+    <div class="container-fluid">
+        <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+            <div class="card-body px-4 py-3">
+              <div class="row align-items-center" style="margin-top:20px;">
+                <div class="col-9">
+                  <h4 class="fw-semibold mb-8">공항서비스 관리</h4>
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a class="text-muted text-decoration-none" href="../main/index.html">DashBoard</a>
+                      </li>
+                      <li class="breadcrumb-item" aria-current="page">항공편 예약 관리</li>
+                    </ol>
+                  </nav>
+                </div>
+                <div class="col-3">
+                  <div class="text-center mb-n4">
+                    <img src="${pageContext.request.contextPath }/resources/assets/images/logos/symbol-01.png" alt="modernize-img" class="img-fluid" style="width: 120px; height: auto;">
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        
+        
+       <div class="container">
+    	<div class="row">
+    <!-- 전/이번달 예약건수(메인)차트 -->
+    <div class="col-md-8"> <!-- 열 크기를 6으로 설정하여 두 개의 차트를 나란히 배치 -->
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">전달 대비 이번달 예약 건수</h4>
+                <div id="chart-line-with-data-label" class="mx-n3"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Start Basic Bar Chart -->
+    <div class="col-md-4"> <!-- 열 크기를 6으로 설정하여 두 개의 차트를 나란히 배치 -->
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">매출</h4>
+                <div id="chart-bar-basic"></div>
+            </div>
+        </div>
+    </div>
+    <!-- End Basic Bar Chart -->
+</div>
+</div>
+
+        
+        
+        
+        <div class="row">
+            <div class="col-sm-6 col-xl-3">
+              <div class="card card-hover bg-info-subtle shadow-none">
+                <div class="card-body p-4">
+                  <div class="d-flex align-items-center">
+                    <div class="round rounded text-bg-info d-flex align-items-center justify-content-center">
+                      <i class="ti ti-alarm" style="font-size: 2rem;"></i>
+                    </div>
+                    <h6 class="mb-0 ms-3">오늘 예약</h6>
+                    <div class="ms-auto text-info d-flex align-items-center">
+                      <i class="ti ti-trending-up text-info fs-6 me-1"></i>
+                      <span class="fs-2 fw-bold">전날 대비 + 3</span>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-between mt-4">
+                    <h3 class="mb-0 fw-semibold fs-7">12 <span class="fs-5 ms-2" style="color: gray;">건</span>
+                    </h3>
+                    <span class="fw-bold">₩ 1,015.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <div class="card card-hover bg-success-subtle shadow-none">
+                <div class="card-body p-4">
+                  <div class="d-flex align-items-center">
+                    <div class="round rounded text-bg-success d-flex align-items-center justify-content-center">
+                     <i class="ti ti-brand-netflix" style="font-size: 2rem;"></i>
+                    </div>
+                    <h6 class="mb-0 ms-3">새로운 예약</h6>
+                    <div class="ms-auto text-success d-flex align-items-center">
+                      <i class="ti ti-trending-up text-success fs-6 me-1"></i>
+                      <span class="fs-2 fw-bold">전날 대비 + 12</span>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-between mt-4">
+                    <h3 class="mb-0 fw-semibold fs-7">45 <span class="fs-5 ms-2" style="color: gray;">건</span>
+                    </h3>
+                    <span class="fw-bold">₩ 2,110.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <div class="card card-hover bg-danger-subtle shadow-none">
+                <div class="card-body p-4">
+                  <div class="d-flex align-items-center">
+                    <div class="round rounded text-bg-danger d-flex align-items-center justify-content-center">
+                      <i class="ti ti-square-letter-x" style="font-size: 2rem;"></i>
+                    </div>
+                    <h6 class="mb-0 ms-3">취소된 예약</h6>
+                    <div class="ms-auto text-danger d-flex align-items-center">
+                      <i class="ti ti-trending-down text-danger fs-6 me-1"></i>
+                      <span class="fs-2 fw-bold text-danger">전달 대비 - 20</span>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-between mt-4">
+                    <h3 class="mb-0 fw-semibold fs-7">2<span class="fs-5 ms-2" style="color: gray;">건</span>
+                    </h3>
+                    <span class="fw-bold">₩1,100.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <div class="card card-hover bg-warning-subtle shadow-none">
+                <div class="card-body p-4">
+                  <div class="d-flex align-items-center">
+                    <div class="round rounded text-bg-warning d-flex align-items-center justify-content-center">
+                      <i class="ti ti-list" style="font-size: 2rem;"></i>
+                    </div>
+                    <h6 class="mb-0 ms-3">전체 예약</h6>
+                    <div class="ms-auto text-warning d-flex align-items-center">
+                      <i class="ti ti-trending-down text-warning fs-6 me-1"></i>
+                      <span class="fs-2 fw-bold text-warning">전달 대비 - 22</span>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-between mt-4">
+                    <h3 class="mb-0 fw-semibold fs-7">123<span class="fs-5 ms-2" style="color: gray;">건</span>
+                    </h3>
+                    <span class="fw-bold">₩2,150.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-9">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title fw-semibold">오늘 예약</h4>
+                            <p class="card-subtitle">오늘 출국 예정인 항공권의 예약 내역입니다.</p>
+                            <div class="row mt-4">
+                                <!-- 추가 내용이 들어갈 수 있습니다. -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body pb-2">
+                            <div class="d-md-flex align-items-center gap-3 justify-content-between mb-3">
+                                <div>
+                                    <h4 class="card-title fw-semibold">Your Investments</h4>
+                                    <p class="card-subtitle">What Are the Risks of Investing?</p>
+                                </div>
+                                <div class="d-flex align-items-center gap-3 mt-4 mt-md-0">
+                                    <div class="dropdown">
+                                        <button class="btn bg-primary-subtle dropdown-toggle" type="button" id="invest1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="cc BTC me-1" title="BTC"></i> BTC
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="invest1">
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:void(0)">
+                                                    <i class="cc ETH me-1" title="ETH"></i> ETH
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:void(0)">
+                                                    <i class="cc LTC me-1" title="LTC"></i> LTC
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:void(0)">
+                                                    <i class="cc XRP me-1" title="XRP"></i> XRP
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <span class="round bg-primary flex-shrink-0 rounded-circle text-white d-flex align-items-center justify-content-center">
+                                        <i class="ti ti-repeat fs-6"></i>
+                                    </span>
+                                    <div class="dropdown">
+                                        <button class="btn bg-danger-subtle dropdown-toggle" type="button" id="invest2" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="cc ETH me-1" title="ETH"></i> ETH
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="invest2">
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:void(0)">
+                                                    <i class="cc BTC me-1" title="BTC"></i> BTC
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:void(0)">
+                                                    <i class="cc ETH me-1" title="ETH"></i> ETH
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:void(0)">
+                                                    <i class="cc LTC me-1" title="LTC"></i> LTC
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="investments" class="mx-n8"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <!-- Start Simple Pie Chart -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">방문 많은 여행지</h4>
+                            <div id="chart-pie-simple"></div>
+                        </div>
+                    </div>
+                    <!-- End Simple Pie Chart -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+              
+              <div class="card">
+                <div class="card-body p-4">
+                  <h4 class="card-title fw-semibold">Quick Transfer</h4>
+                  <p class="card-subtitle">The History of Converters</p>
+                  <div class="d-flex align-items-center gap-2 mt-4 mb-3">
+                    <a href="javascript:void(0)">
+                      <img src="../assets/images/profile/user-2.jpg" class="rounded-circle" alt="t1" width="40" />
+                    </a>
+                    <a href="javascript:void(0)">
+                      <img src="../assets/images/profile/user-3.jpg" class="rounded-circle" alt="t2" width="40" />
+                    </a>
+                    <a href="javascript:void(0)">
+                      <img src="../assets/images/profile/user-4.jpg" class="rounded-circle" alt="t3" width="40" />
+                    </a>
+                    <a href="javascript:void(0)">
+                      <div class="round-40 rounded-circle bg-primary-subtle text-primary d-flex align-items-center justify-content-center">
+                        <i class="ti ti-plus fs-4"></i>
+                      </div>
+                    </a>
+                  </div>
+                  <span class="d-block mb-1">To</span>
+                  <div class="mb-3">
+                    <span class="badge px-2 d-inline-flex align-items-center bg-primary-subtle text-primary rounded-pill fs-3">
+                      <img src="../assets/images/profile/user-1.jpg" class="rounded-circle me-1" alt="user1" width="30" /> John
+                    </span>
+                  </div>
+                  <span class="d-block mb-1">Amount</span>
+                  <div class="input-group rounded">
+                    <input type="text" class="form-control  border-end-0" aria-label="Text input with dropdown button" value="₩1000" />
+                    <button class="btn p-0 border-top border-bottom border-end border-0" type="button">
+                      <span class=" btn btn-primary m-1 rounded"> Transfer <i class="ti ti-arrow-right fs-4"></i>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title fw-semibold">Trade History</h4>
+                  <p class="card-subtitle">Trade and the Age of Exploration</p>
+                  <div class="table-responsive mt-4">
+                    <table class="table table-borderless text-nowrap align-middle mb-0">
+                      <tbody>
+                        <tr class="bg-light">
+                          <td class="rounded-start bg-transparent">
+                            <div class="d-flex align-items-center gap-3">
+                              <div>
+                                <i class="cc BTC fs-7"></i>
+                              </div>
+                              <div>
+                                <h6 class="mb-0">Bitcoin</h6>
+                                <span class="fs-3">BTC</span>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="bg-transparent"> ₩981.1254 <i class="ti ti-chevron-down text-danger ms-1 fs-4"></i>
+                          </td>
+                          <td class="bg-transparent">
+                            <i class="cc ETC me-1 text-primary fs-5" title="ETC"></i> 0.23125
+                          </td>
+                          <td class="bg-transparent">₩1.23560 B</td>
+                          <td class="bg-transparent">04 Feb 2024</td>
+                          <td class="text-end rounded-end bg-transparent">
+                            <span class="badge bg-danger">transfer</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="6"></td>
+                        </tr>
+                        <tr class="bg-light">
+                          <td class="rounded-start bg-transparent">
+                            <div class="d-flex align-items-center gap-3">
+                              <div>
+                                <i class="cc ETH fs-7"></i>
+                              </div>
+                              <div>
+                                <h6 class="mb-0">Ethereum</h6>
+                                <span class="fs-3">ETH</span>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="bg-transparent"> ₩450.1254 <i class="ti ti-chevron-down text-danger ms-1 fs-4"></i>
+                          </td>
+                          <td class="bg-transparent">
+                            <i class="cc ETC me-1 text-primary fs-5" title="ETC"></i> 0.45000
+                          </td>
+                          <td class="bg-transparent">₩3.23560 B</td>
+                          <td class="bg-transparent">09 Mar 2024</td>
+                          <td class="text-end rounded-end bg-transparent">
+                            <span class="badge bg-primary">sell</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="6"></td>
+                        </tr>
+                        <tr class="bg-light">
+                          <td class="rounded-start bg-transparent">
+                            <div class="d-flex align-items-center gap-3">
+                              <div>
+                                <i class="cc LTC fs-7"></i>
+                              </div>
+                              <div>
+                                <h6 class="mb-0">Litecoin</h6>
+                                <span class="fs-3">LTC</span>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="bg-transparent"> ₩100.1254 <i class="ti ti-chevron-up text-success ms-1 fs-4"></i>
+                          </td>
+                          <td class="bg-transparent">
+                            <i class="cc BTC me-1 text-danger fs-5" title="BTC"></i> 0.56012
+                          </td>
+                          <td class="bg-transparent">₩2.45620 B</td>
+                          <td class="bg-transparent">12 Dec 2024</td>
+                          <td class="text-end rounded-end bg-transparent">
+                            <span class="badge bg-success">buy</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="6"></td>
+                        </tr>
+                        <tr class="bg-light">
+                          <td class="rounded-start bg-transparent">
+                            <div class="d-flex align-items-center gap-3">
+                              <div>
+                                <i class="cc XRP fs-7"></i>
+                              </div>
+                              <div>
+                                <h6 class="mb-0">XRP</h6>
+                                <span class="fs-3">XRP</span>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="bg-transparent"> ₩450.1254 <i class="ti ti-chevron-down text-danger ms-1 fs-4"></i>
+                          </td>
+                          <td class="bg-transparent">
+                            <i class="cc ETC me-1 text-primary fs-5" title="ETC"></i> 0.45000
+                          </td>
+                          <td class="bg-transparent">₩3.23560 B</td>
+                          <td class="bg-transparent">01 Aug 2024</td>
+                          <td class="text-end rounded-end bg-transparent">
+                            <span class="badge bg-danger">transfer</span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	 // 라인 차트 생성
+    var options = {
+        chart: {
+            type: 'line',
+            height: 350
+        },
+        series: [
+            {
+                name: 'Sample Data 1',
+                data: [30, 40, 35, 50, 49, 60, 70, 91, 125]
+            },
+            {
+                name: 'Sample Data 2',
+                data: [20, 30, 25, 40, 39, 50, 60, 81, 100]
+            }
+        ],
+        colors: ['#007BFF', '#808080'], // 첫 번째 라인은 파란색, 두 번째 라인은 회색
+        xaxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
+        },
+        dataLabels: {
+            enabled: true, // 데이터 레이블 활성화
+            offsetY: -10, // 레이블의 Y축 오프셋 조정
+            style: {
+                fontSize: '12px',
+                colors: ['#007BFF', '#808080'] // 첫 번째는 파란색, 두 번째는 회색으로 설정
+            }
+        }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart-line-with-data-label"), options);
+    chart.render();
+
+ // 바 차트 생성
+    var optionsBar = {
+        chart: {
+            type: 'bar',
+            height: 350
+        },
+        series: [{
+            name: 'Sales',
+            data: [30, 40, 35, 50, 49, 60, 70]
+        }],
+        xaxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']
+        },
+        colors: ['#007BFF'], // 바 색상 설정
+        dataLabels: {
+            enabled: true // 데이터 레이블 활성화
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: 5 // 바의 모서리 라운드 설정
+            }
+        }
+    };
+
+
+    var chartBar = new ApexCharts(document.querySelector("#chart-bar-basic"), optionsBar);
+    chartBar.render();
+
+ // Simple Pie Chart 데이터 및 설정
+    var options = {
+        chart: {
+            type: 'pie',
+            height: 350
+        },
+        series: [44, 55, 13, 43, 22], // 데이터 시리즈
+        labels: ['A', 'B', 'C', 'D', 'E'], // 레이블
+        title: {
+            text: '방문 많은 여행지'
+        },
+        colors: ['#007BFF', '#00A3E0', '#87CEEB', '#B0E0E6', '#E0FFFF']
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart-pie-simple"), options);
+    chart.render();
+
+});
+
+
+
+</script>

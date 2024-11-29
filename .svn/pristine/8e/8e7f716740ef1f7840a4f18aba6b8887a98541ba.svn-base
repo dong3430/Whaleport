@@ -1,0 +1,9 @@
+package kr.or.ddit.common.etc.calendar.mapper;
+
+import kr.or.ddit.common.etc.calendar.vo.CalendarVO;
+
+public interface CalendarMapper {
+
+	public void addEvent(CalendarVO calendarVO);
+
+}

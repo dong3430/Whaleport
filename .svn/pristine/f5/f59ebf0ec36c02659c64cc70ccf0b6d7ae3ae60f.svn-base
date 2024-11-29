@@ -1,0 +1,10 @@
+package kr.or.ddit.customer.login.login.service;
+
+import kr.or.ddit.customer.login.login.vo.LoginCustomerVO;
+
+public interface LoginCustomerService {
+	
+	// 고객 로그인
+	public LoginCustomerVO loginCheck(LoginCustomerVO customer);
+
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="kr.or.ddit.management.partner.airportSchedule.mapper.AirportMapper" >
+  
+	<insert id="insert" parameterType="kr.or.ddit.customer.airport.airportReserve.vo.PlaneScheduleVO">
+		insert into plane_schedule(
+			SC_NO, SC_AIRFLN, SC_AIRLINE, SC_BOARDING, SC_ARRIVED, SC_STDATE, SC_STD
+		) values (
+			seq_plane_schedule.nextval, #{scAirfln}, #{scAirline}, #{scBoarding}, #{scArrived}, #{scStdate}, #{scStd}
+		)
+		
+	</insert>  
+
+
+  
+  </mapper>

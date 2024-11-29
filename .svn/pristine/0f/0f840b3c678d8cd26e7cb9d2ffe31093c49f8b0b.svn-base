@@ -1,0 +1,200 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<style>
+.header {
+	    background-color: #eef2ff;
+	}
+</style>
+<header class="header" >
+		<nav class="navbar navbar-expand-lg py-0">
+			<div class="container">
+				<!-- 로고 들어갈 부분 -->
+				<a class="navbar-brand me-0 py-0" href="/customer/main">
+					<img src="${pageContext.request.contextPath }/resources/assets/images/logos/headertype-01.png" class="dark-logo" alt="Logo-Dark" style="width: 180px; height: auto;" />
+				</a>
+				<button class="navbar-toggler d-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<i class="ti ti-menu-2 fs-9"></i>
+				</button>
+				<button class="navbar-toggler border-0 p-0 shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+					<i class="ti ti-menu-2 fs-9"></i>
+				</button>
+				<!-- 메뉴 -->
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav align-items-center mb-2 mb-lg-0 ms-auto">
+						
+
+						<!-- 통합예약-->
+						<li class="nav-item dropdown hover-dd mega-dropdown">
+							<a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button" aria-expanded="false">
+									통합예약
+									<!-- v -->
+									<span class="d-flex align-items-center">
+											<i class="ti ti-chevron-down"></i>
+									</span>
+							</a>
+							<!-- 카테고리 입력 공간-->
+							<ul class="dropdown-menu dropdown-menu-animate-up p-4">
+								<div class="col-md-4">
+									<div class="position-relative p-4 border-start h-100">
+										<ul class="list-unstyled">
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary"  href="/customer/reserve">항공권</a>
+											</li>
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary"  href="/customer/reserve/parking/list">주차</a>
+											</li>
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary"  href="/customer/reserve/hotel/list">호텔</a>
+											</li>
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary"  href="/customer/reserve/rounge/list">라운지</a>
+											</li>
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary"  href="/customer/reserve/meeting/list">회의실</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</ul>
+						</li>
+
+						<!-- 운항정보 -->
+						<li class="nav-item dropdown hover-dd mega-dropdown">
+							<a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button" aria-expanded="false">
+									운항정보
+									<!-- v -->
+									<span class="d-flex align-items-center">
+											<i class="ti ti-chevron-down"></i>
+									</span>
+							</a>
+							<!-- 카테고리 입력 공간-->
+							<ul class="dropdown-menu dropdown-menu-animate-up p-4">
+								<div class="col-md-4">
+									<div class="position-relative p-4 border-start h-100">
+										<ul class="list-unstyled">
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary" href="/customer/flightInfo/departureArrival">출발/도착 안내</a>
+											</li>
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary" href="/customer/flightInfo/schedule">운항 스케줄</a>
+											</li>
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary" href="/customer/flightInfo/boardingSimulation">탑승 시뮬레이션</a>
+											</li>
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary" href="/customer/flightInfo/arrivalSimulation">도착 시뮬레이션</a>
+											</li>
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary" href="/customer/flightInfo/OperatingAirline">취항 항공사</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</ul>
+						</li>
+
+						<!-- 시설정보 -->
+						<li class="nav-item dropdown hover-dd mega-dropdown">
+							<a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button" aria-expanded="false">
+									시설정보
+									<!-- v -->
+									<span class="d-flex align-items-center">
+											<i class="ti ti-chevron-down"></i>
+									</span>
+							</a>
+							<!-- 카테고리 입력 공간-->
+							<ul class="dropdown-menu dropdown-menu-animate-up p-4">
+								<div class="col-md-4">
+									<div class="position-relative p-4 border-start h-100">
+										<ul class="list-unstyled">
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary" href="">안내 · 편의시설</a>
+											</li>
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary" href="">쇼핑 · 면세점</a>
+											</li>
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary" href="">식당</a>
+											</li>
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary" href="">공항 최적 동선 안내</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</ul>
+						</li>
+
+						<!-- 교통정보 -->
+						<li class="nav-item dropdown hover-dd mega-dropdown">
+							<a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button" aria-expanded="false">
+									교통정보
+									<!-- v -->
+									<span class="d-flex align-items-center">
+											<i class="ti ti-chevron-down"></i>
+									</span>
+							</a>
+							<!-- 카테고리 입력 공간-->
+							<ul class="dropdown-menu dropdown-menu-animate-up p-4">
+								<div class="col-md-4">
+									<div class="position-relative p-4 border-start h-100">
+										<ul class="list-unstyled">
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary" href="/customer/trafficInfo/direction">오시는 길</a>
+											</li>
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary" href="/customer/trafficInfo/parkingInfo">주차 안내</a>
+											</li>
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary" href="/customer/trafficInfo/shuttleBus">공항 · 셔틀버스</a>
+											</li>
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary" href="/customer/trafficInfo/rentalCar">렌터카</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</ul>
+						</li>
+
+						<!--  안내 · 서비스 -->
+						<li class="nav-item dropdown hover-dd mega-dropdown">
+							<a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button" aria-expanded="false">
+								안내 · 서비스  
+									<!-- v -->
+									<span class="d-flex align-items-center">
+											<i class="ti ti-chevron-down"></i>
+									</span>
+							</a>
+							<!-- 카테고리 입력 공간-->
+							<ul class="dropdown-menu dropdown-menu-animate-up p-4">
+								<div class="col-md-4">
+									<div class="position-relative p-4 border-start h-100">
+										<ul class="list-unstyled">
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary" href="">고객센터</a>
+											</li>
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary" href="">맞춤형 서비스</a>
+											</li>
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary" href="">실시간 항공편 추적</a>
+											</li>
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary" href="">제한물품 조회</a>
+											</li>
+											<li class="mb-3">
+												<a class="fw-semibold text-dark text-hover-primary" href="">관련 사이트 안내</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</ul>
+						</li>
+						<li class="nav-item ms-2">
+							<a class="btn btn-primary fs-3 rounded btn-hover-shadow px-3 py-2" href="/customer/login">Login</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>

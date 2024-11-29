@@ -1,0 +1,12 @@
+package kr.or.ddit.user.reserve.meeting.mapper;
+
+import java.util.List;
+
+import kr.or.ddit.user.reserve.meeting.vo.MeetingVO;
+
+
+public interface MeetingMapper {
+
+	public List<MeetingVO> list();
+
+}

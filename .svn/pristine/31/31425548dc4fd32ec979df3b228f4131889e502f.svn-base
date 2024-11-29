@@ -1,0 +1,56 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bs-theme="light"
+	data-color-theme="Blue_Theme" data-layout="vertical">
+<div class="body-wrapper">
+        <div class="container-fluid">
+          <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
+            <div class="card-body px-4 py-3">
+              <div class="row align-items-center">
+                <div class="col-9">
+                  <h4 class="fw-semibold mb-8">User Profile</h4>
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a class="text-muted text-decoration-none" href="../main/index.html">Home</a>
+                      </li>
+                      <li class="breadcrumb-item" aria-current="page">User Profile</li>
+                    </ol>
+                  </nav>
+                </div>
+                <div class="col-3">
+                  <div class="text-center mb-n5">
+                    <img src="${pageContext.request.contextPath }/resources/assets/images/breadcrumb/ChatBc.png" alt="modernize-img" class="img-fluid mb-n4" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+	<input type="button" value="click" id="test"/>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+
+       $('#test').on('click',function(){
+        $.ajax({
+            url: '/user/searchFlight',
+            type: 'POST',
+            data: {
+                departure: 'ICN',
+                arrival: 'PEK',
+                departDate : '2024-10-10',
+                returnDate : '2024-10-15',
+                apiKey : 'c6240468c6401627f4288e4d26b7b2e21fa357b4d522f02915697e74c7602fed'
+            },
+            success: function(response) {
+                console.log(response);
+            }
+        });
+       });
+});
+
+	</script>
+</html>

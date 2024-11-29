@@ -1,0 +1,18 @@
+package kr.or.ddit.partner.common.qna.mapper;
+
+import java.util.List;
+import kr.or.ddit.partner.common.qna.vo.PartnerQnaVO;
+import kr.or.ddit.util.vo.FileVO;
+import kr.or.ddit.util.vo.PaginationVO;
+
+public interface PartnerQnaMapper {
+	public int register(PartnerQnaVO partnerQnaVO);
+	public List<PartnerQnaVO> list();
+	public PartnerQnaVO detail(int qnaNo);
+	public void update(PartnerQnaVO partnerQnaVO);
+	public void delete(int qnaNo);
+	public int qnaCount(PaginationVO<PartnerQnaVO> pagingVO);
+	public List<PartnerQnaVO> qnaList(PaginationVO<PartnerQnaVO> pagingVO);
+	public void registerFile(FileVO qnaFileVO);
+	public void insertQnaFile(FileVO fileVO);
+}
